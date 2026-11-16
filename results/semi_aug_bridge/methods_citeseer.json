@@ -1,0 +1,24 @@
+[
+ {
+  "dataset": "citeseer",
+  "method": "ref_plain",
+  "seed": 0,
+  "n_aug_kept": 900,
+  "div_pissa": 0.7253000000000001,
+  "div_orthogonal": 0.7206,
+  "div_gaussian": 0.7112,
+  "div_loftq": 0.733,
+  "div_eva": 0.7241,
+  "diff_pissa_joint": 0.7147,
+  "diff_pissa_tied": 0.7256,
+  "diff_pissa_text_only": 0.7136,
+  "diff_pissa_edge_only": 0.6956,
+  "diff_orthogonal_joint": 0.7241,
+  "diff_gaussian_joint": 0.7229000000000001,
+  "diff_loftq_joint": 0.7436,
+  "diff_eva_joint": 0.7303000000000001,
+  "ENS DIVERGE-1": 0.7357755303382874,
+  "ENS diffusion": 0.7420108914375305,
+  "ENS both": 0.7420108914375305
+ }
+]

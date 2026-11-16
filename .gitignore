@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Large artifacts (regenerate / download)
+checkpoints/
+data/
+hf_models/
+logs/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.bin
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
