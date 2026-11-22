@@ -361,6 +361,24 @@ What the data support:
 
 Reading: (i) the reproduction matches DIVERGE's published numbers (84.8 / 85.0 on Cora) within ~0.3; (ii) without augmentation diffusion views do *not* help on Cora (-0.8); (iii) with augmented nodes the diffusion views are as good as or better than the LoRA members and the combined pool is best (+0.7 Cora, +0.2 CiteSeer over DIVERGE + aug) -- the label-free views seem to be more robust to noisy pseudo-labelled nodes/edges; (iv) all gaps are about one seed-std, only 3 repeats and one LoRA seed, so this is suggestive, not significant. A first run with naive kNN edges and no lambda (not DIVERGE's selected config) collapsed DIVERGE to 73% while diffusion views stayed at 77.8% -- an unfair baseline, discarded. Validation-screened ensembles did not help.
 
+#### 7.6b All augmentation methods of the DIVERGE semi-supervised study x diffusion views
+
+Every method is built with DIVERGE's own code (`diva_ideas.build`: its filters, weights, soft labels and edges, unmodified). Test accuracy %, mean ± std over 3 GNN repeats (LoRA seed fixed); "both" = 5 DIVERGE-1 members + 8 diffusion views, uniform ensemble.
+
+| method | Cora D-1 | Cora diff | Cora both | CiteSeer D-1 | CiteSeer diff | CiteSeer both |
+|---|---|---|---|---|---|---|
+| ref_plain | 85.15 | 84.77 | 85.15 | 73.92 | 74.05 | 74.19 |
+| ref_selected | 85.15 | 84.93 | 85.19 | 74.32 | 73.75 | 73.94 |
+| com_vote | 85.09 | 85.06 | 85.43 | 73.69 | 73.88 | 74.31 |
+| own_attn | 85.38 | 85.12 | **85.85** | 74.08 | 74.28 | 74.25 |
+| own_viewdis | 85.49 | 85.06 | 85.54 | 74.06 | 73.86 | 74.07 |
+| lit_conf | 85.43 | 85.17 | 85.41 | 74.18 | 73.89 | 74.19 |
+| diva2_ens | 84.95 | 84.86 | 85.17 | 74.37 | 74.20 | 74.24 |
+| diva_mi | 83.82 | 84.11 | 84.53 | 73.43 | 74.02 | 74.21 |
+| diva_full | 84.53 | 84.78 | 85.14 | 72.80 | 73.69 | 73.73 |
+
+Reading (honest): adding diffusion views changes the DIVERGE-1 ensemble by +0.27 (Cora) / +0.25 (CiteSeer) on average over the 9 methods, with a range of -0.4 to +0.9 and a seed-std of 0.1-0.8, i.e. **no significant effect for any single method**. The only consistent pattern is that the weakest DIVERGE variants (`diva_mi`, `diva_full`) gain most (+0.6 to +0.9), because diffusion views do not suffer from their pseudo-label handling as much; for the strongest ones the gain is ~0. The diffusion views alone are on par with the LoRA members (within about 0.5). No combination beats the best DIVERGE-only number by more than seed noise on CiteSeer; on Cora the best is `own_attn` + diffusion 85.85 vs 85.49 (`own_viewdis`, DIVERGE-1 only). Not run: `own_bandit`, `own_calcls`, `own_verifier_w`, the remaining `lit_*` methods, PubMed/WikiCS, other LoRA seeds. Note the embeddings come from LoRA adapters fine-tuned with the public labels, so the diffusion views are label-free in their own loss only, not in the pipeline.
+
 ## 8. Reproducing
 
 ```bash

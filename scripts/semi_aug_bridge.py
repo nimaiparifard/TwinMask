@@ -11,13 +11,15 @@ Selection: validation only (public val).  Ensembles: uniform softmax mean.
 import json
 import os
 import sys
+from pathlib import Path
 
 import numpy as np
 import torch
 from torch_geometric.utils import to_undirected
 
-DIV = r"C:/Users/Nima/Desktop/Python Project/DIVERGE"
-sys.path.insert(0, DIV); sys.path.insert(0, ".")
+DIV = os.environ.get("TWINMASK_DIVERGE_DIR", r"C:/Users/Nima/Desktop/Python Project/DIVERGE")
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+sys.path.append(DIV)
 from diverge2 import core  # noqa: E402
 from tags_data_augmentation.semi_study.semi_task import SemiTask  # noqa: E402
 from twinmask import phase0  # noqa: E402
@@ -39,14 +41,14 @@ def member(t, x, ei, seed):
     return r
 
 
-def diffusion_view(t, emb, ei_u, variant, seed, cfg=(256, 1000, 1.0, 0.1)):
+def diffusion_view(t, emb, ei_u, variant, seed, cfg=(256, 1000, 1.0, 0.1), *, device=dev):
     hid, ep, lam, pb = cfg
     n = emb.shape[0]
     d = dict(num_nodes=n, emb=emb.cpu(), train_pos=t.und.cpu(), cold_nodes=torch.zeros(0, dtype=torch.long))
     model, x0, _, _ = phase0.train_return_model("semi", variant, seed, epochs=ep, data=d, hid=hid, lam_e=lam,
-                                                p_bound=pb, select_lp=False)
+                                                p_bound=pb, select_lp=False, dev=device)
     with torch.no_grad():
-        hc, _ = model.encode(x0, torch.zeros(n, device=dev), torch.zeros(1, device=dev), ei_u)
+        hc, _ = model.encode(x0, torch.zeros(n, device=device), torch.zeros(1, device=device), ei_u)
     return hc
 
 
@@ -62,11 +64,14 @@ def ens(t, probs):
 SEL = os.path.join(DIV, "tags_data_augmentation", "semi_study", "results")
 
 
-def make_task(ds, arm, s):
+def make_task(ds, arm, s, selection_dir=None):
     """DIVERGE's own validation-selected configuration (ref_selected): edge rule, pseudo-label handling, lambda, tuned hp."""
-    edge = json.load(open(f"{SEL}/edge_selection.json"))[ds]
-    mode = json.load(open(f"{SEL}/mode_selection.json"))[ds]
-    hp = f"{SEL}/hp_{ds}_{arm}.json"
+    selection_dir = SEL if selection_dir is None else selection_dir
+    with open(f"{selection_dir}/edge_selection.json", encoding="utf8") as f:
+        edge = json.load(f)[ds]
+    with open(f"{selection_dir}/mode_selection.json", encoding="utf8") as f:
+        mode = json.load(f)[ds]
+    hp = f"{selection_dir}/hp_{ds}_{arm}.json"
     kw = dict(hp_file=hp) if os.path.exists(hp) else {}
     if arm == "base":
         return SemiTask(ds, arm="base", repeat=s, **kw)
