@@ -349,17 +349,28 @@ def synthetic_graph(name, seed_offset=0):
                 noise_edges=noise_edges)
 
 
-def resplit_link_data(data, seed):
+def resplit_link_data(data, seed, *, legacy=False):
     rng = np.random.default_rng(seed)
     n = len(data["tokens"])
     edges = torch.cat(tuple(data[k] for k in ("train_pos", "val_pos", "test_pos")), 1)
     n_test, n_val = data["test_pos"].shape[1], data["val_pos"].shape[1]
     test, val, train = np.split(rng.permutation(edges.shape[1]), [n_test, n_test+n_val])
-    positives = torch.cat((edges, data["cold_pos"]), 1)
+    positives = data.get("all_true_edges")
+    if positives is None:
+        if not legacy and "cold_nodes" in data:
+            from twinmask.audit_protocol import reference
+            positives = reference(data["name"], data)
+        else:
+            positives = torch.cat((edges, data["cold_pos"]), 1)
     excluded = set((positives[0]*n+positives[1]).tolist())
-    neg = sample_negatives(n, n_test+n_val, excluded, rng)
-    return dict(data, train_pos=edges[:, train], val_pos=edges[:, val], test_pos=edges[:, test],
-                test_neg=neg[:, :n_test], val_neg=neg[:, n_test:])
+    warm = (torch.arange(n)[~torch.isin(torch.arange(n), data["cold_nodes"])].numpy()
+            if not legacy and "cold_nodes" in data else None)
+    neg = sample_negatives(n, n_test+n_val, excluded, rng, warm)
+    updated = dict(data, train_pos=edges[:, train], val_pos=edges[:, val], test_pos=edges[:, test],
+                   test_neg=neg[:, :n_test], val_neg=neg[:, n_test:])
+    if not legacy:
+        updated["all_true_edges"] = positives
+    return updated
 
 
 def variant_suffix(clock_training, rollout, soft_edges, encoder, resplit, full_vocab=False, directional_only=False):
@@ -401,7 +412,13 @@ def run(name, seed, epochs, device, width, vocab_size, clock_training="mixed", r
     fit_edges, controller_edges, dev_edges, base_edges = perm.split(
         [len(perm)//5, len(perm)//10, len(perm)//10, len(perm)-len(perm)//5-2*(len(perm)//10)])
     count = len(fit_edges)+len(controller_edges)+len(dev_edges)
-    negatives = sample_negatives(len(raw), count, forbid, np.random.default_rng(seed)).to(device)
+    warm = None
+    if resplit and "cold_nodes" in data:
+        warm = torch.arange(len(raw))[~torch.isin(torch.arange(len(raw)), data["cold_nodes"])].numpy()
+    if resplit and "all_true_edges" in data:
+        a, b = data["all_true_edges"]
+        forbid.update((a*len(raw)+b).tolist())
+    negatives = sample_negatives(len(raw), count, forbid, np.random.default_rng(seed), warm).to(device)
     neg_fit, neg_controller, neg_dev = negatives.split([len(fit_edges), len(controller_edges), len(dev_edges)], dim=1)
     order = torch.randperm(len(raw), generator=rng, device=device)
     train_nodes, controller_nodes, dev_nodes, test_nodes = order.split(

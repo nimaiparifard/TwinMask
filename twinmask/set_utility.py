@@ -31,12 +31,13 @@ def shapley_values(loss, width):
 
 
 class SetUtility(nn.Module):
-    def __init__(self, dimension, hidden=48, *, attention=False, dropout=0.):
+    def __init__(self, dimension, hidden=48, *, attention=False, dropout=0., anchored=False):
         super().__init__()
         self.phi = nn.Sequential(nn.Linear(dimension, hidden), nn.LayerNorm(hidden), nn.GELU(),
                                  nn.Linear(hidden, hidden), nn.GELU())
         self.rho = nn.Sequential(nn.Linear(2*hidden+1, hidden), nn.GELU(), nn.Linear(hidden, 2))
         self.dropout = dropout
+        self.anchored = anchored
         self.attention = nn.MultiheadAttention(hidden, 4, batch_first=True) if attention else None
 
     def forward(self, features, masks, valid, *, sample_dropout=False):
@@ -51,7 +52,12 @@ class SetUtility(nn.Module):
         full = (h * valid[..., None]).sum(1).expand_as(selected)
         values = self.rho(torch.cat((selected, full, masks.sum(-1, keepdim=True)), -1))
         mean, spread = values.unbind(-1)
-        return mean, F.softplus(spread) + .01
+        spread = F.softplus(spread) + .01
+        if self.anchored:
+            full = masks.bool().eq(valid).all(-1)
+            mean = mean.masked_fill(full, 0.)
+            spread = spread.masked_fill(full, 0.)
+        return mean, spread
 
 
 def subset_objective(mean, spread, utility, masks, allowed, decision_weight=0., uncertainty=False):
@@ -66,7 +72,9 @@ def subset_objective(mean, spread, utility, masks, allowed, decision_weight=0., 
             probabilities = (mean / .35).masked_fill(~(allowed & (count <= budget)), -torch.inf).softmax(0)
             error = error - decision_weight*(probabilities*utility).sum(0).mean()/3
     if uncertainty:
-        residual = (mean.detach() - utility)[allowed]
-        sigma = spread[allowed]
-        error = error + .2*(sigma.log()+.5*(residual/sigma).square()).mean()
+        stochastic = allowed & (spread > 0)
+        if stochastic.any():
+            residual = (mean.detach() - utility)[stochastic]
+            sigma = spread[stochastic]
+            error = error + .2*(sigma.log()+.5*(residual/sigma).square()).mean()
     return error

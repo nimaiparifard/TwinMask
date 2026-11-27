@@ -118,7 +118,7 @@ class MessagePanel:
 def contexts(name, seed, device, *, include_dev=False, resplit=False):
     data = synthetic_graph(name) if name in SYNTHETIC else load(name)
     if resplit:
-        data = resplit_link_data(data, seed)
+        data = resplit_link_data(data, seed, legacy=True)
     directory = "checkpoints/research_twinmask_v2" + ("_resplit" if resplit else "")
     checkpoint = torch.load(Path(directory) / f"{name}_{seed}.pt",
                             map_location="cpu", weights_only=False)

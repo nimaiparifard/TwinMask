@@ -1,6 +1,7 @@
 """Paired TwinMask V4 utility, decision, budget, and risk experiments."""
 import argparse
 import copy
+import math
 from pathlib import Path
 
 import numpy as np
@@ -96,14 +97,14 @@ def fit_messages(train, feature, target, steps, rng):
     return model, scale
 
 
-def fit_sets(train, steps, rng, decision=False, *, attention=False, dropout=0.):
+def fit_sets(train, steps, rng, decision=False, *, attention=False, dropout=0., anchored=False):
     valid = torch.cat([row[0].valid for row in train])
     features = torch.cat([row[1]["aware"] for row in train])
     masks = torch.cat([row[2] for row in train], dim=1)
     allowed = torch.cat([row[3] for row in train], dim=1)
     utility = torch.cat([row[4][-1:]-row[4] for row in train], dim=1)
     scale = utility[allowed].std(unbiased=False).clamp_min(1e-5)
-    model = SetUtility(features.shape[-1], attention=attention, dropout=dropout).to(features.device)
+    model = SetUtility(features.shape[-1], attention=attention, dropout=dropout, anchored=anchored).to(features.device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=.002)
     for _ in range(steps):
         ix = torch.randperm(len(features), generator=rng, device=features.device)[:128]
@@ -232,19 +233,61 @@ def calibration(model, scale, dev):
     return min(zip(risk, candidates), key=lambda x: np.mean(x[0]))[1]
 
 
-def fit_models(train, steps, rng):
+@torch.no_grad()
+def relative_coverage_cutoff(model, scale, dev):
+    residuals = []
+    for panel, features, masks, allowed, loss, _ in dev:
+        mean, spread = model(features["aware"], masks, panel.valid)
+        eligible = allowed & (spread > 0)
+        error = ((loss[-1:]-loss)/scale-mean).abs()
+        residuals.append(error[eligible]/spread[eligible])
+    values = torch.cat(residuals)
+    rank = min(len(values), math.ceil((len(values)+1)*.9))
+    return float(values.kthvalue(rank).values) if rank else 0.
+
+
+def fit_models(train, steps, rng, anchored=False):
     by_name = {"base_loo": ("base", "loo"), "target_loo": ("target", "loo"),
                "aware_loo": ("aware", "loo"), "shapley": ("aware", "shapley")}
     local = {key: (feature, *fit_messages(train, feature, goal, steps, rng))
              for key, (feature, goal) in by_name.items()}
-    sets = {name: fit_sets(train, steps, rng, decision) for name, decision in
+    sets = {name: fit_sets(train, steps, rng, decision, anchored=anchored) for name, decision in
             (("deep_sets", False), ("decision", True))}
     direct = {name: fit_direct(train, steps, rng, attention) for name, attention in
               (("direct", False), ("attention_control", True))}
     return local, sets, direct
 
 
-def evaluate(data, local, sets, direct, risk, rng, comparators=None, uncertainty=None):
+def within_target_metrics(score, truth, valid):
+    pair = valid[:, :, None] & valid[:, None, :]
+    ties = truth[:, :, None] == truth[:, None, :]
+    comparable = (pair & ~ties).triu(1)
+    target = truth.masked_fill(~valid, -torch.inf)
+    selected = score.masked_fill(~valid, -torch.inf).argmax(1, keepdim=True)
+    covered = comparable.any((1, 2))
+    result = {"ranking_coverage": float(covered.float().mean())}
+    if not covered.any():
+        return result
+    ranks = []
+    for values in (score, truth):
+        rank = ((values[:, :, None] > values[:, None, :]).float() +
+                .5*(values[:, :, None] == values[:, None, :])).mul(pair).sum(-1)
+        rank = (rank-(rank*valid).sum(1, keepdim=True)/valid.sum(1, keepdim=True).clamp_min(1))*valid
+        ranks.append(rank)
+    nonconstant = covered & (ranks[0].norm(dim=1) > 0)
+    result.update(within_target_spearman=float(F.cosine_similarity(*ranks)[nonconstant].mean())
+                  if nonconstant.any() else None,
+                  spearman_coverage=float(nonconstant.float().mean()),
+                  pairwise_accuracy=float(((score[:, :, None]-score[:, None, :]).sign() ==
+                                           (truth[:, :, None]-truth[:, None, :]).sign())[comparable].float().mean()),
+                  top1_accuracy=float((target.gather(1, selected).flatten() == target.amax(1))[covered].float().mean()))
+    harmful, removed = (truth < -.001) & valid, (score <= 0) & valid
+    result["harmful_precision"] = float((harmful & removed).sum()/removed.sum()) if removed.any() else None
+    result["harmful_recall"] = float((harmful & removed).sum()/harmful.sum()) if harmful.any() else None
+    return result
+
+
+def evaluate(data, local, sets, direct, risk, rng, comparators=None, uncertainty=None, coverage_cutoff=None):
     panel, features, masks, allowed, loss, predictions = data
     counts = masks.sum(-1)
     ix = torch.arange(len(panel.truth), device=loss.device)
@@ -260,6 +303,7 @@ def evaluate(data, local, sets, direct, risk, rng, comparators=None, uncertainty
         stats[name] = dict(mae=float((values-truth).abs().mean()),
                            spearman=float(rho) if np.isfinite(rho) else None,
                            sign_accuracy=float(((values > 0) == (truth > 0)).float().mean()))
+        stats[name].update(within_target_metrics(priority, loo, valid))
         scores[name] = (masks*priority).sum(-1)
     for key, model in direct.items():
         scores[key] = (masks*model(features["aware"]).squeeze(-1)).sum(-1)
@@ -284,6 +328,14 @@ def evaluate(data, local, sets, direct, risk, rng, comparators=None, uncertainty
             beta, cost, fallback = risk
             risk_score = mean-mean[-1:]-beta*spread
             stats[key]["normal_90_coverage"] = float(((predicted-actual).abs() <= 1.645*spread[allowed]*scale).float().mean())
+            if coverage_cutoff is not None:
+                nonfull = spread[allowed] > 0
+                stats[key]["dev_scaled_90_coverage_nonfull"] = float(
+                    ((predicted-actual).abs()[nonfull] <= coverage_cutoff*spread[allowed][nonfull]*scale).float().mean())
+            feasible = allowed & (counts <= 2)
+            probabilities = (mean/.35).masked_fill(~feasible, -torch.inf).softmax(0)
+            stats[key]["expected_regret_k2"] = float(((probabilities*loss).sum(0)-
+                                                      loss.masked_fill(~feasible, torch.inf).amin(0)).mean())
     for key, (predictor, scale, params) in (uncertainty or {}).items():
         mean, spread = predictor(features["aware"], masks, valid)
         beta_, cost_, fallback_ = params
@@ -317,6 +369,8 @@ def evaluate(data, local, sets, direct, risk, rng, comparators=None, uncertainty
                                   "panel_messages": float(counts[p, ix].mean()),
                                   "zero_fraction": float((counts[p, ix] == 0).float().mean())}
                            for key, p in picked.items()}
+        results[budget]["decision_cost"]["oracle_regret_equal_count"] = float(
+            (loss[picked["decision_cost"], ix]-loss[picked["matched_oracle_analysis_only"], ix]).mean())
         if hasattr(panel, "noisy") and panel.noisy.any():
             for key, p in picked.items():
                 selected_mask = masks[p, ix]
@@ -403,7 +457,12 @@ def paired_timing(backbone, case, selector, direction, device, seed, limit):
 
 
 @torch.no_grad()
-def diffusion_case(model, case, selectors, device, seed, use_selector):
+def actual_clocks(rates, original_masks, remaining_masks):
+    return tuple(rate * int(remaining.sum()) / max(1, int(initial.sum()))
+                 for rate, initial, remaining in zip(rates, original_masks, remaining_masks))
+
+
+def diffusion_case(model, case, selectors, device, seed, use_selector, corrected=False):
     ids, states, _ = case.initial()
     token_mask, edge_mask = case.mask.clone(), case.edge_mask.clone()
     only_tokens = case.mask.nonzero()
@@ -418,7 +477,9 @@ def diffusion_case(model, case, selectors, device, seed, use_selector):
     edge_probabilities = torch.zeros_like(states, dtype=torch.float)
     traces = []
     for step in range(2):
-        rates = (case.rates[0]*(1-.5*step), case.rates[1]*(1-.5*step))
+        rates = (actual_clocks(case.rates, (case.mask, case.edge_mask),
+                              (case.mask & ~(all_tokens & ~token_mask), case.edge_mask & ~(all_edges & ~edge_mask)))
+                 if corrected else (case.rates[0]*(1-.5*step), case.rates[1]*(1-.5*step)))
         progress = Case(ids, case.ids, token_mask, case.pairs, states, edge_mask, case.base, rates)
         progress.a_truth = case.labels[progress.a_index]
         trace = {"clocks": rates}
@@ -502,7 +563,7 @@ def independent_synthetic(model, selectors, seed, device, limit):
 
 
 def run(dataset, seed, device, limit, steps, panel_size, resplit=False, layer="last", extra=False,
-        comparators=False, transfer=False, tag=""):
+        comparators=False, transfer=False, tag="", source=None, audit=False):
     set_seed(seed)
     start = tick(device)
     if device.type == "cuda":
@@ -511,7 +572,9 @@ def run(dataset, seed, device, limit, steps, panel_size, resplit=False, layer="l
     saved_cases = []
     noise = synthetic_graph(dataset)["noise_edges"].to(device) if dataset in SYNTHETIC else None
     with torch.no_grad():
-        for model, fit, dev, test, rng in contexts(dataset, seed, device, include_dev=True, resplit=resplit):
+        if source is None:
+            source = contexts(dataset, seed, device, include_dev=True, resplit=resplit)
+        for model, fit, dev, test, rng in source:
             saved_cases.append((fit, dev, test))
             for direction, splits in groups.items():
                 for case, rows in zip((fit, dev, test), splits):
@@ -526,7 +589,7 @@ def run(dataset, seed, device, limit, steps, panel_size, resplit=False, layer="l
     results = {}
     selectors, states = {}, {}
     for direction, (train, dev, test) in groups.items():
-        local, sets, direct = fit_models(train, steps, rng)
+        local, sets, direct = fit_models(train, steps, rng, anchored=audit)
         baseline_models = fit_comparators(train, steps, rng) if comparators else None
         uncertainty_models = {}
         if comparators:
@@ -541,9 +604,12 @@ def run(dataset, seed, device, limit, steps, panel_size, resplit=False, layer="l
             estimator.eval()
         with torch.no_grad():
             risk = calibration(*sets["decision"], dev)
+            cutoff = relative_coverage_cutoff(*sets["decision"], dev) if audit else None
             uncertainty = {key: (*value, calibration(*value, dev)) for key, value in uncertainty_models.items()}
-            cases = [evaluate(row, local, sets, direct, risk, rng, baseline_models, uncertainty) for row in test]
+            cases = [evaluate(row, local, sets, direct, risk, rng, baseline_models, uncertainty, cutoff) for row in test]
         results[direction] = dict(risk_beta=risk[0], risk_cost_std_units=risk[1], risk_fallback=risk[2], cases=cases)
+        if cutoff is not None:
+            results[direction]["dev_coverage_cutoff"] = cutoff
         states[direction] = dict(features=train[0][1]["aware"].shape[-1],
                                  decision=selectors[direction].state_dict(),
                                  scale=sets["decision"][1], risk=risk)
@@ -568,7 +634,7 @@ def run(dataset, seed, device, limit, steps, panel_size, resplit=False, layer="l
                         evaluated[mode].append({**score_logits(logits, panel),
                                                 "panel_messages": float(weights.sum(1).mean())})
             results[direction]["fine_tuning"] = evaluated
-    diffusion = ({name: [diffusion_case(model, case, selectors, device, seed+j, use)
+    diffusion = ({name: [diffusion_case(model, case, selectors, device, seed+j, use, corrected=audit)
                          for j, (_, _, case) in enumerate(saved_cases)]
                   for name, use in (("full", False), ("selected", True))} if extra else None)
     directory = Path("checkpoints/research_twinmask_v4")

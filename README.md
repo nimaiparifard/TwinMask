@@ -5,6 +5,230 @@
 
 ---
 
+<!-- research-v41-v5 -->
+
+## TwinMask V4.1 · Correctness and protocol audit
+
+V4.1 aligns the local raw graphs to the cached node order by exact text comparison and confirms that every saved positive is present in the raw graph. The complete canonical edge references, including Cold–Cold links, are saved in `data/references/`. Warm negatives are generated against the full reference and are unique and disjoint across controller train, development, and test. The revised sampler also prevents validation/test negative overlap and duplicate cold negatives in newly prepared datasets. The old frozen backbones are retained so the matched/growing comparison isolates the selector context protocol. Those historical checkpoint weights were fitted under V2.
+
+The matched and growing arms share regenerated candidate pools, target node splits, masks, and seed IDs 42–44. Both arms train on the same reduced base graph. Growing adds the controller and development positive pools to the test-only base. Each episode separately adds its observed positive candidates. Thus the arms differ in base connectivity while evaluating identical target labels.
+
+| Dataset | Raw edges | Omitted positives in legacy cache | Legacy false negatives | Legacy val/test negative overlap | Legacy duplicate cold negatives | Matched / growing test base |
+|---|---|---|---|---|---|---|
+| Cora | 5278 | 18 | 0 | 0 | 1 | 3237 / 4045 |
+| CiteSeer | 4225 | 14 | 0 | 0 | 1 | 2557 / 3195 |
+| PubMed | 44324 | 103 | 0 | 0 | 0 | 27199 / 33997 |
+
+The audit of stored legacy validation, test, and cold negatives found zero true positives among those negatives. This check concerns the stored pools and does not establish equivalence to the old training sampler.
+
+Lower token CE and edge BCE are better. K=2 is an upper bound on optional messages. Random and oracle receive the decision policy's realized count on each target.
+
+| Dataset | Task | Context | Full | Decision + cost | Count-matched random | Equal-count oracle regret | Expected regret | Dev-scaled 90% coverage |
+|---|---|---|---|---|---|---|---|---|
+| Cora | text | matched | 4.9159 | 4.9044 | 4.9041 | 0.0081 | 0.0541 | 0.9051 |
+| Cora | edge | matched | 0.6651 | 0.6645 | 0.6653 | 0.0174 | 0.0316 | 0.8977 |
+| Cora | text | growing | 4.9142 | 4.9025 | 4.9023 | 0.0094 | 0.0541 | 0.9063 |
+| Cora | edge | growing | 0.6558 | 0.6565 | 0.6568 | 0.0177 | 0.0305 | 0.9091 |
+| CiteSeer | text | matched | 5.2378 | 5.2346 | 5.2347 | 0.0011 | 0.0591 | 0.8983 |
+| CiteSeer | edge | matched | 0.6585 | 0.6594 | 0.6595 | 0.0144 | 0.0398 | 0.8975 |
+| CiteSeer | text | growing | 5.2353 | 5.2311 | 5.2311 | 0.0015 | 0.0655 | 0.8951 |
+| CiteSeer | edge | growing | 0.6482 | 0.6495 | 0.6495 | 0.0166 | 0.0420 | 0.8955 |
+| PubMed | text | matched | 3.9883 | 3.9822 | 3.9826 | 0.0044 | 0.0389 | 0.8955 |
+| PubMed | edge | matched | 0.4991 | 0.4954 | 0.4978 | 0.0111 | 0.0310 | 0.9098 |
+| PubMed | text | growing | 3.9910 | 3.9865 | 3.9872 | 0.0049 | 0.0433 | 0.9011 |
+| PubMed | edge | growing | 0.4922 | 0.4872 | 0.4904 | 0.0107 | 0.0305 | 0.9169 |
+
+Risk models now learn utility relative to Full directly, with exact zero mean and uncertainty for Full. The held-out interval uses the development 90th percentile of standardized non-full residuals. Reported coverage is empirical because messages and subsets are dependent.
+
+The next table uses the matched arm and the prediction-aware LOO estimator. The rank metrics exclude targets with no non-tied pair. Harmful precision and recall use LOO utility below −0.001 and predicted utility at most zero.
+
+| Dataset | Task | Global ρ | Within-target ρ | Rank coverage | Pairwise accuracy | Top-1 | Harmful precision | Harmful recall |
+|---|---|---|---|---|---|---|---|---|
+| Cora | text | 0.0462 | 0.0352 | 0.6364 | 0.5067 | 0.3964 | 0.5439 | 0.5644 |
+| Cora | edge | 0.0508 | 0.0301 | 0.9452 | 0.5179 | 0.3590 | 0.4794 | 0.4069 |
+| CiteSeer | text | 0.0248 | -0.0081 | 0.3571 | 0.4986 | 0.3984 | 0.5041 | 0.5734 |
+| CiteSeer | edge | 0.0531 | 0.0611 | 0.7824 | 0.5221 | 0.4117 | 0.4902 | 0.5992 |
+| PubMed | text | 0.0949 | 0.1155 | 0.4017 | 0.5453 | 0.3996 | 0.5201 | 0.5732 |
+| PubMed | edge | 0.1657 | 0.0857 | 0.9030 | 0.5217 | 0.4211 | 0.4337 | 0.6145 |
+
+Corrected diffusion clocks scale each original rate by the fraction of the original hidden entries still pending. Unqueried hidden entries count toward the clock. The paired replay below evaluates two passes.
+
+| Matched context | Full token accuracy / edge AUROC | Selected token accuracy / edge AUROC | Selected second-call text / edge clock |
+|---|---|---|---|
+| Cora | 0.1571 / 0.6587 | 0.1584 / 0.6562 | 0.5841 / 0.4977 |
+| CiteSeer | 0.1215 / 0.6814 | 0.1215 / 0.6734 | 0.5870 / 0.4715 |
+| PubMed | 0.3234 / 0.8351 | 0.3242 / 0.8406 | 0.5981 / 0.5880 |
+
+V4.1 retains the V4 direct-component intervention for comparability. A test compares the cached two-layer local intervention to direct recomputation. The latency remains that of the existing full graph aggregation and local probes, separate from the number of optional messages retained.
+
+Per-seed results. [Cora matched](results/research_twinmask_v41/cora_matched.json) [Cora growing](results/research_twinmask_v41/cora_growing.json) [CiteSeer matched](results/research_twinmask_v41/citeseer_matched.json) [CiteSeer growing](results/research_twinmask_v41/citeseer_growing.json) [PubMed matched](results/research_twinmask_v41/pubmed_matched.json) [PubMed growing](results/research_twinmask_v41/pubmed_growing.json)
+
+## TwinMask V5 · Expected utility and isolated cross-modal transfer
+
+V5 trains text and topology encoders independently in the forward computation and introduces cross-modal evidence only in fusion. With all optional groups suppressed, the text decoder depends on the local text stream and the edge decoder uses the topology stream. At full weights the subset decoder reproduces the ordinary joint logits. The four groups are a structural self representation and three deterministic incoming-structure groups for token targets, and two endpoint text representations plus their two aggregated text neighborhoods for edge targets.
+
+The locked run grid uses split seeds **2101, 2113** and model seeds **71, 83, 97**. Every split trains fresh weights. The same base edges support fitting, development, and evaluation. Reference-backed warm pools are disjoint and historical validation/test citation positives are excluded from these new pools. Histories on the citation graphs still make them exploratory as corpora. The new Amazon Computers experiment uses two deterministic uniform 6,000-node induced samples from the 87,229-node raw graph and independently splits the induced pairs. This scope allows comparable GPU runs and does not estimate performance on the full graph.
+
+**Main finding.** Structural conditioning worsened mean text CE in 11 of 12 joint architecture–dataset comparisons. Joint training also raised mean text CE relative to the separately trained MLM in all 12 comparisons. Text conditioning for edges varied by architecture and dataset. Expected-utility selection produced small average improvements on some comparisons, while all paired expected-versus-random loss intervals included zero.
+
+### Conditioning versus joint training
+
+Positive gain means the joint arm lowers loss. Conditioning gain switches opposite-modality fusion off in the same checkpoint. Joint-training gain compares the joint checkpoint with a separately trained text-only MLM or structure-only GNN. The GAT and GraphSAGE controls are one-shot, the GAE is an inner-product structural reconstruction baseline, and the TwinMask arm adds free-prediction feedback during training.
+
+| Dataset | Architecture | Structure → text | Text → edge | Joint training text gain | Joint training edge gain |
+|---|---|---|---|---|---|
+| Cora | sage | -0.0047 | -0.0015 | -0.0758 | -0.0005 |
+| Cora | gat | 0.0020 | 0.0018 | -0.0895 | 0.0045 |
+| Cora | twinmask | -0.0107 | -0.0005 | -0.1081 | -0.0050 |
+| CiteSeer | sage | -0.0035 | -0.0032 | -0.0712 | -0.0082 |
+| CiteSeer | gat | -0.0009 | 0.0004 | -0.0925 | 0.0023 |
+| CiteSeer | twinmask | -0.0097 | -0.0046 | -0.1039 | -0.0112 |
+| PubMed | sage | -0.0302 | 0.0005 | -0.1171 | -0.0114 |
+| PubMed | gat | -0.0321 | 0.0004 | -0.1680 | -0.0191 |
+| PubMed | twinmask | -0.0206 | -0.0000 | -0.1728 | -0.0095 |
+| Amazon Computers | sage | -0.0090 | 0.0003 | -0.0581 | 0.0011 |
+| Amazon Computers | gat | -0.0028 | 0.0006 | -0.0642 | 0.0040 |
+| Amazon Computers | twinmask | -0.0097 | 0.0012 | -0.0719 | 0.0039 |
+
+
+| Dataset | Text-only MLM CE | Structure-only GNN BCE | Text-only link BCE | GAE BCE |
+|---|---|---|---|---|
+| Cora | 5.3886 | 0.6163 | 0.6884 | 0.6603 |
+| CiteSeer | 5.8405 | 0.6163 | 0.6931 | 0.6495 |
+| PubMed | 4.9665 | 0.3814 | 0.6905 | 0.5839 |
+| Amazon Computers | 5.6514 | 0.4880 | 0.6902 | 0.5937 |
+
+### Fixed-target timestep analysis
+
+One held-out audit set stays masked at every timestep. Static corruption redraws the known context for each step. The free-running and teacher-forced arms reveal the same scheduled positions. Only teacher forcing inserts gold feedback, for diagnostic analysis. All three arms follow identical actual remaining-mask clocks. The four-step table gives signed text CE and edge BCE conditioning gains in chronological order.
+
+| Dataset | Mode | Structure → text by step | Text → edge by step |
+|---|---|---|---|
+| Cora | static | -0.0124 / -0.0138 / -0.0156 / -0.0183 | -0.0048 / -0.0045 / -0.0043 / -0.0037 |
+| Cora | free | -0.0124 / -0.0084 / -0.0051 / -0.0037 | -0.0048 / -0.0044 / -0.0042 / -0.0039 |
+| Cora | teacher | -0.0124 / -0.0134 / -0.0154 / -0.0182 | -0.0048 / -0.0044 / -0.0042 / -0.0040 |
+| CiteSeer | static | -0.0037 / -0.0066 / -0.0086 / -0.0108 | 0.0011 / 0.0013 / 0.0014 / 0.0021 |
+| CiteSeer | free | -0.0037 / -0.0029 / -0.0020 / -0.0017 | 0.0011 / 0.0014 / 0.0015 / 0.0017 |
+| CiteSeer | teacher | -0.0037 / -0.0064 / -0.0080 / -0.0109 | 0.0011 / 0.0011 / 0.0013 / 0.0017 |
+| PubMed | static | -0.0259 / -0.0284 / -0.0307 / -0.0342 | -0.0003 / -0.0005 / -0.0006 / -0.0007 |
+| PubMed | free | -0.0259 / -0.0217 / -0.0172 / -0.0129 | -0.0003 / -0.0005 / -0.0005 / -0.0006 |
+| PubMed | teacher | -0.0259 / -0.0280 / -0.0305 / -0.0340 | -0.0003 / -0.0005 / -0.0006 / -0.0006 |
+| Amazon Computers | static | -0.0142 / -0.0151 / -0.0163 / -0.0167 | 0.0002 / 0.0002 / -0.0001 / 0.0000 |
+| Amazon Computers | free | -0.0142 / -0.0115 / -0.0091 / -0.0071 | 0.0002 / 0.0002 / 0.0002 / -0.0000 |
+| Amazon Computers | teacher | -0.0142 / -0.0150 / -0.0157 / -0.0167 | 0.0002 / 0.0002 / 0.0002 / 0.0003 |
+
+For the 1, 2, 4, and 8 step checks, the table reports final-step free-running conditional utility on the same audit targets.
+
+| Dataset | Task | 1 step | 2 steps | 4 steps | 8 steps |
+|---|---|---|---|---|---|
+| Cora | text | -0.0124 | -0.0048 | -0.0037 | -0.0014 |
+| Cora | edge | -0.0048 | -0.0040 | -0.0039 | -0.0035 |
+| CiteSeer | text | -0.0037 | -0.0019 | -0.0017 | -0.0017 |
+| CiteSeer | edge | 0.0011 | 0.0019 | 0.0017 | 0.0018 |
+| PubMed | text | -0.0259 | -0.0178 | -0.0129 | -0.0103 |
+| PubMed | edge | -0.0003 | -0.0006 | -0.0006 | -0.0006 |
+| Amazon Computers | text | -0.0142 | -0.0090 | -0.0071 | -0.0065 |
+| Amazon Computers | edge | 0.0002 | 0.0002 | -0.0000 | 0.0000 |
+
+### Expected utility, mixtures, and distillation
+
+A standalone MLM supplies text targets. Edge teachers include a text-only link MLP, a structure-only GNN, a graph autoencoder, and two ensembles. Teacher temperatures and the teacher family are chosen on development loss. The student backbone's full prediction is never its own teacher. Expected gain is the teacher-weighted log-probability difference between a subset and Full. Hard selection uses at most two groups. The three soft mixture controls share the exact candidate pool, including Full, and stacking fits nonnegative mixture weights on development only.
+
+The paired interval uses two independent split means, with three model seeds averaged within each split. Its width reflects the small split count.
+
+| Dataset | Task | Full | Teacher | Expected ≤2 | Matched random | Expected − random [95% CI] | Uniform | Expected mixture | Stacking |
+|---|---|---|---|---|---|---|---|---|---|
+| Cora | text | 5.4967 | 5.3886 | 5.4824 | 5.4834 | -0.0010 [-0.0037, +0.0017] | 5.4855 | 5.4853 | 5.4857 |
+| Cora | edge | 0.6244 | 0.6253 | 0.6229 | 0.6238 | -0.0008 [-0.0027, +0.0010] | 0.6240 | 0.6240 | 0.6231 |
+| CiteSeer | text | 5.9444 | 5.8405 | 5.9348 | 5.9345 | +0.0002 [-0.0043, +0.0048] | 5.9338 | 5.9337 | 5.9325 |
+| CiteSeer | edge | 0.6245 | 0.6181 | 0.6198 | 0.6200 | -0.0002 [-0.0006, +0.0002] | 0.6211 | 0.6211 | 0.6199 |
+| PubMed | text | 5.1394 | 4.9665 | 5.1079 | 5.1113 | -0.0034 [-0.0173, +0.0106] | 5.1191 | 5.1175 | 5.1156 |
+| PubMed | edge | 0.3999 | 0.3883 | 0.3988 | 0.3995 | -0.0007 [-0.0033, +0.0018] | 0.3998 | 0.3998 | 0.3994 |
+| Amazon Computers | text | 5.7233 | 5.6514 | 5.7140 | 5.7146 | -0.0005 [-0.0036, +0.0025] | 5.7143 | 5.7142 | 5.7130 |
+| Amazon Computers | edge | 0.4842 | 0.4876 | 0.4847 | 0.4845 | +0.0002 [-0.0049, +0.0053] | 0.4846 | 0.4846 | 0.4839 |
+
+
+| Dataset | Metric | Full | Teacher | Expected ≤2 | Expected mixture | Stacking |
+|---|---|---|---|---|---|---|
+| Cora | accuracy | 0.0895 | 0.0992 | 0.0917 | 0.0905 | 0.0913 |
+| Cora | auc | 0.6926 | 0.6922 | 0.6925 | 0.6910 | 0.6907 |
+| Cora | ap | 0.7405 | 0.7397 | 0.7401 | 0.7394 | 0.7394 |
+| CiteSeer | accuracy | 0.0398 | 0.0576 | 0.0419 | 0.0418 | 0.0426 |
+| CiteSeer | auc | 0.7070 | 0.7095 | 0.7083 | 0.7078 | 0.7082 |
+| CiteSeer | ap | 0.7357 | 0.7385 | 0.7363 | 0.7367 | 0.7376 |
+| PubMed | accuracy | 0.1839 | 0.1905 | 0.1814 | 0.1815 | 0.1813 |
+| PubMed | auc | 0.8946 | 0.9016 | 0.8947 | 0.8944 | 0.8945 |
+| PubMed | ap | 0.8799 | 0.8896 | 0.8801 | 0.8797 | 0.8799 |
+| Amazon Computers | accuracy | 0.0551 | 0.0673 | 0.0586 | 0.0591 | 0.0604 |
+| Amazon Computers | auc | 0.8474 | 0.8450 | 0.8456 | 0.8474 | 0.8498 |
+| Amazon Computers | ap | 0.8518 | 0.8459 | 0.8506 | 0.8519 | 0.8526 |
+
+The distillation pilot uses one model seed per split. Direct and LOO controls use only fitting outcomes. The distilled scorer learns from independent-teacher expected utility and decodes only the selected subset at inference, without teacher calls or prediction probes. All four hard controls use exact K=2, capped by availability. Timing compares synchronization-warmed full selector pipelines. The measured baseline is expected utility with teacher queries, while ordinary full-message inference is a separate baseline.
+
+| Dataset | Task | Expected exact | Direct | LOO | Distilled | Agreement | Expected / distilled ms |
+|---|---|---|---|---|---|---|---|
+| Cora | text | 5.4934 | 5.4924 | 5.4917 | 5.4940 | 0.7473 | 6.1215 / 2.7457 |
+| Cora | edge | 0.6264 | 0.6265 | 0.6267 | 0.6267 | 0.5074 | 10.3066 / 2.8951 |
+| CiteSeer | text | 5.9308 | 5.9308 | 5.9301 | 5.9308 | 0.9031 | 4.5932 / 2.7948 |
+| CiteSeer | edge | 0.6258 | 0.6272 | 0.6272 | 0.6266 | 0.6984 | 10.1592 / 3.7226 |
+| PubMed | text | 5.1362 | 5.1341 | 5.1347 | 5.1368 | 0.8500 | 9.8753 / 5.2179 |
+| PubMed | edge | 0.3948 | 0.3960 | 0.3953 | 0.3949 | 0.6988 | 21.6396 / 6.4402 |
+| Amazon Computers | text | 5.7144 | 5.7150 | 5.7152 | 5.7151 | 0.9355 | 5.2318 / 3.1417 |
+| Amazon Computers | edge | 0.4894 | 0.4894 | 0.4898 | 0.4895 | 0.7150 | 11.6436 / 3.7497 |
+
+### Mechanisms and sensitivity checks
+
+Each synthetic setting uses three independently generated graphs, and each sweep changes one factor with the others fixed at homophily 0.7, text noise 0.1, edge noise 0, and 128 tokens. Edge noise adds false edges only to test context. Vocabulary varies the data-generating alphabet and decoder size. The full vocabulary run limits fitting and scoring query counts for memory. Positive utility indicates improved loss with the opposite modality; harmful fraction uses per-target utility below −0.001.
+
+| Factor | Level | Text utility | Edge utility | Text harmful | Edge harmful |
+|---|---|---|---|---|---|
+| homophily | 0.1 | 0.0231 | 0.0002 | 0.4653 | 0.4583 |
+| homophily | 0.3 | 0.0105 | 0.0008 | 0.5035 | 0.4757 |
+| homophily | 0.5 | -0.0513 | 0.0003 | 0.5833 | 0.4444 |
+| homophily | 0.7 | -0.0275 | 0.0001 | 0.5104 | 0.4792 |
+| homophily | 0.9 | -0.0326 | 0.0001 | 0.5556 | 0.4792 |
+| text_noise | 0.0 | -0.0112 | -0.0004 | 0.4792 | 0.4722 |
+| text_noise | 0.1 | -0.0275 | 0.0001 | 0.5104 | 0.4792 |
+| text_noise | 0.25 | 0.0331 | -0.0000 | 0.4896 | 0.5069 |
+| text_noise | 0.5 | 0.0437 | 0.0009 | 0.5000 | 0.4722 |
+| edge_noise | 0.0 | -0.0275 | 0.0001 | 0.5104 | 0.4792 |
+| edge_noise | 0.1 | -0.0281 | 0.0002 | 0.5174 | 0.4653 |
+| edge_noise | 0.25 | -0.0290 | 0.0002 | 0.5278 | 0.4826 |
+| edge_noise | 0.5 | -0.0293 | 0.0004 | 0.5278 | 0.4583 |
+| vocabulary | 32 | -0.0222 | -0.0001 | 0.5660 | 0.4896 |
+| vocabulary | 128 | -0.0275 | 0.0001 | 0.5104 | 0.4792 |
+| vocabulary | 512 | 0.0329 | 0.0007 | 0.4861 | 0.4618 |
+| vocabulary | 1024 | -0.0237 | 0.0017 | 0.5243 | 0.4271 |
+| vocabulary | full | -0.0153 | 0.0004 | 0.5174 | 0.4479 |
+
+Real-data missingness sweeps change either text or edge missingness through 0.1, 0.3, 0.5, 0.7, and 0.9 with the other fixed at 0.5. Degree bins stratify targets by observed degree at each masked case. Ties can produce empty bins. The table lists direction-matched utilities for the two missingness sweeps and the low, medium, and high degree bins.
+
+| Dataset | Text gain over text-mask sweep | Edge gain over edge-mask sweep | Text degree-bin gain | Edge degree-bin gain |
+|---|---|---|---|---|
+| Cora | -0.0153 / -0.0158 / -0.0132 / -0.0197 / -0.0042 | 0.0003 / 0.0002 / -0.0019 / -0.0009 / -0.0017 | -0.0086 / -0.0149 / -0.0071 | 0.0009 / 0.0027 / -0.0036 |
+| CiteSeer | -0.0238 / -0.0193 / 0.0001 / 0.0048 / -0.0092 | -0.0056 / -0.0036 / -0.0025 / -0.0046 / -0.0058 | -0.0105 / -0.0049 / -0.0082 | -0.0047 / -0.0083 / -0.0029 |
+| PubMed | -0.0541 / -0.0367 / -0.0259 / -0.0150 / -0.0212 | -0.0014 / -0.0008 / -0.0003 / -0.0002 / 0.0004 | -0.0153 / -0.0368 / -0.0288 | 0.0008 / -0.0009 / 0.0001 |
+| Amazon Computers | -0.0059 / -0.0061 / -0.0098 / -0.0099 / -0.0043 | -0.0015 / -0.0016 / 0.0003 / 0.0007 / -0.0001 | -0.0056 / -0.0268 / -0.0047 | 0.0004 / 0.0014 / 0.0011 |
+
+Full V5 runs. [Cora](results/research_twinmask_v5/cora.json) [CiteSeer](results/research_twinmask_v5/citeseer.json) [PubMed](results/research_twinmask_v5/pubmed.json) [Amazon Computers](results/research_twinmask_v5/computer.json)
+
+Selector and timing controls. [Cora](results/research_twinmask_v5/cora_selectors.json) [CiteSeer](results/research_twinmask_v5/citeseer_selectors.json) [PubMed](results/research_twinmask_v5/pubmed_selectors.json) [Amazon Computers](results/research_twinmask_v5/computer_selectors.json)
+
+Independent synthetic graphs. [mechanisms](results/research_twinmask_v5/mechanisms.json)
+
+### Reproduction
+
+Raw references default to the neighboring `DIVERGE/datasets` directory and can be supplied through `TWINMASK_RAW_GRAPHS`. The audit requires the three local V2 checkpoints per citation dataset. The V5 experiments initialize all models independently.
+
+```powershell
+python -m scripts.research_twinmask_v41
+python -m scripts.research_twinmask_v5
+python -m scripts.research_twinmask_v5 --model-seeds 71 --selector-controls
+python -m scripts.research_twinmask_v5 --mechanism-study
+python -m unittest scripts.test_research_pilots scripts.test_research_twinmask_v3 scripts.test_research_twinmask_v4 scripts.test_research_twinmask_v5
+python -m scripts.report_research_v5
+```
+
 <!-- research-v4-results -->
 
 ## TwinMask V4 · Target-conditioned counterfactual set utility

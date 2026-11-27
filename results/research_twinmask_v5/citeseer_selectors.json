@@ -1,0 +1,1752 @@
+[
+  {
+    "dataset": "citeseer",
+    "split_seed": 2101,
+    "model_seed": 71,
+    "epochs": 32,
+    "vocabulary": 1024,
+    "audit": {
+      "reference_edges": 4225,
+      "warm_nodes": 3027,
+      "split_hash": "00cb9e13cb530baa06479dbd14da5f845adbdc273cdbfb4f288a5f3298e7913b",
+      "base_edges": 2238,
+      "positive_counts": [
+        319,
+        319,
+        319
+      ],
+      "omitted_positive_edges": 14,
+      "legacy_false_negatives": {
+        "val_neg": 0,
+        "test_neg": 0,
+        "cold_neg": 0
+      },
+      "legacy_duplicates": {
+        "val_neg": 0,
+        "test_neg": 0,
+        "cold_neg": 1
+      },
+      "legacy_validation_test_overlap": 0
+    },
+    "seconds": 4.254610000003595,
+    "expected": {
+      "text": {
+        "temperatures": {
+          "mlm": 1.0
+        },
+        "teacher": [
+          "mlm"
+        ],
+        "cases": [
+          {
+            "full": {
+              "loss": 5.793787956237793,
+              "accuracy": 0.04374999925494194,
+              "perplexity": 328.2540844581783
+            },
+            "without": {
+              "loss": 5.78689432144165,
+              "accuracy": 0.07187499850988388,
+              "perplexity": 325.9990024659575
+            },
+            "teacher": {
+              "loss": 5.761760711669922,
+              "accuracy": 0.05937499925494194,
+              "perplexity": 317.9075800194988
+            },
+            "uniform": {
+              "loss": 5.780768871307373,
+              "accuracy": 0.05312500149011612,
+              "perplexity": 324.0082152910252
+            },
+            "utility_mixture": {
+              "loss": 5.780948638916016,
+              "accuracy": 0.05312500149011612,
+              "perplexity": 324.06646670877075
+            },
+            "stacking": {
+              "loss": 5.777137279510498,
+              "accuracy": 0.05625000223517418,
+              "perplexity": 322.83368371472784
+            },
+            "expected_at_most": {
+              "loss": 5.785947322845459,
+              "accuracy": 0.046875,
+              "perplexity": 325.69042800111595
+            },
+            "expected_exact": {
+              "loss": 5.789651393890381,
+              "accuracy": 0.04374999925494194,
+              "perplexity": 326.8990455057681
+            },
+            "random_matched": {
+              "loss": 5.7872843742370605,
+              "accuracy": 0.046875,
+              "perplexity": 326.1261840903319
+            },
+            "oracle_matched_analysis_only": {
+              "loss": 5.7713446617126465,
+              "accuracy": 0.046875,
+              "perplexity": 320.9690373783976
+            },
+            "teacher_mlm": {
+              "loss": 5.761760711669922,
+              "accuracy": 0.05937499925494194,
+              "perplexity": 317.9075800194988
+            },
+            "messages": {
+              "expected_at_most": 1.390625,
+              "expected_exact": 1.6906250715255737,
+              "random_matched": 1.390625,
+              "oracle_matched_analysis_only": 1.390625
+            },
+            "degree_conditioning_gain": [
+              -0.013248110190033913,
+              null,
+              0.006117137614637613
+            ]
+          },
+          {
+            "full": {
+              "loss": 5.929410934448242,
+              "accuracy": 0.05000000074505806,
+              "perplexity": 375.9329994081683
+            },
+            "without": {
+              "loss": 5.939712047576904,
+              "accuracy": 0.05000000074505806,
+              "perplexity": 379.8255421045068
+            },
+            "teacher": {
+              "loss": 5.909251689910889,
+              "accuracy": 0.05937499925494194,
+              "perplexity": 368.430352079424
+            },
+            "uniform": {
+              "loss": 5.926064968109131,
+              "accuracy": 0.05625000223517418,
+              "perplexity": 374.67724227849834
+            },
+            "utility_mixture": {
+              "loss": 5.926018714904785,
+              "accuracy": 0.05625000223517418,
+              "perplexity": 374.6599126562259
+            },
+            "stacking": {
+              "loss": 5.925902843475342,
+              "accuracy": 0.05312500149011612,
+              "perplexity": 374.6165027916214
+            },
+            "expected_at_most": {
+              "loss": 5.928188800811768,
+              "accuracy": 0.05312500149011612,
+              "perplexity": 375.4738396789561
+            },
+            "expected_exact": {
+              "loss": 5.930232524871826,
+              "accuracy": 0.05312500149011612,
+              "perplexity": 376.2419892745679
+            },
+            "random_matched": {
+              "loss": 5.929297924041748,
+              "accuracy": 0.05312500149011612,
+              "perplexity": 375.89051746758656
+            },
+            "oracle_matched_analysis_only": {
+              "loss": 5.912140846252441,
+              "accuracy": 0.05625000223517418,
+              "perplexity": 369.4963441349022
+            },
+            "teacher_mlm": {
+              "loss": 5.909251689910889,
+              "accuracy": 0.05937499925494194,
+              "perplexity": 368.430352079424
+            },
+            "messages": {
+              "expected_at_most": 1.399999976158142,
+              "expected_exact": 1.646875023841858,
+              "random_matched": 1.399999976158142,
+              "oracle_matched_analysis_only": 1.399999976158142
+            },
+            "degree_conditioning_gain": [
+              0.011026388965547085,
+              0.02093498595058918,
+              -0.0014482573606073856
+            ]
+          },
+          {
+            "full": {
+              "loss": 5.965890884399414,
+              "accuracy": 0.04374999925494194,
+              "perplexity": 389.90022942146277
+            },
+            "without": {
+              "loss": 5.985427379608154,
+              "accuracy": 0.03125,
+              "perplexity": 397.59240783119947
+            },
+            "teacher": {
+              "loss": 5.940313816070557,
+              "accuracy": 0.04374999925494194,
+              "perplexity": 380.05417793484975
+            },
+            "uniform": {
+              "loss": 5.967451572418213,
+              "accuracy": 0.04062500223517418,
+              "perplexity": 390.5092171343496
+            },
+            "utility_mixture": {
+              "loss": 5.967463493347168,
+              "accuracy": 0.04062500223517418,
+              "perplexity": 390.51387239473087
+            },
+            "stacking": {
+              "loss": 5.969569683074951,
+              "accuracy": 0.04062500223517418,
+              "perplexity": 391.3372354763856
+            },
+            "expected_at_most": {
+              "loss": 5.968992710113525,
+              "accuracy": 0.046875,
+              "perplexity": 391.1115095978429
+            },
+            "expected_exact": {
+              "loss": 5.965035438537598,
+              "accuracy": 0.046875,
+              "perplexity": 389.56683350509263
+            },
+            "random_matched": {
+              "loss": 5.968425750732422,
+              "accuracy": 0.046875,
+              "perplexity": 390.88982810655756
+            },
+            "oracle_matched_analysis_only": {
+              "loss": 5.953192710876465,
+              "accuracy": 0.046875,
+              "perplexity": 384.9805104799592
+            },
+            "teacher_mlm": {
+              "loss": 5.940313816070557,
+              "accuracy": 0.04374999925494194,
+              "perplexity": 380.05417793484975
+            },
+            "messages": {
+              "expected_at_most": 1.5750000476837158,
+              "expected_exact": 1.7531250715255737,
+              "random_matched": 1.5750000476837158,
+              "oracle_matched_analysis_only": 1.5750000476837158
+            },
+            "degree_conditioning_gain": [
+              0.01687721721827984,
+              0.026504086330533028,
+              0.022689931094646454
+            ]
+          },
+          {
+            "full": {
+              "loss": 5.9278740882873535,
+              "accuracy": 0.04374999925494194,
+              "perplexity": 375.35569195127925
+            },
+            "without": {
+              "loss": 5.959836483001709,
+              "accuracy": 0.03750000149011612,
+              "perplexity": 387.54674857540107
+            },
+            "teacher": {
+              "loss": 5.898092746734619,
+              "accuracy": 0.03125,
+              "perplexity": 364.34191247374906
+            },
+            "uniform": {
+              "loss": 5.934678554534912,
+              "accuracy": 0.03437500074505806,
+              "perplexity": 377.91849645806457
+            },
+            "utility_mixture": {
+              "loss": 5.934351444244385,
+              "accuracy": 0.03437500074505806,
+              "perplexity": 377.7948956455435
+            },
+            "stacking": {
+              "loss": 5.932431697845459,
+              "accuracy": 0.04062500223517418,
+              "perplexity": 377.07032097743087
+            },
+            "expected_at_most": {
+              "loss": 5.934163570404053,
+              "accuracy": 0.03750000149011612,
+              "perplexity": 377.72392453465704
+            },
+            "expected_exact": {
+              "loss": 5.931106090545654,
+              "accuracy": 0.03750000149011612,
+              "perplexity": 376.5708049615892
+            },
+            "random_matched": {
+              "loss": 5.930930137634277,
+              "accuracy": 0.03750000149011612,
+              "perplexity": 376.504552060983
+            },
+            "oracle_matched_analysis_only": {
+              "loss": 5.918491840362549,
+              "accuracy": 0.03750000149011612,
+              "perplexity": 371.8504808816541
+            },
+            "teacher_mlm": {
+              "loss": 5.898092746734619,
+              "accuracy": 0.03125,
+              "perplexity": 364.34191247374906
+            },
+            "messages": {
+              "expected_at_most": 1.431249976158142,
+              "expected_exact": 1.6843750476837158,
+              "random_matched": 1.431249976158142,
+              "oracle_matched_analysis_only": 1.431249976158142
+            },
+            "degree_conditioning_gain": [
+              0.025861075147986412,
+              null,
+              0.04967127740383148
+            ]
+          }
+        ],
+        "selector_controls": [
+          {
+            "distilled": {
+              "loss": 5.792245388031006,
+              "accuracy": 0.04374999925494194,
+              "perplexity": 327.74812048604286
+            },
+            "direct": {
+              "loss": 5.791833877563477,
+              "accuracy": 0.04374999925494194,
+              "perplexity": 327.6132764505187
+            },
+            "loo": {
+              "loss": 5.790865421295166,
+              "accuracy": 0.046875,
+              "perplexity": 327.29615090525573
+            },
+            "expected": {
+              "loss": 5.789651393890381,
+              "accuracy": 0.04374999925494194,
+              "perplexity": 326.8990455057681
+            },
+            "distilled_expected_agreement": 0.8843750357627869
+          },
+          {
+            "distilled": {
+              "loss": 5.928294658660889,
+              "accuracy": 0.05312500149011612,
+              "perplexity": 375.5135886358582
+            },
+            "direct": {
+              "loss": 5.928603649139404,
+              "accuracy": 0.05312500149011612,
+              "perplexity": 375.629636687248
+            },
+            "loo": {
+              "loss": 5.927885055541992,
+              "accuracy": 0.05625000223517418,
+              "perplexity": 375.3598085953071
+            },
+            "expected": {
+              "loss": 5.930232524871826,
+              "accuracy": 0.05312500149011612,
+              "perplexity": 376.2419892745679
+            },
+            "distilled_expected_agreement": 0.8968750238418579,
+            "timing_ms": {
+              "distilled": 2.7792000328190625,
+              "expected": 4.536299966275692
+            }
+          },
+          {
+            "distilled": {
+              "loss": 5.964951992034912,
+              "accuracy": 0.046875,
+              "perplexity": 389.5343268715757
+            },
+            "direct": {
+              "loss": 5.964995861053467,
+              "accuracy": 0.04374999925494194,
+              "perplexity": 389.551415735022
+            },
+            "loo": {
+              "loss": 5.964749336242676,
+              "accuracy": 0.04374999925494194,
+              "perplexity": 389.4553934823847
+            },
+            "expected": {
+              "loss": 5.965035438537598,
+              "accuracy": 0.046875,
+              "perplexity": 389.56683350509263
+            },
+            "distilled_expected_agreement": 0.9375
+          },
+          {
+            "distilled": {
+              "loss": 5.930159091949463,
+              "accuracy": 0.04062500223517418,
+              "perplexity": 376.2143617401774
+            },
+            "direct": {
+              "loss": 5.92808198928833,
+              "accuracy": 0.04062500223517418,
+              "perplexity": 375.4337368878873
+            },
+            "loo": {
+              "loss": 5.931023597717285,
+              "accuracy": 0.03437500074505806,
+              "perplexity": 376.5397418520662
+            },
+            "expected": {
+              "loss": 5.931106090545654,
+              "accuracy": 0.03750000149011612,
+              "perplexity": 376.5708049615892
+            },
+            "distilled_expected_agreement": 0.934374988079071
+          }
+        ]
+      },
+      "edge": {
+        "temperatures": {
+          "text_link": 1.5,
+          "structure": 0.75,
+          "gae": 0.75
+        },
+        "teacher": [
+          "structure"
+        ],
+        "cases": [
+          {
+            "full": {
+              "loss": 0.6746275424957275,
+              "auc": 0.6613681855645828,
+              "ap": 0.7214862201867771
+            },
+            "without": {
+              "loss": 0.6516821980476379,
+              "auc": 0.6629381058911259,
+              "ap": 0.7159918709343794
+            },
+            "teacher": {
+              "loss": 0.6513325572013855,
+              "auc": 0.6787550531810511,
+              "ap": 0.7362865086417609
+            },
+            "uniform": {
+              "loss": 0.6600400805473328,
+              "auc": 0.6632913379645983,
+              "ap": 0.7235480716365383
+            },
+            "utility_mixture": {
+              "loss": 0.6599610447883606,
+              "auc": 0.6634875780054162,
+              "ap": 0.7237977966965463
+            },
+            "stacking": {
+              "loss": 0.6581056714057922,
+              "auc": 0.6599945052788571,
+              "ap": 0.7216254947864249
+            },
+            "expected_at_most": {
+              "loss": 0.6572299003601074,
+              "auc": 0.6651752423564503,
+              "ap": 0.7174455867090748
+            },
+            "expected_exact": {
+              "loss": 0.66133713722229,
+              "auc": 0.663409081989089,
+              "ap": 0.7230485977458165
+            },
+            "random_matched": {
+              "loss": 0.6564599275588989,
+              "auc": 0.666823658699321,
+              "ap": 0.7193406700668273
+            },
+            "oracle_matched_analysis_only": {
+              "loss": 0.6455157399177551,
+              "auc": 0.6956316966913928,
+              "ap": 0.7330188362334461
+            },
+            "teacher_text_link": {
+              "loss": 0.6945350766181946,
+              "auc": 0.5530044350249225,
+              "ap": 0.5637405333817682
+            },
+            "teacher_structure": {
+              "loss": 0.6513325572013855,
+              "auc": 0.6787550531810511,
+              "ap": 0.7362865086417609
+            },
+            "teacher_gae": {
+              "loss": 0.6443568468093872,
+              "auc": 0.6351897641194709,
+              "ap": 0.7060690222431648
+            },
+            "teacher_text_link_structure_gae": {
+              "loss": 0.6371816992759705,
+              "auc": 0.6813061737116841,
+              "ap": 0.74131240658255
+            },
+            "teacher_text_link_structure": {
+              "loss": 0.6457486152648926,
+              "auc": 0.6829938380627183,
+              "ap": 0.7402492664768721
+            },
+            "messages": {
+              "expected_at_most": 0.9750000238418579,
+              "expected_exact": 2.0,
+              "random_matched": 0.9750000238418579,
+              "oracle_matched_analysis_only": 0.9750000238418579
+            },
+            "degree_conditioning_gain": [
+              -0.018192391842603683,
+              -0.040797241032123566,
+              -0.018679309636354446
+            ]
+          },
+          {
+            "full": {
+              "loss": 0.6564087271690369,
+              "auc": 0.6716280295047419,
+              "ap": 0.6704017630884485
+            },
+            "without": {
+              "loss": 0.642632782459259,
+              "auc": 0.6757112750263435,
+              "ap": 0.6631696213188605
+            },
+            "teacher": {
+              "loss": 0.6583887338638306,
+              "auc": 0.6745697225149279,
+              "ap": 0.6749983762800587
+            },
+            "uniform": {
+              "loss": 0.6473202109336853,
+              "auc": 0.6747892518440464,
+              "ap": 0.6722149866954268
+            },
+            "utility_mixture": {
+              "loss": 0.6472952365875244,
+              "auc": 0.6747892518440464,
+              "ap": 0.6721904808148478
+            },
+            "stacking": {
+              "loss": 0.6452376246452332,
+              "auc": 0.6731647348085704,
+              "ap": 0.6696077621373463
+            },
+            "expected_at_most": {
+              "loss": 0.6478525400161743,
+              "auc": 0.668642430628732,
+              "ap": 0.6592095629211172
+            },
+            "expected_exact": {
+              "loss": 0.6488468647003174,
+              "auc": 0.6718475588338602,
+              "ap": 0.6701204163311762
+            },
+            "random_matched": {
+              "loss": 0.6477348208427429,
+              "auc": 0.6696961714085001,
+              "ap": 0.6613377121984793
+            },
+            "oracle_matched_analysis_only": {
+              "loss": 0.6355401873588562,
+              "auc": 0.6980593607305936,
+              "ap": 0.6757145192340497
+            },
+            "teacher_text_link": {
+              "loss": 0.6909434795379639,
+              "auc": 0.543905865823674,
+              "ap": 0.5041985252253511
+            },
+            "teacher_structure": {
+              "loss": 0.6583887338638306,
+              "auc": 0.6745697225149279,
+              "ap": 0.6749983762800587
+            },
+            "teacher_gae": {
+              "loss": 0.6692985892295837,
+              "auc": 0.6158456269757641,
+              "ap": 0.63892940409344
+            },
+            "teacher_text_link_structure_gae": {
+              "loss": 0.6411900520324707,
+              "auc": 0.6737794169301019,
+              "ap": 0.6830313947170705
+            },
+            "teacher_text_link_structure": {
+              "loss": 0.6432239413261414,
+              "auc": 0.6765454864769933,
+              "ap": 0.6902224530512218
+            },
+            "messages": {
+              "expected_at_most": 1.0463576316833496,
+              "expected_exact": 2.0,
+              "random_matched": 1.0463576316833496,
+              "oracle_matched_analysis_only": 1.0463576316833496
+            },
+            "degree_conditioning_gain": [
+              -0.00847331341356039,
+              -0.025783482939004898,
+              -0.006423123646527529
+            ]
+          },
+          {
+            "full": {
+              "loss": 0.6378996968269348,
+              "auc": 0.6894399460188934,
+              "ap": 0.7010737819405064
+            },
+            "without": {
+              "loss": 0.6305427551269531,
+              "auc": 0.69222334682861,
+              "ap": 0.7020443574509112
+            },
+            "teacher": {
+              "loss": 0.6539551019668579,
+              "auc": 0.6885121457489879,
+              "ap": 0.703908350286901
+            },
+            "uniform": {
+              "loss": 0.6324961185455322,
+              "auc": 0.6887651821862348,
+              "ap": 0.7023233168180061
+            },
+            "utility_mixture": {
+              "loss": 0.6324449777603149,
+              "auc": 0.6889338731443995,
+              "ap": 0.7024227097863751
+            },
+            "stacking": {
+              "loss": 0.6311594843864441,
+              "auc": 0.6926450742240216,
+              "ap": 0.7058307701035225
+            },
+            "expected_at_most": {
+              "loss": 0.6297360062599182,
+              "auc": 0.7000674763832658,
+              "ap": 0.7091948317476269
+            },
+            "expected_exact": {
+              "loss": 0.631067156791687,
+              "auc": 0.6934885290148448,
+              "ap": 0.7058774925667375
+            },
+            "random_matched": {
+              "loss": 0.6317493915557861,
+              "auc": 0.6938259109311742,
+              "ap": 0.7036016931509972
+            },
+            "oracle_matched_analysis_only": {
+              "loss": 0.6184183955192566,
+              "auc": 0.7191295546558704,
+              "ap": 0.7185692187686896
+            },
+            "teacher_text_link": {
+              "loss": 0.6966110467910767,
+              "auc": 0.5192307692307692,
+              "ap": 0.5203396498460381
+            },
+            "teacher_structure": {
+              "loss": 0.6539551019668579,
+              "auc": 0.6885121457489879,
+              "ap": 0.703908350286901
+            },
+            "teacher_gae": {
+              "loss": 0.6743208169937134,
+              "auc": 0.6438090418353577,
+              "ap": 0.6743088452560464
+            },
+            "teacher_text_link_structure_gae": {
+              "loss": 0.6352013945579529,
+              "auc": 0.694838056680162,
+              "ap": 0.6993324536599463
+            },
+            "teacher_text_link_structure": {
+              "loss": 0.6364721059799194,
+              "auc": 0.6941632928475033,
+              "ap": 0.6980290481186173
+            },
+            "messages": {
+              "expected_at_most": 1.1103895902633667,
+              "expected_exact": 2.0,
+              "random_matched": 1.1103895902633667,
+              "oracle_matched_analysis_only": 1.1103895902633667
+            },
+            "degree_conditioning_gain": [
+              -0.007107011508196592,
+              -0.025784410536289215,
+              0.004956088028848171
+            ]
+          },
+          {
+            "full": {
+              "loss": 0.653288722038269,
+              "auc": 0.6910632644289009,
+              "ap": 0.7144828038031594
+            },
+            "without": {
+              "loss": 0.6409302353858948,
+              "auc": 0.6916103317572585,
+              "ap": 0.7065164148911192
+            },
+            "teacher": {
+              "loss": 0.6331881880760193,
+              "auc": 0.7015356961431755,
+              "ap": 0.7313712961490452
+            },
+            "uniform": {
+              "loss": 0.6453976631164551,
+              "auc": 0.6897346723457466,
+              "ap": 0.7152239733848738
+            },
+            "utility_mixture": {
+              "loss": 0.6453008055686951,
+              "auc": 0.6902817396741041,
+              "ap": 0.7155041169828319
+            },
+            "stacking": {
+              "loss": 0.6428818702697754,
+              "auc": 0.6909460357156814,
+              "ap": 0.7131822542730104
+            },
+            "expected_at_most": {
+              "loss": 0.6410150527954102,
+              "auc": 0.6963776327615177,
+              "ap": 0.7144401991759388
+            },
+            "expected_exact": {
+              "loss": 0.6450400948524475,
+              "auc": 0.6925286233441444,
+              "ap": 0.7151108413324259
+            },
+            "random_matched": {
+              "loss": 0.6411787271499634,
+              "auc": 0.6964948614747373,
+              "ap": 0.7185662887085041
+            },
+            "oracle_matched_analysis_only": {
+              "loss": 0.6307240724563599,
+              "auc": 0.7276776991911218,
+              "ap": 0.7422536715026533
+            },
+            "teacher_text_link": {
+              "loss": 0.6911289095878601,
+              "auc": 0.5643781016763706,
+              "ap": 0.537381126479796
+            },
+            "teacher_structure": {
+              "loss": 0.6331881880760193,
+              "auc": 0.7015356961431755,
+              "ap": 0.7313712961490452
+            },
+            "teacher_gae": {
+              "loss": 0.6542054414749146,
+              "auc": 0.6595287405728576,
+              "ap": 0.6941648009448854
+            },
+            "teacher_text_link_structure_gae": {
+              "loss": 0.6300771832466125,
+              "auc": 0.709898011019499,
+              "ap": 0.7309876964635257
+            },
+            "teacher_text_link_structure": {
+              "loss": 0.6327686309814453,
+              "auc": 0.7118908991442303,
+              "ap": 0.7360313921847483
+            },
+            "messages": {
+              "expected_at_most": 1.118749976158142,
+              "expected_exact": 2.0,
+              "random_matched": 1.118749976158142,
+              "oracle_matched_analysis_only": 1.118749976158142
+            },
+            "degree_conditioning_gain": [
+              -0.008325470611453056,
+              -0.010023396462202072,
+              -0.0187524501234293
+            ]
+          }
+        ],
+        "selector_controls": [
+          {
+            "distilled": {
+              "loss": 0.6622120141983032,
+              "auc": 0.6602692413360022,
+              "ap": 0.7215011032801137
+            },
+            "direct": {
+              "loss": 0.6645906567573547,
+              "auc": 0.6649397543074689,
+              "ap": 0.7240444294744376
+            },
+            "loo": {
+              "loss": 0.6634235978126526,
+              "auc": 0.6658032104870678,
+              "ap": 0.7249679210035607
+            },
+            "expected": {
+              "loss": 0.6613370776176453,
+              "auc": 0.663409081989089,
+              "ap": 0.7230485977458165
+            },
+            "distilled_expected_agreement": 0.7281250357627869
+          },
+          {
+            "distilled": {
+              "loss": 0.6488564014434814,
+              "auc": 0.6719792764313312,
+              "ap": 0.6704740427968119
+            },
+            "direct": {
+              "loss": 0.6497343182563782,
+              "auc": 0.6747014401123991,
+              "ap": 0.6720704246066206
+            },
+            "loo": {
+              "loss": 0.6493396759033203,
+              "auc": 0.6754039339655779,
+              "ap": 0.6732230046511618
+            },
+            "expected": {
+              "loss": 0.6488468647003174,
+              "auc": 0.6718475588338602,
+              "ap": 0.6701204163311762
+            },
+            "distilled_expected_agreement": 0.7119204998016357,
+            "timing_ms": {
+              "distilled": 4.349599999841303,
+              "expected": 10.157600045204163
+            }
+          },
+          {
+            "distilled": {
+              "loss": 0.6341906189918518,
+              "auc": 0.689608636977058,
+              "ap": 0.7024838452784002
+            },
+            "direct": {
+              "loss": 0.6343968510627747,
+              "auc": 0.6907894736842105,
+              "ap": 0.7027230880206659
+            },
+            "loo": {
+              "loss": 0.6343212127685547,
+              "auc": 0.6912955465587044,
+              "ap": 0.7033808211429171
+            },
+            "expected": {
+              "loss": 0.6310672163963318,
+              "auc": 0.6934885290148448,
+              "ap": 0.7058774925667375
+            },
+            "distilled_expected_agreement": 0.7077922224998474
+          },
+          {
+            "distilled": {
+              "loss": 0.6462394595146179,
+              "auc": 0.6900863584854049,
+              "ap": 0.7139780117902765
+            },
+            "direct": {
+              "loss": 0.6467589735984802,
+              "auc": 0.6957524129576804,
+              "ap": 0.7174925338023611
+            },
+            "loo": {
+              "loss": 0.6472684144973755,
+              "auc": 0.6967293189011763,
+              "ap": 0.7177922062106237
+            },
+            "expected": {
+              "loss": 0.6450400948524475,
+              "auc": 0.6925286233441444,
+              "ap": 0.7151108413324259
+            },
+            "distilled_expected_agreement": 0.706250011920929
+          }
+        ]
+      }
+    }
+  },
+  {
+    "dataset": "citeseer",
+    "split_seed": 2113,
+    "model_seed": 71,
+    "epochs": 32,
+    "vocabulary": 1024,
+    "audit": {
+      "reference_edges": 4225,
+      "warm_nodes": 3027,
+      "split_hash": "98eb714e6ce6c12c1cde0fe18b35e218210260a2084dd807ff245c6922de8a3a",
+      "base_edges": 2238,
+      "positive_counts": [
+        319,
+        319,
+        319
+      ],
+      "omitted_positive_edges": 14,
+      "legacy_false_negatives": {
+        "val_neg": 0,
+        "test_neg": 0,
+        "cold_neg": 0
+      },
+      "legacy_duplicates": {
+        "val_neg": 0,
+        "test_neg": 0,
+        "cold_neg": 1
+      },
+      "legacy_validation_test_overlap": 0
+    },
+    "seconds": 4.228203199978452,
+    "expected": {
+      "text": {
+        "temperatures": {
+          "mlm": 1.0
+        },
+        "teacher": [
+          "mlm"
+        ],
+        "cases": [
+          {
+            "full": {
+              "loss": 5.949880599975586,
+              "accuracy": 0.02812500111758709,
+              "perplexity": 383.7075216384141
+            },
+            "without": {
+              "loss": 5.917135715484619,
+              "accuracy": 0.05000000074505806,
+              "perplexity": 371.3465469695489
+            },
+            "teacher": {
+              "loss": 5.87944221496582,
+              "accuracy": 0.05312500149011612,
+              "perplexity": 357.6097167199357
+            },
+            "uniform": {
+              "loss": 5.925666332244873,
+              "accuracy": 0.03750000149011612,
+              "perplexity": 374.52791225833323
+            },
+            "utility_mixture": {
+              "loss": 5.926351547241211,
+              "accuracy": 0.03750000149011612,
+              "perplexity": 374.78463234454165
+            },
+            "stacking": {
+              "loss": 5.928257942199707,
+              "accuracy": 0.03437500074505806,
+              "perplexity": 375.4998013588694
+            },
+            "expected_at_most": {
+              "loss": 5.935842037200928,
+              "accuracy": 0.02812500111758709,
+              "perplexity": 378.3584539696989
+            },
+            "expected_exact": {
+              "loss": 5.945329666137695,
+              "accuracy": 0.03125,
+              "perplexity": 381.96526155651173
+            },
+            "random_matched": {
+              "loss": 5.932170391082764,
+              "accuracy": 0.03125,
+              "perplexity": 376.9718028248381
+            },
+            "oracle_matched_analysis_only": {
+              "loss": 5.918284893035889,
+              "accuracy": 0.03125,
+              "perplexity": 371.7735353808258
+            },
+            "teacher_mlm": {
+              "loss": 5.87944221496582,
+              "accuracy": 0.05312500149011612,
+              "perplexity": 357.6097167199357
+            },
+            "messages": {
+              "expected_at_most": 1.290624976158142,
+              "expected_exact": 1.7468750476837158,
+              "random_matched": 1.290624976158142,
+              "oracle_matched_analysis_only": 1.290624976158142
+            },
+            "degree_conditioning_gain": [
+              -0.03795291855931282,
+              null,
+              -0.02128833532333374
+            ]
+          },
+          {
+            "full": {
+              "loss": 6.015590190887451,
+              "accuracy": 0.03750000149011612,
+              "perplexity": 409.76760867307246
+            },
+            "without": {
+              "loss": 5.995666027069092,
+              "accuracy": 0.03125,
+              "perplexity": 401.6841274208376
+            },
+            "teacher": {
+              "loss": 5.964273929595947,
+              "accuracy": 0.046875,
+              "perplexity": 389.2702878034403
+            },
+            "uniform": {
+              "loss": 6.000146389007568,
+              "accuracy": 0.03750000149011612,
+              "perplexity": 403.4878553563374
+            },
+            "utility_mixture": {
+              "loss": 5.9999895095825195,
+              "accuracy": 0.03750000149011612,
+              "perplexity": 403.4245613784661
+            },
+            "stacking": {
+              "loss": 6.001414775848389,
+              "accuracy": 0.03125,
+              "perplexity": 403.9999587464465
+            },
+            "expected_at_most": {
+              "loss": 6.006922721862793,
+              "accuracy": 0.03437500074505806,
+              "perplexity": 406.23130814393215
+            },
+            "expected_exact": {
+              "loss": 6.012548923492432,
+              "accuracy": 0.03750000149011612,
+              "perplexity": 408.5232889189197
+            },
+            "random_matched": {
+              "loss": 6.003566741943359,
+              "accuracy": 0.03750000149011612,
+              "perplexity": 404.8702890848563
+            },
+            "oracle_matched_analysis_only": {
+              "loss": 5.989438056945801,
+              "accuracy": 0.03750000149011612,
+              "perplexity": 399.1902247130766
+            },
+            "teacher_mlm": {
+              "loss": 5.964273929595947,
+              "accuracy": 0.046875,
+              "perplexity": 389.2702878034403
+            },
+            "messages": {
+              "expected_at_most": 1.428125023841858,
+              "expected_exact": 1.7781250476837158,
+              "random_matched": 1.428125023841858,
+              "oracle_matched_analysis_only": 1.428125023841858
+            },
+            "degree_conditioning_gain": [
+              -0.01730697602033615,
+              -0.01353603508323431,
+              -0.03149549290537834
+            ]
+          },
+          {
+            "full": {
+              "loss": 5.973934650421143,
+              "accuracy": 0.046875,
+              "perplexity": 393.04914322322406
+            },
+            "without": {
+              "loss": 5.968543529510498,
+              "accuracy": 0.03750000149011612,
+              "perplexity": 390.93586934416146
+            },
+            "teacher": {
+              "loss": 5.934098720550537,
+              "accuracy": 0.05312500149011612,
+              "perplexity": 377.6994299877241
+            },
+            "uniform": {
+              "loss": 5.9662652015686035,
+              "accuracy": 0.03125,
+              "perplexity": 390.04620309012694
+            },
+            "utility_mixture": {
+              "loss": 5.966046333312988,
+              "accuracy": 0.03125,
+              "perplexity": 389.96084369961847
+            },
+            "stacking": {
+              "loss": 5.969193458557129,
+              "accuracy": 0.03125,
+              "perplexity": 391.19003250608216
+            },
+            "expected_at_most": {
+              "loss": 5.968080997467041,
+              "accuracy": 0.04062500223517418,
+              "perplexity": 390.7550907888133
+            },
+            "expected_exact": {
+              "loss": 5.971034049987793,
+              "accuracy": 0.04062500223517418,
+              "perplexity": 391.9107165666674
+            },
+            "random_matched": {
+              "loss": 5.968411445617676,
+              "accuracy": 0.04374999925494194,
+              "perplexity": 390.88423642270834
+            },
+            "oracle_matched_analysis_only": {
+              "loss": 5.9571709632873535,
+              "accuracy": 0.04374999925494194,
+              "perplexity": 386.5151106133172
+            },
+            "teacher_mlm": {
+              "loss": 5.934098720550537,
+              "accuracy": 0.05312500149011612,
+              "perplexity": 377.6994299877241
+            },
+            "messages": {
+              "expected_at_most": 1.475000023841858,
+              "expected_exact": 1.756250023841858,
+              "random_matched": 1.475000023841858,
+              "oracle_matched_analysis_only": 1.475000023841858
+            },
+            "degree_conditioning_gain": [
+              -0.0028605663683265448,
+              null,
+              -0.01042847242206335
+            ]
+          },
+          {
+            "full": {
+              "loss": 5.89914083480835,
+              "accuracy": 0.04374999925494194,
+              "perplexity": 364.72397506962375
+            },
+            "without": {
+              "loss": 5.896324157714844,
+              "accuracy": 0.05312500149011612,
+              "perplexity": 363.6981108459616
+            },
+            "teacher": {
+              "loss": 5.856812477111816,
+              "accuracy": 0.05312500149011612,
+              "perplexity": 349.60798262345503
+            },
+            "uniform": {
+              "loss": 5.8903069496154785,
+              "accuracy": 0.04062500223517418,
+              "perplexity": 361.51623461255167
+            },
+            "utility_mixture": {
+              "loss": 5.890291690826416,
+              "accuracy": 0.04062500223517418,
+              "perplexity": 361.51071835467087
+            },
+            "stacking": {
+              "loss": 5.889939308166504,
+              "accuracy": 0.04062500223517418,
+              "perplexity": 361.3833506885468
+            },
+            "expected_at_most": {
+              "loss": 5.8924078941345215,
+              "accuracy": 0.04062500223517418,
+              "perplexity": 362.27655858377557
+            },
+            "expected_exact": {
+              "loss": 5.9016900062561035,
+              "accuracy": 0.04374999925494194,
+              "perplexity": 365.6549050591372
+            },
+            "random_matched": {
+              "loss": 5.897695541381836,
+              "accuracy": 0.04374999925494194,
+              "perplexity": 364.1972226535591
+            },
+            "oracle_matched_analysis_only": {
+              "loss": 5.881087779998779,
+              "accuracy": 0.04062500223517418,
+              "perplexity": 358.1986712137752
+            },
+            "teacher_mlm": {
+              "loss": 5.856812477111816,
+              "accuracy": 0.05312500149011612,
+              "perplexity": 349.60798262345503
+            },
+            "messages": {
+              "expected_at_most": 1.2000000476837158,
+              "expected_exact": 1.7062500715255737,
+              "random_matched": 1.2000000476837158,
+              "oracle_matched_analysis_only": 1.2000000476837158
+            },
+            "degree_conditioning_gain": [
+              -0.00700034573674202,
+              null,
+              0.006945058703422546
+            ]
+          }
+        ],
+        "selector_controls": [
+          {
+            "distilled": {
+              "loss": 5.947633266448975,
+              "accuracy": 0.03125,
+              "perplexity": 382.8461710941228
+            },
+            "direct": {
+              "loss": 5.9476318359375,
+              "accuracy": 0.03125,
+              "perplexity": 382.8456234286737
+            },
+            "loo": {
+              "loss": 5.9440226554870605,
+              "accuracy": 0.03125,
+              "perplexity": 381.4663550005985
+            },
+            "expected": {
+              "loss": 5.945329666137695,
+              "accuracy": 0.03125,
+              "perplexity": 381.96526155651173
+            },
+            "distilled_expected_agreement": 0.8812500238418579
+          },
+          {
+            "distilled": {
+              "loss": 6.011346340179443,
+              "accuracy": 0.03750000149011612,
+              "perplexity": 408.03230091486154
+            },
+            "direct": {
+              "loss": 6.012226104736328,
+              "accuracy": 0.03750000149011612,
+              "perplexity": 408.39143122316534
+            },
+            "loo": {
+              "loss": 6.009562015533447,
+              "accuracy": 0.03750000149011612,
+              "perplexity": 407.30488798737946
+            },
+            "expected": {
+              "loss": 6.012548923492432,
+              "accuracy": 0.03750000149011612,
+              "perplexity": 408.5232889189197
+            },
+            "distilled_expected_agreement": 0.890625,
+            "timing_ms": {
+              "distilled": 2.8102999785915017,
+              "expected": 4.650099959690124
+            }
+          },
+          {
+            "distilled": {
+              "loss": 5.971072196960449,
+              "accuracy": 0.04374999925494194,
+              "perplexity": 391.9256670592122
+            },
+            "direct": {
+              "loss": 5.972212314605713,
+              "accuracy": 0.04374999925494194,
+              "perplexity": 392.37276325055603
+            },
+            "loo": {
+              "loss": 5.972697734832764,
+              "accuracy": 0.04374999925494194,
+              "perplexity": 392.5632751618084
+            },
+            "expected": {
+              "loss": 5.971034049987793,
+              "accuracy": 0.04062500223517418,
+              "perplexity": 391.9107165666674
+            },
+            "distilled_expected_agreement": 0.890625
+          },
+          {
+            "distilled": {
+              "loss": 5.900561809539795,
+              "accuracy": 0.04374999925494194,
+              "perplexity": 365.24260701632846
+            },
+            "direct": {
+              "loss": 5.9007344245910645,
+              "accuracy": 0.04374999925494194,
+              "perplexity": 365.3056588293538
+            },
+            "loo": {
+              "loss": 5.900023937225342,
+              "accuracy": 0.04374999925494194,
+              "perplexity": 365.04620595403765
+            },
+            "expected": {
+              "loss": 5.9016900062561035,
+              "accuracy": 0.04374999925494194,
+              "perplexity": 365.6549050591372
+            },
+            "distilled_expected_agreement": 0.909375011920929
+          }
+        ]
+      },
+      "edge": {
+        "temperatures": {
+          "text_link": 2.0,
+          "structure": 1.0,
+          "gae": 1.0
+        },
+        "teacher": [
+          "structure"
+        ],
+        "cases": [
+          {
+            "full": {
+              "loss": 0.5961356163024902,
+              "auc": 0.7493650111367278,
+              "ap": 0.7780740915175612
+            },
+            "without": {
+              "loss": 0.5964533686637878,
+              "auc": 0.7427415888398265,
+              "ap": 0.7678674098160727
+            },
+            "teacher": {
+              "loss": 0.5738359689712524,
+              "auc": 0.7475479660818257,
+              "ap": 0.7736853590034184
+            },
+            "uniform": {
+              "loss": 0.5962663888931274,
+              "auc": 0.7484662576687117,
+              "ap": 0.778719044694265
+            },
+            "utility_mixture": {
+              "loss": 0.5962605476379395,
+              "auc": 0.7484662576687117,
+              "ap": 0.7787065458191639
+            },
+            "stacking": {
+              "loss": 0.5963457226753235,
+              "auc": 0.7482318002422728,
+              "ap": 0.7780022597990635
+            },
+            "expected_at_most": {
+              "loss": 0.5952501893043518,
+              "auc": 0.7482122621234027,
+              "ap": 0.7794828793567249
+            },
+            "expected_exact": {
+              "loss": 0.5951377153396606,
+              "auc": 0.7498143878707358,
+              "ap": 0.7794554905983496
+            },
+            "random_matched": {
+              "loss": 0.595689594745636,
+              "auc": 0.7473330467742565,
+              "ap": 0.7801884589764186
+            },
+            "oracle_matched_analysis_only": {
+              "loss": 0.5925518870353699,
+              "auc": 0.7584502364112383,
+              "ap": 0.7883628403845049
+            },
+            "teacher_text_link": {
+              "loss": 0.6841292381286621,
+              "auc": 0.5838380680708061,
+              "ap": 0.5512179884805745
+            },
+            "teacher_structure": {
+              "loss": 0.5738359689712524,
+              "auc": 0.7475479660818257,
+              "ap": 0.7736853590034184
+            },
+            "teacher_gae": {
+              "loss": 0.6296704411506653,
+              "auc": 0.7147239263803681,
+              "ap": 0.7359925148789029
+            },
+            "teacher_text_link_structure_gae": {
+              "loss": 0.614385724067688,
+              "auc": 0.7524911101559142,
+              "ap": 0.7867160661048308
+            },
+            "teacher_text_link_structure": {
+              "loss": 0.6135821342468262,
+              "auc": 0.7533507873861904,
+              "ap": 0.788436788927408
+            },
+            "messages": {
+              "expected_at_most": 1.4031250476837158,
+              "expected_exact": 2.0,
+              "random_matched": 1.4031250476837158,
+              "oracle_matched_analysis_only": 1.4031250476837158
+            },
+            "degree_conditioning_gain": [
+              0.0009813217911869287,
+              -0.0027055596001446247,
+              0.0012298873625695705
+            ]
+          },
+          {
+            "full": {
+              "loss": 0.6007503271102905,
+              "auc": 0.7304054319243298,
+              "ap": 0.7771071643014567
+            },
+            "without": {
+              "loss": 0.6008319854736328,
+              "auc": 0.7263628870834804,
+              "ap": 0.7713481648195644
+            },
+            "teacher": {
+              "loss": 0.590225100517273,
+              "auc": 0.7373523293692845,
+              "ap": 0.7808337200693128
+            },
+            "uniform": {
+              "loss": 0.6007504463195801,
+              "auc": 0.7297382157855488,
+              "ap": 0.7764251101321281
+            },
+            "utility_mixture": {
+              "loss": 0.6007448434829712,
+              "auc": 0.7297774637937124,
+              "ap": 0.776453368698006
+            },
+            "stacking": {
+              "loss": 0.6007251143455505,
+              "auc": 0.730483927940657,
+              "ap": 0.7769611753024421
+            },
+            "expected_at_most": {
+              "loss": 0.5997639894485474,
+              "auc": 0.7319164802386279,
+              "ap": 0.7787011506530186
+            },
+            "expected_exact": {
+              "loss": 0.5997483134269714,
+              "auc": 0.731896856234546,
+              "ap": 0.7775014780794038
+            },
+            "random_matched": {
+              "loss": 0.6002236604690552,
+              "auc": 0.729247615683504,
+              "ap": 0.7759486850026889
+            },
+            "oracle_matched_analysis_only": {
+              "loss": 0.5965828895568848,
+              "auc": 0.7402959299815535,
+              "ap": 0.7849966159845196
+            },
+            "teacher_text_link": {
+              "loss": 0.6858728528022766,
+              "auc": 0.5797715765924879,
+              "ap": 0.5947038976341799
+            },
+            "teacher_structure": {
+              "loss": 0.590225100517273,
+              "auc": 0.7373523293692845,
+              "ap": 0.7808337200693128
+            },
+            "teacher_gae": {
+              "loss": 0.621734619140625,
+              "auc": 0.712861572275207,
+              "ap": 0.7556061460026007
+            },
+            "teacher_text_link_structure_gae": {
+              "loss": 0.6168414950370789,
+              "auc": 0.7511283802347031,
+              "ap": 0.7919996680145884
+            },
+            "teacher_text_link_structure": {
+              "loss": 0.6201356053352356,
+              "auc": 0.7426900584795322,
+              "ap": 0.788003537500509
+            },
+            "messages": {
+              "expected_at_most": 1.265625,
+              "expected_exact": 2.0,
+              "random_matched": 1.265625,
+              "oracle_matched_analysis_only": 1.265625
+            },
+            "degree_conditioning_gain": [
+              0.0009005364845506847,
+              -0.002857016632333398,
+              0.0011382397497072816
+            ]
+          },
+          {
+            "full": {
+              "loss": 0.6169887185096741,
+              "auc": 0.7196055342949661,
+              "ap": 0.771454571414325
+            },
+            "without": {
+              "loss": 0.617431104183197,
+              "auc": 0.715557845157492,
+              "ap": 0.7672823991142274
+            },
+            "teacher": {
+              "loss": 0.6055071949958801,
+              "auc": 0.7185016190756549,
+              "ap": 0.7713092649329191
+            },
+            "uniform": {
+              "loss": 0.6171597838401794,
+              "auc": 0.7185752134236091,
+              "ap": 0.7704636321715967
+            },
+            "utility_mixture": {
+              "loss": 0.6171559691429138,
+              "auc": 0.7185752134236091,
+              "ap": 0.7704636321715967
+            },
+            "stacking": {
+              "loss": 0.6172640919685364,
+              "auc": 0.717544892552252,
+              "ap": 0.7705797637860685
+            },
+            "expected_at_most": {
+              "loss": 0.6166253089904785,
+              "auc": 0.716588166028849,
+              "ap": 0.7692283892559506
+            },
+            "expected_exact": {
+              "loss": 0.6161821484565735,
+              "auc": 0.7204886664704151,
+              "ap": 0.7724396972127484
+            },
+            "random_matched": {
+              "loss": 0.6168630123138428,
+              "auc": 0.718501619075655,
+              "ap": 0.771227431405114
+            },
+            "oracle_matched_analysis_only": {
+              "loss": 0.613190770149231,
+              "auc": 0.727921695613777,
+              "ap": 0.7802168937139082
+            },
+            "teacher_text_link": {
+              "loss": 0.6899338960647583,
+              "auc": 0.5543126287901089,
+              "ap": 0.606892798564296
+            },
+            "teacher_structure": {
+              "loss": 0.6055071949958801,
+              "auc": 0.7185016190756549,
+              "ap": 0.7713092649329191
+            },
+            "teacher_gae": {
+              "loss": 0.6407293081283569,
+              "auc": 0.6920076538121872,
+              "ap": 0.7269540589172232
+            },
+            "teacher_text_link_structure_gae": {
+              "loss": 0.6277888417243958,
+              "auc": 0.7244627612599353,
+              "ap": 0.7699389886714103
+            },
+            "teacher_text_link_structure": {
+              "loss": 0.627354621887207,
+              "auc": 0.7184280247277008,
+              "ap": 0.7767785845289638
+            },
+            "messages": {
+              "expected_at_most": 1.2969696521759033,
+              "expected_exact": 1.9999998807907104,
+              "random_matched": 1.2969696521759033,
+              "oracle_matched_analysis_only": 1.2969696521759033
+            },
+            "degree_conditioning_gain": [
+              0.00195905938744545,
+              -0.0014873811742290854,
+              -9.662152297096327e-05
+            ]
+          },
+          {
+            "full": {
+              "loss": 0.610019326210022,
+              "auc": 0.7210166177908115,
+              "ap": 0.7581732621913433
+            },
+            "without": {
+              "loss": 0.6109600067138672,
+              "auc": 0.7139784946236558,
+              "ap": 0.7418336746271732
+            },
+            "teacher": {
+              "loss": 0.5923065543174744,
+              "auc": 0.7288758553274681,
+              "ap": 0.757176597722454
+            },
+            "uniform": {
+              "loss": 0.6104623675346375,
+              "auc": 0.7202737047898339,
+              "ap": 0.7570076524913837
+            },
+            "utility_mixture": {
+              "loss": 0.6104559898376465,
+              "auc": 0.7202346041055719,
+              "ap": 0.7569848268321944
+            },
+            "stacking": {
+              "loss": 0.6102271676063538,
+              "auc": 0.7200391006842619,
+              "ap": 0.7588089060185275
+            },
+            "expected_at_most": {
+              "loss": 0.6095041036605835,
+              "auc": 0.7212512218963831,
+              "ap": 0.7602433395948198
+            },
+            "expected_exact": {
+              "loss": 0.6091464161872864,
+              "auc": 0.723049853372434,
+              "ap": 0.7589956544319273
+            },
+            "random_matched": {
+              "loss": 0.6105577945709229,
+              "auc": 0.7164613880742914,
+              "ap": 0.7519949867383715
+            },
+            "oracle_matched_analysis_only": {
+              "loss": 0.6058091521263123,
+              "auc": 0.7369696969696969,
+              "ap": 0.7753143603241224
+            },
+            "teacher_text_link": {
+              "loss": 0.6871277093887329,
+              "auc": 0.5541348973607039,
+              "ap": 0.5605240911647458
+            },
+            "teacher_structure": {
+              "loss": 0.5923065543174744,
+              "auc": 0.7288758553274681,
+              "ap": 0.757176597722454
+            },
+            "teacher_gae": {
+              "loss": 0.6349188685417175,
+              "auc": 0.6968132942326489,
+              "ap": 0.721692119831611
+            },
+            "teacher_text_link_structure_gae": {
+              "loss": 0.6258919835090637,
+              "auc": 0.7404105571847508,
+              "ap": 0.768856945354409
+            },
+            "teacher_text_link_structure": {
+              "loss": 0.6272756457328796,
+              "auc": 0.7356793743890517,
+              "ap": 0.769246519550227
+            },
+            "messages": {
+              "expected_at_most": 1.265625,
+              "expected_exact": 2.0,
+              "random_matched": 1.265625,
+              "oracle_matched_analysis_only": 1.265625
+            },
+            "degree_conditioning_gain": [
+              0.0026711481623351574,
+              -0.0024331833701580763,
+              0.002215123036876321
+            ]
+          }
+        ],
+        "selector_controls": [
+          {
+            "distilled": {
+              "loss": 0.5952686667442322,
+              "auc": 0.7492673205423782,
+              "ap": 0.7796013542539166
+            },
+            "direct": {
+              "loss": 0.5956838726997375,
+              "auc": 0.7487593294517604,
+              "ap": 0.7790502721758159
+            },
+            "loo": {
+              "loss": 0.5960275530815125,
+              "auc": 0.7483294908366223,
+              "ap": 0.7781350847636145
+            },
+            "expected": {
+              "loss": 0.5951377153396606,
+              "auc": 0.7498143878707358,
+              "ap": 0.7794554905983496
+            },
+            "distilled_expected_agreement": 0.6625000238418579
+          },
+          {
+            "distilled": {
+              "loss": 0.6001433730125427,
+              "auc": 0.730287687899839,
+              "ap": 0.7762919167327559
+            },
+            "direct": {
+              "loss": 0.6002388596534729,
+              "auc": 0.730680167981475,
+              "ap": 0.7765607242003805
+            },
+            "loo": {
+              "loss": 0.6006180644035339,
+              "auc": 0.7301306958671847,
+              "ap": 0.7763852329705048
+            },
+            "expected": {
+              "loss": 0.5997483134269714,
+              "auc": 0.731896856234546,
+              "ap": 0.7775014780794038
+            },
+            "distilled_expected_agreement": 0.6625000238418579,
+            "timing_ms": {
+              "distilled": 3.0956999980844557,
+              "expected": 10.16079995315522
+            }
+          },
+          {
+            "distilled": {
+              "loss": 0.6164378523826599,
+              "auc": 0.7191639682072416,
+              "ap": 0.7713571679292106
+            },
+            "direct": {
+              "loss": 0.6166242957115173,
+              "auc": 0.7197527229908743,
+              "ap": 0.7719889141511427
+            },
+            "loo": {
+              "loss": 0.6168708205223083,
+              "auc": 0.7197527229908742,
+              "ap": 0.7716932712561262
+            },
+            "expected": {
+              "loss": 0.6161821484565735,
+              "auc": 0.7204886664704151,
+              "ap": 0.7724396972127484
+            },
+            "distilled_expected_agreement": 0.6424242258071899
+          },
+          {
+            "distilled": {
+              "loss": 0.6095893979072571,
+              "auc": 0.7223069403714565,
+              "ap": 0.7588225936580608
+            },
+            "direct": {
+              "loss": 0.6095616817474365,
+              "auc": 0.7223069403714564,
+              "ap": 0.758251751044724
+            },
+            "loo": {
+              "loss": 0.6098379492759705,
+              "auc": 0.7228347996089932,
+              "ap": 0.7591176945976814
+            },
+            "expected": {
+              "loss": 0.6091464161872864,
+              "auc": 0.723049853372434,
+              "ap": 0.7589956544319273
+            },
+            "distilled_expected_agreement": 0.765625
+          }
+        ]
+      }
+    }
+  }
+]

@@ -2,12 +2,13 @@
 cache MiniLM sentence embeddings (phase 0) and RoBERTa token ids (phase 1+)."""
 import os
 import argparse
+from pathlib import Path
 import numpy as np
 import torch
 
-DIVERGE_DIR = r"C:/Users/Nima/Desktop/Python Project/DIVERGE/datasets"
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROC = os.path.join(ROOT, "data", "processed")
+DIVERGE_DIR = os.environ.get("TWINMASK_RAW_GRAPHS", str(Path(ROOT).parent / "DIVERGE" / "datasets"))
 
 
 def undirected_unique(ei, n):
@@ -20,7 +21,15 @@ def undirected_unique(ei, n):
 def sample_negatives(n, num, forbid_keys, rng, allowed=None):
     """Uniform random non-edges (u<v). forbid_keys: set of u*n+v of all true edges."""
     out = []
-    pool = allowed if allowed is not None else np.arange(n)
+    pool = np.unique(allowed) if allowed is not None else np.arange(n)
+    if not num:
+        return torch.empty((2, 0), dtype=torch.long)
+    if num < 0 or num > len(pool)*(len(pool)-1)//2:
+        raise ValueError("Invalid negative sample count")
+    membership = set(map(int, pool))
+    unavailable = sum(key//n in membership and key%n in membership and key//n < key%n for key in forbid_keys)
+    if num > len(pool)*(len(pool)-1)//2-unavailable:
+        raise ValueError("Insufficient eligible non-edges")
     seen = set()
     while len(out) < num:
         u = rng.choice(pool, 2 * num); v = rng.choice(pool, 2 * num)
@@ -61,16 +70,25 @@ def build_split(name, seed=0, cold_frac=0.05, val_frac=0.05, test_frac=0.10):
 
     warm = torch.nonzero(~is_cold).view(-1).numpy()
     test_neg = sample_negatives(n, test_pos.shape[1], all_keys, rng, warm)
-    val_neg = sample_negatives(n, val_pos.shape[1], all_keys, rng, warm)
+    used = set((test_neg[0] * n + test_neg[1]).tolist())
+    val_neg = sample_negatives(n, val_pos.shape[1], all_keys | used, rng, warm)
     # cold negatives: one endpoint is the cold node of each positive, other endpoint random warm node
-    cn = []
+    cn = torch.empty((2, cold_pos.shape[1]), dtype=torch.long)
     cold_endpoint = torch.where(is_cold[cold_pos[0]], cold_pos[0], cold_pos[1])
-    for c in cold_endpoint.tolist():
-        while True:
-            v = int(rng.choice(warm)); a, b = min(c, v), max(c, v)
-            if a * n + b not in all_keys:
-                cn.append((a, b)); break
-    cold_neg = torch.tensor(cn).t()
+    for c in cold_endpoint.unique(sorted=True).tolist():
+        count = int((cold_endpoint == c).sum())
+        if count > len(warm)-count:
+            raise ValueError(f"Insufficient warm non-neighbors for cold node {c}")
+        selected_ids = {}
+        while len(selected_ids) < count:
+            for v in rng.choice(warm, max(8, 2*count)):
+                if min(c, v)*n+max(c, v) not in all_keys:
+                    selected_ids[int(v)] = None
+                if len(selected_ids) == count:
+                    break
+        selected = torch.tensor(list(selected_ids), dtype=torch.long)
+        cn[:, cold_endpoint == c] = torch.stack((selected.clamp(max=c), selected.clamp(min=c)))
+    cold_neg = cn
 
     texts = [t.replace("\n", " ").strip() for t in g.raw_texts]
     masks = {}
@@ -84,7 +102,8 @@ def build_split(name, seed=0, cold_frac=0.05, val_frac=0.05, test_frac=0.10):
     hom = (y[E[0]] == y[E[1]]).float().mean().item()
     return dict(name=name, num_nodes=n, y=y, texts=texts, label_names=list(g.label_name),
                 train_pos=train_pos, val_pos=val_pos, val_neg=val_neg, test_pos=test_pos, test_neg=test_neg,
-                cold_nodes=cold, cold_pos=cold_pos, cold_neg=cold_neg, homophily=hom, **masks)
+                cold_nodes=cold, cold_pos=cold_pos, cold_cold_pos=E[:, both_cold], all_true_edges=E,
+                cold_neg=cold_neg, homophily=hom, **masks)
 
 
 @torch.no_grad()
