@@ -5,6 +5,197 @@
 
 ---
 
+<!-- research-v4-results -->
+
+## TwinMask V4 · Target-conditioned counterfactual set utility
+
+V4 evaluates whether observed target features and learned subset value recover the oracle gains in V3. The primary study uses the same V2 checkpoints and saved test masks across all selectors, four asymmetric mask cases per seed, and up to 384 targets per direction and case. It covers Cora, CiteSeer, and PubMed with seeds 42–51. Controller-training, development, and test cases have disjoint target nodes and held-out edge pools. Test targets enter metric and oracle computation only. A regression test modifies hidden labels and verifies unchanged selections and predictions.
+
+**What worked.** Target and prediction-change features improved PubMed edge LOO Spearman from 0.0633 to 0.2026. The decision selector reduced edge BCE versus equal-count random selection on Cora and PubMed. The highest matched-budget recovery for decision plus cost was 14.8%, below the proposed 30% goal. The audit also missed the proposed 0.25 LOO Spearman and 65% sign-accuracy targets for the PubMed edge arm. The selected inference path was slower than full-message decoding in each measured timing pair.
+
+### V4.0 · Oracle and utility audit
+
+Loss is token cross-entropy (CE) or edge binary cross-entropy (BCE). Token and edge oracles choose per target. The node oracle uses one panel subset for a node's sampled tokens. The shared-endpoint oracle shares a subset at the first endpoint of all the sampled candidates with that endpoint, while allowing the other endpoint to vary within the total budget. Both shared oracles still use the target labels, so they measure restrictions on decision granularity. The equal-count oracle and random control use the same number of optional messages per target as the decision score with message cost.
+
+| Dataset | Task | Full | Per-target oracle ≤2 | Shared oracle ≤2 | Matched-count oracle | Harmful fraction thresholds 0 / .001 / .005 / .01 |
+|---|---|---|---|---|---|---|
+| Cora | text | 4.8501 | 4.7873 | 4.7963 | 4.8369 | 0.5207 / 0.5076 / 0.4639 / 0.4175 |
+| CiteSeer | text | 5.1609 | 5.0933 | 5.1019 | 5.1502 | 0.5191 / 0.5112 / 0.4807 / 0.4417 |
+| PubMed | text | 4.0550 | 4.0112 | 4.0120 | 4.0491 | 0.5592 / 0.4816 / 0.3858 / 0.3211 |
+
+
+| Dataset | Task | Full | Per-target oracle ≤2 | Shared oracle ≤2 | Matched-count oracle | Harmful fraction thresholds 0 / .001 / .005 / .01 |
+|---|---|---|---|---|---|---|
+| Cora | edge | 0.6483 | 0.6060 | 0.6074 | 0.6241 | 0.4852 / 0.4497 / 0.3663 / 0.2950 |
+| CiteSeer | edge | 0.6436 | 0.5911 | 0.5919 | 0.6266 | 0.4871 / 0.4587 / 0.3815 / 0.3168 |
+| PubMed | edge | 0.4909 | 0.4572 | 0.4573 | 0.4708 | 0.4940 / 0.3916 / 0.2778 / 0.2146 |
+
+### V4.1–V4.2 · Target-conditioned and prediction-aware estimates
+
+Text features include sender, receiver, message, masked-token representation, and position. Edge features include both endpoints, their absolute difference and product, with the opposite endpoint defined relative to each message receiver. Prediction-aware features add full uncertainty, changes in entropy, confidence and margin, JS divergence, top-answer disagreement, and the magnitude of the removed contribution before the final nonlinearity. The position and all semantic features come from visible or masked inputs.
+
+The first three columns below are LOO Spearman correlations. Sign accuracy is for the prediction-aware LOO estimator.
+
+| Dataset | Task | V3 features | + Target | + Prediction changes | Sign accuracy | Majority sign |
+|---|---|---|---|---|---|---|
+| Cora | text | 0.0238 | 0.0398 | 0.0469 | 0.5226 | 0.5300 |
+| Cora | edge | 0.0183 | 0.0583 | 0.0686 | 0.5250 | 0.5187 |
+| CiteSeer | text | 0.0421 | 0.0267 | 0.0329 | 0.5115 | 0.5316 |
+| CiteSeer | edge | 0.0328 | 0.0686 | 0.0725 | 0.5217 | 0.5196 |
+| PubMed | text | 0.0506 | 0.0480 | 0.0449 | 0.5186 | 0.5593 |
+| PubMed | edge | 0.0633 | 0.1542 | 0.2026 | 0.5580 | 0.5175 |
+
+### V4.3–V4.5 · Set utility, decision loss, and flexible budgets
+
+DeepSets assigns a value to each unique feasible subset using selected and full panel summaries. The target is full loss minus subset loss. Decision training adds expected reconstruction regret under a masked softmax at K=1, 2, and 3. Development tunes the cost per optional message in standardized utility units and the risk rule. The threshold arm uses a fixed 0.1 utility threshold in standardized units, and the at-most arms can choose an empty set.
+
+All entries in the first results table use exact K=2, capped by availability. The direct gate uses the same prediction-aware features and scorer width as the message-utility MLP. The Shapley arm is trained on exact message Shapley values.
+
+| Dataset | Task | Random | Direct | Aware LOO | Shapley | DeepSets | Decision |
+|---|---|---|---|---|---|---|---|
+| Cora | text | 4.8487 | 4.8485 | 4.8486 | 4.8486 | 4.8487 | 4.8485 |
+| Cora | edge | 0.6496 | 0.6477 | 0.6476 | 0.6481 | 0.6492 | 0.6476 |
+| CiteSeer | text | 5.1606 | 5.1606 | 5.1606 | 5.1606 | 5.1607 | 5.1604 |
+| CiteSeer | edge | 0.6459 | 0.6448 | 0.6438 | 0.6436 | 0.6445 | 0.6439 |
+| PubMed | text | 4.0546 | 4.0544 | 4.0546 | 4.0546 | 4.0544 | 4.0544 |
+| PubMed | edge | 0.4905 | 0.4888 | 0.4867 | 0.4867 | 0.4901 | 0.4880 |
+
+
+| Dataset | Task | At most 2 | Threshold | Decision + cost | Messages | Empty fraction | Loss change vs matched random [paired 95% CI] | Matched-random-to-oracle gap recovered |
+|---|---|---|---|---|---|---|---|---|
+| Cora | text | 4.8450 | 4.8461 | 4.8457 | 0.6212 | 0.5670 | -0.0002 [-0.0006, +0.0002] | 2.0% |
+| Cora | edge | 0.6487 | 0.6491 | 0.6490 | 1.0956 | 0.2827 | -0.0021 [-0.0036, -0.0005] | 7.7% |
+| CiteSeer | text | 5.1551 | 5.1549 | 5.1547 | 0.4887 | 0.6857 | -0.0001 [-0.0004, +0.0002] | 1.9% |
+| CiteSeer | edge | 0.6444 | 0.6444 | 0.6443 | 0.8130 | 0.4746 | -0.0019 [-0.0045, +0.0008] | 9.5% |
+| PubMed | text | 4.0510 | 4.0517 | 4.0511 | 0.2275 | 0.8219 | -0.0002 [-0.0005, +0.0000] | 10.0% |
+| PubMed | edge | 0.4849 | 0.4868 | 0.4853 | 0.9157 | 0.3851 | -0.0025 [-0.0044, -0.0006] | 14.8% |
+
+Paired intervals use ten seed means within each fixed graph. The recovery fraction uses the random-to-oracle loss gap with the selector's exact realized message count. That quantity differs from the full-to-unconstrained-oracle gap.
+
+Accuracy, AUROC, and AP use the same test targets as the loss comparisons. Direct, aware LOO, and decision use exact K=2 in this table.
+
+| Dataset | Metric | Full | Direct exact | Aware LOO exact | Decision exact | Decision + cost | Matched random |
+|---|---|---|---|---|---|---|---|
+| Cora | ACCURACY | 0.1665 | 0.1666 | 0.1665 | 0.1671 | 0.1676 | 0.1678 |
+| Cora | AUC | 0.6787 | 0.6800 | 0.6807 | 0.6804 | 0.6785 | 0.6759 |
+| Cora | AP | 0.7017 | 0.7032 | 0.7042 | 0.7041 | 0.7023 | 0.7000 |
+| CiteSeer | ACCURACY | 0.1359 | 0.1355 | 0.1355 | 0.1355 | 0.1348 | 0.1349 |
+| CiteSeer | AUC | 0.6835 | 0.6803 | 0.6821 | 0.6811 | 0.6772 | 0.6745 |
+| CiteSeer | AP | 0.7136 | 0.7113 | 0.7124 | 0.7115 | 0.7085 | 0.7071 |
+| PubMed | ACCURACY | 0.3037 | 0.3037 | 0.3036 | 0.3039 | 0.3036 | 0.3036 |
+| PubMed | AUC | 0.8590 | 0.8624 | 0.8649 | 0.8624 | 0.8637 | 0.8629 |
+| PubMed | AP | 0.8565 | 0.8586 | 0.8606 | 0.8584 | 0.8593 | 0.8591 |
+
+
+### V4.6 · Uncertainty and external-method controls
+
+The decision model estimates a predictive spread and risk uses mean minus beta times spread, with a cost for each message. The development-selected fallback may use the full panel and is reported separately from strict-cap policies. The three-seed comparator runs include eight MC dropout draws and a three-member ensemble. The table reports nominal 90% empirical interval coverage and strict-cap loss at K=2. Coverage is an empirical diagnostic and carries no calibration guarantee.
+
+| Dataset | Task | Mean/variance coverage | MC dropout coverage | Ensemble coverage | Risk | Risk + full fallback |
+|---|---|---|---|---|---|---|
+| Cora | text | 0.8891 | 0.9044 | 0.9186 | 4.8890 | 4.8898 |
+| Cora | edge | 0.8659 | 0.8770 | 0.8970 | 0.6453 | 0.6446 |
+| CiteSeer | text | 0.8805 | 0.8668 | 0.8948 | 5.1414 | 5.1424 |
+| CiteSeer | edge | 0.8347 | 0.8803 | 0.8625 | 0.6439 | 0.6431 |
+| PubMed | text | 0.8852 | 0.8895 | 0.9109 | 4.0280 | 4.0280 |
+| PubMed | edge | 0.9055 | 0.8998 | 0.9080 | 0.4879 | 0.4879 |
+
+Equal-count local reconstructions below use additive GAT attention, a straight-through top-K sparsifier inspired by NeuralSparse, and a correctness-predicting utility proxy with predicted Shapley scores inspired by SGUL. These are adaptations to the frozen reconstruction model with paired panels and targets. Published end-to-end benchmark numbers use other tasks and protocols. The set-attention ablation adds one permutation-equivariant self-attention block before DeepSets pooling.
+
+| Dataset | Task | GAT local | NeuralSparse local | SGUL local | Set attention | Decision |
+|---|---|---|---|---|---|---|
+| Cora | text | 4.8966 | 4.8970 | 4.8970 | 4.8974 | 4.8963 |
+| Cora | edge | 0.6435 | 0.6441 | 0.6467 | 0.6447 | 0.6438 |
+| CiteSeer | text | 5.1412 | 5.1411 | 5.1412 | 5.1407 | 5.1409 |
+| CiteSeer | edge | 0.6428 | 0.6422 | 0.6434 | 0.6433 | 0.6427 |
+| PubMed | text | 4.0315 | 4.0322 | 4.0319 | 4.0316 | 4.0319 |
+| PubMed | edge | 0.4945 | 0.4938 | 0.4926 | 0.4945 | 0.4907 |
+
+### Larger panels, layer interventions, and generalization
+
+All interventions preserve the graph and degree denominator. The edge branch suppresses the direct text component of incoming messages. Layer ablations include first-only and both layers. With hidden candidate edges and no self loops, the target roots are locally recomputed while untouched messages keep their cached values.
+
+This Cora table uses three seeds and the same 192-target cap within each protocol. The four-slot both-layer arm and the six-slot layer comparison are exploratory. The re-split arm loads independently re-split V2 warm-link checkpoints and regenerated node splits.
+
+| Cora variant | Task | Full | Decision K=2 | Matched-count oracle |
+|---|---|---|---|---|
+| cora_panel4_last | text | 4.8999 | 4.8891 | 4.8829 |
+| cora_panel4_last | edge | 0.6409 | 0.6425 | 0.6217 |
+| cora_both | text | 4.8999 | 4.8914 | 4.8688 |
+| cora_both | edge | 0.6409 | 0.6443 | 0.6021 |
+| cora_panel6_first | text | 4.8999 | 4.8994 | 4.8919 |
+| cora_panel6_first | edge | 0.6409 | 0.6482 | 0.6216 |
+| cora_panel6 | text | 4.8999 | 4.8886 | 4.8853 |
+| cora_panel6 | edge | 0.6409 | 0.6431 | 0.6161 |
+| cora_panel6_both | text | 4.8999 | 4.8935 | 4.8756 |
+| cora_panel6_both | edge | 0.6409 | 0.6478 | 0.6020 |
+| cora_resplit | text | 4.8555 | 4.8534 | 4.8468 |
+| cora_resplit | edge | 0.6425 | 0.6444 | 0.6227 |
+
+Synthetic controls vary homophily, text signal, and target-time false edges. In the transfer test, the denoiser and selector are fitted on the reference graph and evaluated on newly generated graphs without fitting on their labels. The objective is the same K≤2 decision score. Random and oracle receive the learned selector's exact count per target.
+
+| Unseen synthetic regime | Task | Full | Decision | Matched random | Matched oracle | False-edge retention decision / random |
+|---|---|---|---|---|---|---|
+| synthetic_reference | text | 2.7900 | 2.7919 | 2.7943 | 2.7839 | — |
+| synthetic_reference | edge | 0.7036 | 0.6889 | 0.6891 | 0.6809 | — |
+| synthetic_low_homophily | text | 2.8926 | 2.8860 | 2.8874 | 2.8692 | — |
+| synthetic_low_homophily | edge | 0.8335 | 0.8300 | 0.8292 | 0.8133 | — |
+| synthetic_weak_text | text | 3.7182 | 3.7122 | 3.7132 | 3.6958 | — |
+| synthetic_weak_text | edge | 0.6774 | 0.6791 | 0.6784 | 0.6687 | — |
+| synthetic_noisy_context | text | 2.8028 | 2.8037 | 2.8055 | 2.7947 | 0.3064 / 0.3155 |
+| synthetic_noisy_context | edge | 0.6753 | 0.6663 | 0.6663 | 0.6589 | 0.3749 / 0.3424 |
+
+### V4.7 · Fine-tuning and measured runtime
+
+For each direction, partial fine-tuning unfreezes the last GraphSAGE layer. End-to-end fine-tuning updates the compact denoiser and selector jointly with refreshed subset losses and differentiable subset choice. The full-message control fine-tunes the same denoiser for the same 12 updates. All tuning uses controller-training cases, and each arm scores paired test panels.
+
+Measured latency includes graph and panel preparation, prediction probes where applicable, scoring, and final decoding. Each value averages three seed medians after warm-up. The graph prefix and its full aggregation are still computed in this implementation. Optional-message counts describe the selected panel only.
+
+| Dataset | Task | Frozen selected | Partial selected | End-to-end selected | Fine-tuned full | Full / selected ms | Full / selected panel messages |
+|---|---|---|---|---|---|---|---|
+| Cora | text | 4.8714 | 4.8665 | 4.8408 | 4.8404 | 6.4919 / 9.1331 | 2.5117 / 0.6914 |
+| Cora | edge | 0.6471 | 0.6450 | 0.6514 | 0.6513 | 8.9295 / 11.9824 | 3.3984 / 1.6536 |
+| CiteSeer | text | 5.1473 | 5.1455 | 5.1317 | 5.1298 | 5.8951 / 8.4394 | 1.6602 / 0.9414 |
+| CiteSeer | edge | 0.6399 | 0.6380 | 0.6375 | 0.6385 | 7.1049 / 10.5318 | 2.8854 / 1.0417 |
+| PubMed | text | 4.0316 | 4.0294 | 4.0148 | 4.0160 | 25.3872 / 29.6589 | 1.9479 / 0.4727 |
+| PubMed | edge | 0.4904 | 0.4874 | 0.4865 | 0.4928 | 27.8257 / 30.9140 | 3.0964 / 1.3763 |
+
+### V4.8 · Diffusion integration
+
+Two free-running reconstruction iterations use the same sampled panel of up to 192 held-out tokens and edges per case. The first iteration confidence-fills half, and the second completes the panel at half the initial clocks using the previous predictions. The selector is reapplied on both iterations. The paired full-message rollout uses the same masks, initial targets, and number of reconstruction iterations. The selected arm also uses counterfactual prediction probes and thus incurs additional work.
+
+| Dataset | Full token accuracy / edge AUROC | Selected token accuracy / edge AUROC |
+|---|---|---|
+| Cora | 0.1606 / 0.6813 | 0.1597 / 0.6757 |
+| CiteSeer | 0.1380 / 0.6827 | 0.1367 / 0.6766 |
+| PubMed | 0.3181 / 0.8678 | 0.3147 / 0.8709 |
+
+### Results and reproduction
+
+Primary paired results. [Cora](results/research_twinmask_v4/cora.json) [CiteSeer](results/research_twinmask_v4/citeseer.json) [PubMed](results/research_twinmask_v4/pubmed.json)
+
+Fine-tuning, timing, and diffusion. [Cora](results/research_twinmask_v4/cora_extra.json) [CiteSeer](results/research_twinmask_v4/citeseer_extra.json) [PubMed](results/research_twinmask_v4/pubmed_extra.json)
+
+Local baselines and uncertainty controls. [Cora](results/research_twinmask_v4/cora_baselines.json) [CiteSeer](results/research_twinmask_v4/citeseer_baselines.json) [PubMed](results/research_twinmask_v4/pubmed_baselines.json)
+
+Layer, split, and synthetic studies. [cora_panel4_last](results/research_twinmask_v4/cora_panel4_last.json) [cora_both](results/research_twinmask_v4/cora_both.json) [cora_panel6_first](results/research_twinmask_v4/cora_panel6_first.json) [cora_panel6](results/research_twinmask_v4/cora_panel6.json) [cora_panel6_both](results/research_twinmask_v4/cora_panel6_both.json) [cora_resplit](results/research_twinmask_v4/cora_resplit.json) [synthetic_reference](results/research_twinmask_v4/synthetic_reference.json) [synthetic_low_homophily](results/research_twinmask_v4/synthetic_low_homophily.json) [synthetic_weak_text](results/research_twinmask_v4/synthetic_weak_text.json) [synthetic_noisy_context](results/research_twinmask_v4/synthetic_noisy_context.json) [synthetic_reference_transfer](results/research_twinmask_v4/synthetic_reference_transfer.json)
+
+DeepSets provides the invariant aggregation. Set Transformer motivates the attention ablation. The decision objective is a softmax over this pilot's enumerated subsets, following the decision-focused training principle. [Deep Sets](https://arxiv.org/abs/1703.06114) [Set Transformer](https://arxiv.org/abs/1810.00825) [Decision-Focused Learning](https://mlanthology.org/jair/2024/mandi2024jair-decisionfocused/)
+
+```powershell
+python -m scripts.research_twinmask_v4
+python -m scripts.research_twinmask_v4 --seeds 42 43 44 --extra --steps 60 --limit 256
+python -m scripts.research_twinmask_v4 --seeds 42 43 44 --comparators --steps 60 --limit 256
+foreach ($layer in 'first','last','both') { python -m scripts.research_twinmask_v4 --datasets cora --seeds 42 43 44 --panel 6 --layer $layer --steps 60 --limit 192 }
+python -m scripts.research_twinmask_v4 --datasets cora --seeds 42 43 44 --steps 60 --limit 192 --tag panel4_last
+python -m scripts.research_twinmask_v4 --datasets cora --seeds 42 43 44 --layer both --steps 60 --limit 192
+python -m scripts.research_twinmask_v4 --datasets cora --seeds 42 43 44 --resplit --steps 60 --limit 192
+python -m scripts.research_twinmask_v4 --datasets synthetic_reference synthetic_low_homophily synthetic_weak_text synthetic_noisy_context --seeds 42 43 44 --steps 60 --limit 192
+python -m scripts.research_twinmask_v4 --datasets synthetic_reference --transfer --seeds 42 43 44 --steps 60 --limit 192
+python -m unittest scripts.test_research_pilots scripts.test_research_twinmask_v3 scripts.test_research_twinmask_v4
+python -m scripts.report_research_v4
+```
+
 ## TwinMask V3 · Counterfactual utility and selective message passing
 
 V3 asks whether local evidence removal improves masked token and edge reconstruction, and how much of the oracle gain a selector can recover from observations alone. This pilot freezes the V2 denoiser and intervenes in its final GraphSAGE aggregation. Each token target has up to four sampled incoming messages. Each edge candidate has up to two sampled incoming messages at each endpoint, and the edge experiment gates the direct pooled-text term of those messages. Indirect text paths, degree normalization, the observed graph, and messages outside the sampled panel stay fixed. The budget applies to the panel.

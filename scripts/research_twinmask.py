@@ -322,9 +322,9 @@ SYNTHETIC = {
 }
 
 
-def synthetic_graph(name):
+def synthetic_graph(name, seed_offset=0):
     homophily, lexical, noise = SYNTHETIC[name]
-    streams = [np.random.default_rng(seed) for seed in range(100, 105)]
+    streams = [np.random.default_rng(seed+seed_offset) for seed in range(100, 105)]
     n = 480
     classes = streams[0].integers(4, size=n)
     u, v = np.triu_indices(n, k=1)
@@ -337,7 +337,8 @@ def synthetic_graph(name):
     forbidden = set((edges[0]*n+edges[1]).tolist())
     negatives = sample_negatives(n, len(test)+len(val), forbidden, streams[3])
     forbidden.update((negatives[0]*n+negatives[1]).tolist())
-    noise_edges = sample_negatives(n, int(len(train)*noise), forbidden, np.random.default_rng(105)) if noise else edges[:, :0]
+    noise_edges = (sample_negatives(n, int(len(train)*noise), forbidden, np.random.default_rng(105+seed_offset))
+                   if noise else edges[:, :0])
     token_class = np.where(streams[4].random((n, 16)) < lexical, classes[:, None],
                            streams[4].integers(4, size=(n, 16)))
     tokens = torch.ones((n, 17), dtype=torch.long)

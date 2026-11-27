@@ -11,7 +11,8 @@ from torch import nn
 from torch.nn import functional as F
 
 from scripts.research_ensemble import tick
-from scripts.research_twinmask import Case, MASK, OTHER, PAD, SparseTwinMask, corruption
+from scripts.research_twinmask import (Case, MASK, OTHER, PAD, SYNTHETIC, SparseTwinMask, corruption,
+                                       resplit_link_data, synthetic_graph)
 from twinmask.common import save_json, set_seed
 from twinmask.data import load, sample_negatives
 
@@ -21,8 +22,9 @@ SLOT_PAIRS = [(i, j) for i in range(4) for j in range(i+1, 4)]
 class MessagePanel:
     """Intervene in the final aggregation while preserving the observed graph and degree."""
 
-    def __init__(self, model, case, direction, limit, generator):
+    def __init__(self, model, case, direction, limit, generator, panel_size=4, layer="last"):
         self.model, self.direction = model, direction
+        self.layer = layer
         ids, state, _ = case.initial()
         x = torch.randperm(len(case.x_truth), generator=generator, device=ids.device)[:limit]
         a = torch.randperm(len(case.a_truth), generator=generator, device=ids.device)[:limit]
@@ -32,11 +34,11 @@ class MessagePanel:
         if direction == "text":
             targets = query[0][:, None]
             self.selected, self.truth = selected, case.x_truth[x]
-            per_target = 4
+            per_target = panel_size
         else:
             targets = case.pairs[:, case.a_index[a]].T
             self.state, self.truth = state[case.a_index[a]], case.a_truth[a]
-            per_target = 2
+            per_target = panel_size // 2
         neighborhoods = [[] for _ in range(len(ids))]
         for source, target in adjacency.T.cpu().tolist():
             neighborhoods[target].append(source)
@@ -49,11 +51,27 @@ class MessagePanel:
         receivers = targets.repeat_interleave(per_target, dim=1)
         self.valid = slots >= 0
         safe = slots.clamp_min(0)
+        self.targets, self.slots, self.receivers = targets, slots, receivers
+        self.query = query if direction == "text" else case.a_index[a]
+        self.sender_h, self.receiver_h = h[safe], h[receivers]
+        self.position = query[1]
         self.h, self.total, self.mass = h[targets], total[targets], degree[targets]
         # Edge interventions remove the direct pooled text component of a message.
         # The structural residual and indirect text paths remain available.
         senders = h if direction == "text" else semantic
         self.messages = senders[safe] * self.valid[..., None]
+        if layer != "last":
+            start = semantic + model.clock_x(semantic.new_tensor(case.clocks(case.initial())[0]))
+            start = start + model.clock_a(semantic.new_tensor(case.clocks(case.initial())[1]))
+            source, destination = adjacency
+            first_totals = torch.zeros_like(start).index_add_(0, destination, start[source])
+            first_senders = start if direction == "text" else semantic
+            self.first_h, self.first_total = start[targets], first_totals[targets]
+            self.first_messages = first_senders[safe] * self.valid[..., None]
+            if direction == "edge":
+                n = len(ids)
+                observed = source*n+destination
+                assert not torch.isin(targets[:, 0]*n+targets[:, 1], observed).any(), "Candidate must be hidden"
         self.unit = F.normalize(semantic[safe]) * self.valid[..., None]
         sim = (self.unit * F.normalize(semantic[receivers])).sum(-1)
         text_fraction = ((ids > OTHER).sum(-1) / (ids != PAD).sum(-1).clamp_min(1))
@@ -63,10 +81,19 @@ class MessagePanel:
                                      h[receivers].norm(dim=-1), torch.full_like(sim, tx), torch.full_like(sim, ta)), -1)
 
     def predict(self, weights, indices):
-        removed = (1-weights)[..., None] * self.messages[indices]
-        total = self.total[indices] - removed.reshape(*removed.shape[:-2], self.h.shape[1], -1,
-                                                       self.h.shape[-1]).sum(-2)
-        h = self.model.finish_messages(self.h[indices], total, self.mass[indices])
+        def subtract(total, messages):
+            removed = (1-weights)[..., None]*messages[indices]
+            return total[indices]-removed.reshape(*removed.shape[:-2], self.h.shape[1], -1,
+                                                   self.h.shape[-1]).sum(-2)
+
+        h, mass = self.h[indices], self.mass[indices]
+        if self.layer != "last":
+            layer = self.model.mix[0]
+            first = self.first_h[indices]
+            aggregate = subtract(self.first_total, self.first_messages) / mass.clamp_min(1)[..., None]
+            h = first + F.gelu(layer.lin_l(aggregate) + layer.lin_r(first))
+        total = self.total[indices] if self.layer == "first" else subtract(self.total, self.messages)
+        h = self.model.finish_messages(h, total, mass)
         if self.direction == "text":
             return self.model.text(self.model.norm(self.selected[indices] + h[..., 0, :]))
         return self.model.predict_pairs(h[..., 0, :], h[..., 1, :],
@@ -88,9 +115,12 @@ class MessagePanel:
         return torch.cat(losses, 1), torch.cat(probabilities, 1)
 
 
-def contexts(name, seed, device):
-    data = load(name)
-    checkpoint = torch.load(Path("checkpoints/research_twinmask_v2") / f"{name}_{seed}.pt",
+def contexts(name, seed, device, *, include_dev=False, resplit=False):
+    data = synthetic_graph(name) if name in SYNTHETIC else load(name)
+    if resplit:
+        data = resplit_link_data(data, seed)
+    directory = "checkpoints/research_twinmask_v2" + ("_resplit" if resplit else "")
+    checkpoint = torch.load(Path(directory) / f"{name}_{seed}.pt",
                             map_location="cpu", weights_only=False)
     vocabulary = checkpoint["vocabulary"].to(device)
     model = SparseTwinMask(len(vocabulary)+3, 16, width=checkpoint["model"]["embed.weight"].shape[1]).to(device)
@@ -103,7 +133,7 @@ def contexts(name, seed, device):
     n = len(ids)
     generator = torch.Generator(device=device).manual_seed(seed)
     order = checkpoint["node_split"].to(device)
-    train, fit, _, test = order.split([n//2, n//5, n//10, n-n//2-n//5-n//10])
+    train, fit, dev, test = order.split([n//2, n//5, n//10, n-n//2-n//5-n//10])
     context = ids.clone()
     context[order[len(train):]] = context[order[len(train):]].masked_fill(ids[order[len(train):]] > OTHER, MASK)
     pairs = data["train_pos"].to(device)
@@ -120,6 +150,14 @@ def contexts(name, seed, device):
     evaluation = torch.cat([data[k] for k in ("test_pos", "test_neg")], 1)
     truth_table = dict(zip((evaluation[0]*n+evaluation[1]).tolist(),
                            [1]*data["test_pos"].shape[1]+[0]*data["test_neg"].shape[1]))
+    dev_index = perm[len(perm)//5+len(perm)//10:len(perm)//5+2*(len(perm)//10)]
+    if include_dev:
+        keep[dev_index] = False
+        forbidden.update((negatives[0]*n+negatives[1]).tolist())
+        dev_neg = sample_negatives(n, len(dev_index), forbidden, np.random.default_rng(seed+4000)).to(device)
+        dev_pairs = torch.cat((pairs[:, dev_index], dev_neg), 1)
+        dev_labels = torch.arange(dev_pairs.shape[1], device=device) < len(dev_index)
+    noisy = data.get("noise_edges", pairs[:, :0]).to(device)
     for rates, saved in zip(((.25, .75), (.5, .5), (.75, .25), (.9, .9)), checkpoint["masks"]):
         fit_context, test_context = context.clone(), context.clone()
         fit_context[fit], test_context[test] = ids[fit], ids[test]
@@ -130,8 +168,17 @@ def contexts(name, seed, device):
         candidates = saved["pairs"]
         test_labels = torch.tensor([truth_table[k] for k in (candidates[0]*n+candidates[1]).tolist()], device=device)
         test_case = Case(test_context, ids, saved["tokens"].to(device), candidates.to(device), test_labels,
-                         saved["edge_mask"].to(device), pairs, rates)
-        yield model, fit_case, test_case, generator
+                         saved["edge_mask"].to(device), torch.cat((pairs, noisy), 1), rates)
+        if include_dev:
+            dev_context = context.clone()
+            dev_context[dev] = ids[dev]
+            dev_pool = torch.zeros_like(pool)
+            dev_pool[dev] = ids[dev] > OTHER
+            dev_case = Case(dev_context, ids, corruption(dev_pool, rates[0], generator), dev_pairs, dev_labels.long(),
+                            corruption(torch.ones_like(dev_labels), rates[1], generator), pairs[:, keep], rates)
+            yield model, fit_case, dev_case, test_case, generator
+        else:
+            yield model, fit_case, test_case, generator
 
 
 def subset_weights(panel):
