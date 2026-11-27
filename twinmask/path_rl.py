@@ -220,7 +220,8 @@ if __name__ == "__main__":
     ap.add_argument("--w_text", type=float, default=0.5)
     ap.add_argument("--no_policy", action="store_true")
     ap.add_argument("--sweep", type=int, nargs="*", default=[1, 2, 4, 8, 16])
+    ap.add_argument("--output-tag", default="path_rl", help="result subdirectory under results")
     a = ap.parse_args()
     r = experiment(a.dataset, a.steps, a.rho, a.mode, a.k, a.reps, a.iters, a.seed, a.ckpt_seed, a.max_nodes,
                    tuple(a.sweep), a.adv, a.w_text, a.no_policy)
-    print(save_json(r, "path_rl", f"{a.dataset}_rho{a.rho}_N{a.steps}_{a.mode}_s{a.seed}.json"))
+    print(save_json(r, a.output_tag, f"{a.dataset}_rho{a.rho}_N{a.steps}_{a.mode}_s{a.seed}.json"))
