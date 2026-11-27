@@ -44,7 +44,7 @@ class SparseTwinMask(nn.Module):
         self.pair_state = nn.Embedding(3, width)
         self.edge = nn.Sequential(nn.Linear(4*width+1, width), nn.GELU(), nn.Linear(width, 1))
 
-    def forward(self, ids, pairs, state, base, token_query, edge_query, tx, ta, generated=None):
+    def encode_messages(self, ids, pairs, state, base, token_query, tx, ta, generated=None):
         row, col = token_query
         valid = (ids != PAD).unsqueeze(-1)
         if self.encoder is None:
@@ -66,6 +66,7 @@ class SparseTwinMask(nn.Module):
                 ordering.append(in_batch.nonzero().flatten())
             h = self.project(torch.cat(pooled).to(self.project.weight.dtype))
             selected = self.project(torch.cat(queries)[torch.cat(ordering).argsort()].to(self.project.weight.dtype))
+        semantic = h
         h = h + self.clock_x(h.new_tensor(tx)) + self.clock_a(h.new_tensor(ta))
         weights = (state == 1).float()
         if generated is not None:
@@ -77,14 +78,29 @@ class SparseTwinMask(nn.Module):
         source, target = adjacency
         mass = h.new_zeros(len(h)).index_add_(0, target, weight)
         degree = mass.log1p()
-        for layer in self.mix:
+        for layer in self.mix[:-1]:
             neighbors = torch.zeros_like(h).index_add_(0, target, h[source] * weight[:, None])
             h = h + F.gelu(layer.lin_l(neighbors / mass.clamp_min(1)[:, None]) + layer.lin_r(h))
+        neighbors = torch.zeros_like(h).index_add_(0, target, h[source] * weight[:, None])
+        return selected, semantic, h, neighbors, mass, adjacency
+
+    def finish_messages(self, h, neighbors, mass):
+        layer = self.mix[-1]
+        return h + F.gelu(layer.lin_l(neighbors / mass.clamp_min(1)[..., None]) + layer.lin_r(h))
+
+    def predict_pairs(self, a, b, degree, state):
+        features = torch.cat((a+b, (a-b).abs(), a*b, self.pair_state(state), degree[..., None]), -1)
+        return self.edge(features).squeeze(-1)
+
+    def forward(self, ids, pairs, state, base, token_query, edge_query, tx, ta, generated=None):
+        selected, _, h, neighbors, mass, _ = self.encode_messages(ids, pairs, state, base, token_query,
+                                                                  tx, ta, generated)
+        h = self.finish_messages(h, neighbors, mass)
+        row, _ = token_query
         i, j = pairs[:, edge_query]
-        a, b = h[i], h[j]
-        features = torch.cat((a+b, (a-b).abs(), a*b, self.pair_state(state[edge_query]),
-                              (degree[i]+degree[j])[:, None]), 1)
-        return self.text(self.norm(selected + h[row])), self.edge(features).flatten()
+        degree = mass.log1p()
+        return self.text(self.norm(selected + h[row])), self.predict_pairs(h[i], h[j], degree[i]+degree[j],
+                                                                          state[edge_query])
 
 
 def corruption(eligible, rate, rng):

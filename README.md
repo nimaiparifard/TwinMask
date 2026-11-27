@@ -5,6 +5,63 @@
 
 ---
 
+## TwinMask V3 · Counterfactual utility and selective message passing
+
+V3 asks whether local evidence removal improves masked token and edge reconstruction, and how much of the oracle gain a selector can recover from observations alone. This pilot freezes the V2 denoiser and intervenes in its final GraphSAGE aggregation. Each token target has up to four sampled incoming messages. Each edge candidate has up to two sampled incoming messages at each endpoint, and the edge experiment gates the direct pooled-text term of those messages. Indirect text paths, degree normalization, the observed graph, and messages outside the sampled panel stay fixed. The budget applies to the panel.
+
+The runner measures leave-one-out loss changes, exact Shapley values over the at-most-four-slot panel, and signed pair interactions. Separate lightweight utility networks for text and edge use Huber and ranking losses. A reconstruction-trained gate with the same scoring architecture serves as a control. The budgeted comparisons use matched counts for random, semantic similarity, predicted utility, redundancy-penalized utility, and predicted synergy. The unconstrained-count oracle can use any subset of size at most K. A second oracle uses the matched count. Oracle scores use target labels for diagnostics. Learned selectors are fitted on controller cases and choose test weights from observable features.
+
+### Related work and overlap
+
+| Primary source | What overlaps and what V3 measures |
+|---|---|
+| [SGUL, ICLR 2025](https://arxiv.org/html/2503.18195v1) | The closest overlap for learning neighbor value without test labels. SGUL values neighbor subsets using a learned utility tied to inference accuracy and Shapley features. The V3 pilot estimates signed loss changes for two masked reconstruction targets. |
+| [Efficient Modality Selection, JMLR 2024](https://jmlr.org/papers/v25/23-0439.html) | Uses Shapley and marginal utility for cardinality-constrained modality selection, with guarantees under its assumptions. V3 enumerates small message panels, including potentially negative and interacting utility. |
+| [GraphMask, ICLR 2021](https://arxiv.org/html/2010.00577) | Trains differentiable message masks to explain which messages a frozen GNN can omit while preserving behavior. V3 compares reconstruction loss changes under fixed-normalization message suppression. |
+| [NeuralSparse, ICML 2020](https://proceedings.mlr.press/v119/zheng20d.html) and [PASS, KDD 2021](https://blog.ml.cmu.edu/2021/12/03/pass-performance-adaptive-sampling-strategy-for-graph-convolutional-networks/) | Learn task-relevant sparsification or neighbor sampling. The pilot's reconstruction-trained gate is a local control. Equal-protocol reproductions of the published methods remain open. |
+| [UDPD, ICML 2026](https://proceedings.mlr.press/v306/yu26ab.html) | Already modulates cross-modal interaction by uncertainty in continuous embedding diffusion for node classification. V3 studies local counterfactual evidence for discrete reconstruction under separate masking rates. |
+
+These overlaps leave the paper's candidate contribution in the **measurement and mitigation of direction-specific harmful evidence under incomplete text and structure**, with equal-budget controls. Establishing novelty and improvement requires stronger same-protocol comparisons.
+
+<!-- research-v3-results -->
+
+### Ten-seed results
+
+Seeds 42–51, four asymmetric corruption cases per seed, and up to 768 sampled targets per task and case. The test cases use saved V2 masks. Lower token CE and edge BCE are better. Each cell is a mean over cases and seeds.
+
+| Dataset | Direction | Full | Random K=2 | Direct gate top-2 | Learned top-2 | Learned redundancy + synergy K=2 | Oracle matched K=2 | Oracle at most 2 |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| Cora | text | 4.8499 | 4.8496 | 4.8490 | 4.8492 | 4.8493 | 4.8333 | 4.7882 |
+| Cora | edge | 0.6465 | 0.6483 | 0.6480 | 0.6471 | 0.6477 | 0.6132 | 0.6044 |
+| CiteSeer | text | 5.1818 | 5.1819 | 5.1814 | 5.1815 | 5.1816 | 5.1734 | 5.1151 |
+| CiteSeer | edge | 0.6468 | 0.6489 | 0.6483 | 0.6479 | 0.6477 | 0.6191 | 0.5943 |
+| PubMed | text | 3.9951 | 3.9945 | 3.9942 | 3.9942 | 3.9944 | 3.9884 | 3.9512 |
+| PubMed | edge | 0.4940 | 0.4929 | 0.4925 | 0.4907 | 0.4915 | 0.4692 | 0.4599 |
+
+Paired intervals use the ten seed means within each graph and quantify run variability on that graph.
+
+| Dataset | Direction | Oracle at most 2 minus full [95% CI] | Learned top-2 minus direct gate top-2 [95% CI] | LOO Spearman |
+|---|---|---:|---:|---:|
+| Cora | text | -0.0617 [-0.0720, -0.0513] | +0.0001 [-0.0002, +0.0004] | 0.033 |
+| Cora | edge | -0.0420 [-0.0522, -0.0319] | -0.0009 [-0.0031, +0.0013] | 0.023 |
+| CiteSeer | text | -0.0667 [-0.0766, -0.0567] | +0.0000 [-0.0002, +0.0003] | 0.043 |
+| CiteSeer | edge | -0.0524 [-0.0682, -0.0366] | -0.0003 [-0.0017, +0.0011] | 0.052 |
+| PubMed | text | -0.0439 [-0.0507, -0.0371] | +0.0000 [-0.0001, +0.0002] | 0.083 |
+| PubMed | edge | -0.0341 [-0.0414, -0.0267] | -0.0018 [-0.0028, -0.0008] | 0.115 |
+
+The oracle with an up-to-two budget improved both losses on all three datasets. The learned selectors recovered only a small share of the diagnostic oracle gap. Weak positive rank correlation and the comparison with direct supervision temper any claim for the utility or synergy objective. The current audit scores all subsets of a small panel after full-graph encoding, so its runtime measures the research experiment. The selected message counts do not establish inference speedup.
+
+![Change in token and edge reconstruction loss relative to full message use across local budgets](results/research_twinmask_v3/budget_curves.png)
+
+Detailed curves for budgets 1–4, hard/soft gates, oracle Shapley ranking, interaction magnitude, accuracy, perplexity, AUROC, AP, and per-seed runtimes. Fitted selectors are stored locally under `checkpoints/research_twinmask_v3/`. [Cora](results/research_twinmask_v3/cora.json) [CiteSeer](results/research_twinmask_v3/citeseer.json) [PubMed](results/research_twinmask_v3/pubmed.json)
+
+This pilot uses the compact V2 checkpoints and a one-shot final-layer intervention. Multi-step diffusion integration, larger message panels, node classification, GAT/GraphMask/NeuralSparse/PASS reproductions, synthetic-shift generalization, and deployment latency remain future tests.
+
+```powershell
+python -m scripts.research_twinmask_v3 --seeds 42 43 44 45 46 47 48 49 50 51
+python -m unittest scripts.test_research_pilots scripts.test_research_twinmask_v3 -v
+```
+
 ## Research correction and directional conditioning (V2)
 
 **Working title.** When Text and Topology Disagree: Adaptive Cross-Modal Conditioning for Incomplete Text-Attributed Graphs.
