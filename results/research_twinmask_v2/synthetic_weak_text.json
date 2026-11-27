@@ -1,0 +1,4883 @@
+[
+  {
+    "seed": 42,
+    "epochs": 120,
+    "width": 64,
+    "vocab": 32,
+    "best_fixed": "joint",
+    "rollout_training": true,
+    "soft_edges": true,
+    "clock_training": "mixed",
+    "test_vocab_coverage": 1.0,
+    "dev_gain_spearman": 0.46149509739892264,
+    "dev_negative_gain_accuracy": 0.7727272727272727,
+    "training_seconds": 1.5355131999822333,
+    "controller_seconds": 1.3761061999830417,
+    "checkpoint_sha256": "ce369520e76c7a26c912402a196058f95ea0cad11be38ccd8090ea7603ce60ff",
+    "peak_mib": 45.49267578125,
+    "cases": [
+      {
+        "text_rate": 0.25,
+        "edge_rate": 0.75,
+        "initial_clocks": [
+          0.25,
+          0.75
+        ],
+        "tokens": 407,
+        "pairs": 521,
+        "initial_token_ce": 3.4963743686676025,
+        "initial_edge_bce": 0.6982247233390808,
+        "structure_to_text": 0.003723621368408203,
+        "text_to_edge": -0.005388438701629639,
+        "metrics": {
+          "one_shot": {
+            "token_accuracy": 0.049140047281980515,
+            "edge_accuracy": 0.4894433617591858,
+            "edge_auc": 0.5074906367041199,
+            "edge_ap": 0.5422596523364878,
+            "edge_brier": 0.2525282097573651,
+            "calls": 1,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  407,
+                  0
+                ],
+                "pairs": [
+                  521,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.007037200033664703
+          },
+          "joint": {
+            "token_accuracy": 0.04176904261112213,
+            "edge_accuracy": 0.5028790831565857,
+            "edge_auc": 0.5075791087911763,
+            "edge_ap": 0.541358665747556,
+            "edge_brier": 0.25231273839047447,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  102,
+                  0
+                ],
+                "pairs": [
+                  131,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  102,
+                  0
+                ],
+                "pairs": [
+                  130,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  102,
+                  0
+                ],
+                "pairs": [
+                  130,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  101,
+                  0
+                ],
+                "pairs": [
+                  130,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.018583099998068064
+          },
+          "text": {
+            "token_accuracy": 0.051597051322460175,
+            "edge_accuracy": 0.4836851954460144,
+            "edge_auc": 0.5061340647025864,
+            "edge_ap": 0.5441766939483941,
+            "edge_brier": 0.25402452755633353,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "text",
+                "tokens": [
+                  102,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  102,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  102,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  101,
+                  0
+                ],
+                "pairs": [
+                  521,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.016924700001254678
+          },
+          "edge": {
+            "token_accuracy": 0.051597051322460175,
+            "edge_accuracy": 0.4971209168434143,
+            "edge_auc": 0.5032439765254062,
+            "edge_ap": 0.5403480098751483,
+            "edge_brier": 0.2524001067144926,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  131,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  130,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  130,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  407,
+                  0
+                ],
+                "pairs": [
+                  130,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.017370900022797287
+          },
+          "correct": {
+            "token_accuracy": 0.04668304696679115,
+            "edge_accuracy": 0.5086372494697571,
+            "edge_auc": 0.5032439765254062,
+            "edge_ap": 0.5348070830376954,
+            "edge_brier": 0.252709847208389,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "correct",
+                "tokens": [
+                  102,
+                  0
+                ],
+                "pairs": [
+                  131,
+                  0
+                ]
+              },
+              {
+                "action": "rescore"
+              },
+              {
+                "action": "correct",
+                "tokens": [
+                  153,
+                  10
+                ],
+                "pairs": [
+                  195,
+                  13
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  162,
+                  0
+                ],
+                "pairs": [
+                  208,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.018908699974417686
+          },
+          "entropy": {
+            "token_accuracy": 0.051597051322460175,
+            "edge_accuracy": 0.4971209168434143,
+            "edge_auc": 0.5032439765254062,
+            "edge_ap": 0.5403480098751483,
+            "edge_brier": 0.2524001074496972,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  131,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  130,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  130,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  407,
+                  0
+                ],
+                "pairs": [
+                  130,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.02000760001828894
+          },
+          "adaptive": {
+            "token_accuracy": 0.054054051637649536,
+            "edge_accuracy": 0.5124759674072266,
+            "edge_auc": 0.49932171399923325,
+            "edge_ap": 0.5388375446929412,
+            "edge_brier": 0.25257390275301533,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  131,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  130,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  204,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  203,
+                  0
+                ],
+                "pairs": [
+                  260,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.020516600052360445
+          }
+        },
+        "gates": {
+          "unimodal": {
+            "token_ce": 3.5000979900360107,
+            "token_accuracy": 0.051597051322460175,
+            "edge_bce": 0.6928362846374512,
+            "edge_auc": 0.5327420448848389,
+            "weights": [
+              0.0,
+              0.0
+            ]
+          },
+          "joint": {
+            "token_ce": 3.4963743686676025,
+            "token_accuracy": 0.049140047281980515,
+            "edge_bce": 0.698224663734436,
+            "edge_auc": 0.5074906367041199,
+            "weights": [
+              1.0,
+              1.0
+            ]
+          },
+          "learned": {
+            "token_ce": 3.496429920196533,
+            "token_accuracy": 0.051597051322460175,
+            "edge_bce": 0.6928362846374512,
+            "edge_auc": 0.5327420448848389,
+            "weights": [
+              0.7003473178646482,
+              0.0
+            ]
+          },
+          "oracle_analysis_only": {
+            "token_ce": 3.49635910987854,
+            "token_accuracy": 0.051597051322460175,
+            "edge_bce": 0.6928362846374512,
+            "edge_auc": 0.5327420448848389,
+            "weights": [
+              0.75,
+              0.0
+            ]
+          }
+        }
+      },
+      {
+        "text_rate": 0.5,
+        "edge_rate": 0.5,
+        "initial_clocks": [
+          0.5,
+          0.5
+        ],
+        "tokens": 775,
+        "pairs": 352,
+        "initial_token_ce": 3.5208566188812256,
+        "initial_edge_bce": 0.7025497555732727,
+        "structure_to_text": -0.009511470794677734,
+        "text_to_edge": -0.009466826915740967,
+        "metrics": {
+          "one_shot": {
+            "token_accuracy": 0.025806453078985214,
+            "edge_accuracy": 0.5056818127632141,
+            "edge_auc": 0.5211406573498965,
+            "edge_ap": 0.507626274420109,
+            "edge_brier": 0.2545001200164135,
+            "calls": 1,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  775,
+                  0
+                ],
+                "pairs": [
+                  352,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.006130399997346103
+          },
+          "joint": {
+            "token_accuracy": 0.028387097641825676,
+            "edge_accuracy": 0.5255681872367859,
+            "edge_auc": 0.5266563146997929,
+            "edge_ap": 0.5097037819015625,
+            "edge_brier": 0.25405678685432204,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  194,
+                  0
+                ],
+                "pairs": [
+                  88,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  194,
+                  0
+                ],
+                "pairs": [
+                  88,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  194,
+                  0
+                ],
+                "pairs": [
+                  88,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  193,
+                  0
+                ],
+                "pairs": [
+                  88,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.017798799963202327
+          },
+          "text": {
+            "token_accuracy": 0.021935485303401947,
+            "edge_accuracy": 0.4943181872367859,
+            "edge_auc": 0.5335791925465838,
+            "edge_ap": 0.5318847163308495,
+            "edge_brier": 0.2511422026544427,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "text",
+                "tokens": [
+                  194,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  194,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  194,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  193,
+                  0
+                ],
+                "pairs": [
+                  352,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.017497399996500462
+          },
+          "edge": {
+            "token_accuracy": 0.02709677442908287,
+            "edge_accuracy": 0.5142045617103577,
+            "edge_auc": 0.5197657867494825,
+            "edge_ap": 0.5063662442339798,
+            "edge_brier": 0.25436843974342016,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  88,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  88,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  88,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  775,
+                  0
+                ],
+                "pairs": [
+                  88,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.017031399998813868
+          },
+          "correct": {
+            "token_accuracy": 0.028387097641825676,
+            "edge_accuracy": 0.5170454978942871,
+            "edge_auc": 0.5262357660455487,
+            "edge_ap": 0.5089276217664239,
+            "edge_brier": 0.25405488267044324,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "correct",
+                "tokens": [
+                  194,
+                  0
+                ],
+                "pairs": [
+                  88,
+                  0
+                ]
+              },
+              {
+                "action": "rescore"
+              },
+              {
+                "action": "correct",
+                "tokens": [
+                  291,
+                  19
+                ],
+                "pairs": [
+                  132,
+                  8
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  309,
+                  0
+                ],
+                "pairs": [
+                  140,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.01546220004092902
+          },
+          "entropy": {
+            "token_accuracy": 0.02709677442908287,
+            "edge_accuracy": 0.5142045617103577,
+            "edge_auc": 0.5197657867494825,
+            "edge_ap": 0.5063662442339798,
+            "edge_brier": 0.2543684405944069,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  88,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  88,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  88,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  775,
+                  0
+                ],
+                "pairs": [
+                  88,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.01734819996636361
+          },
+          "adaptive": {
+            "token_accuracy": 0.023225806653499603,
+            "edge_accuracy": 0.5284091234207153,
+            "edge_auc": 0.537008281573499,
+            "edge_ap": 0.5143994393700884,
+            "edge_brier": 0.2527025530946459,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  88,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  88,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  388,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  387,
+                  0
+                ],
+                "pairs": [
+                  176,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.02205810003215447
+          }
+        },
+        "gates": {
+          "unimodal": {
+            "token_ce": 3.511345148086548,
+            "token_accuracy": 0.02451612986624241,
+            "edge_bce": 0.6930829286575317,
+            "edge_auc": 0.532430771221532,
+            "weights": [
+              0.0,
+              0.0
+            ]
+          },
+          "joint": {
+            "token_ce": 3.5208566188812256,
+            "token_accuracy": 0.025806453078985214,
+            "edge_bce": 0.7025497555732727,
+            "edge_auc": 0.5211406573498965,
+            "weights": [
+              1.0,
+              1.0
+            ]
+          },
+          "learned": {
+            "token_ce": 3.512105941772461,
+            "token_accuracy": 0.025806453078985214,
+            "edge_bce": 0.6930829286575317,
+            "edge_auc": 0.532430771221532,
+            "weights": [
+              0.14203909682254467,
+              0.0
+            ]
+          },
+          "oracle_analysis_only": {
+            "token_ce": 3.511345148086548,
+            "token_accuracy": 0.02451612986624241,
+            "edge_bce": 0.6930829286575317,
+            "edge_auc": 0.532430771221532,
+            "weights": [
+              0.0,
+              0.0
+            ]
+          }
+        }
+      },
+      {
+        "text_rate": 0.75,
+        "edge_rate": 0.25,
+        "initial_clocks": [
+          0.75,
+          0.25
+        ],
+        "tokens": 1132,
+        "pairs": 168,
+        "initial_token_ce": 3.500868082046509,
+        "initial_edge_bce": 0.7041289806365967,
+        "structure_to_text": -0.002156496047973633,
+        "text_to_edge": -0.010192930698394775,
+        "metrics": {
+          "one_shot": {
+            "token_accuracy": 0.03621908277273178,
+            "edge_accuracy": 0.4702380895614624,
+            "edge_auc": 0.45882688739831595,
+            "edge_ap": 0.5454918421096496,
+            "edge_brier": 0.2554481735686352,
+            "calls": 1,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  1132,
+                  0
+                ],
+                "pairs": [
+                  168,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.0053653999930247664
+          },
+          "joint": {
+            "token_accuracy": 0.051236748695373535,
+            "edge_accuracy": 0.4821428656578064,
+            "edge_auc": 0.46482089339232197,
+            "edge_ap": 0.5477705800359479,
+            "edge_brier": 0.25544580097022457,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  283,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  283,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  283,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  283,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.015085999970324337
+          },
+          "text": {
+            "token_accuracy": 0.04858657345175743,
+            "edge_accuracy": 0.4761904776096344,
+            "edge_auc": 0.4601113172541745,
+            "edge_ap": 0.5589250559835176,
+            "edge_brier": 0.2576774085607317,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "text",
+                "tokens": [
+                  283,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  283,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  283,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  283,
+                  0
+                ],
+                "pairs": [
+                  168,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.0171394000062719
+          },
+          "edge": {
+            "token_accuracy": 0.03268551081418991,
+            "edge_accuracy": 0.4821428656578064,
+            "edge_auc": 0.4611103182531754,
+            "edge_ap": 0.546604961880832,
+            "edge_brier": 0.25445111567237355,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  1132,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.016524599981494248
+          },
+          "correct": {
+            "token_accuracy": 0.04858657345175743,
+            "edge_accuracy": 0.4821428656578064,
+            "edge_auc": 0.4552590266875981,
+            "edge_ap": 0.5446650944171826,
+            "edge_brier": 0.25635319135595663,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "correct",
+                "tokens": [
+                  283,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              },
+              {
+                "action": "rescore"
+              },
+              {
+                "action": "correct",
+                "tokens": [
+                  425,
+                  28
+                ],
+                "pairs": [
+                  63,
+                  4
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  452,
+                  0
+                ],
+                "pairs": [
+                  67,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.017479100031778216
+          },
+          "entropy": {
+            "token_accuracy": 0.03268551081418991,
+            "edge_accuracy": 0.4821428656578064,
+            "edge_auc": 0.4611103182531754,
+            "edge_ap": 0.546604961880832,
+            "edge_brier": 0.2544511157070807,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  1132,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.018505499989259988
+          },
+          "adaptive": {
+            "token_accuracy": 0.03975265100598335,
+            "edge_accuracy": 0.5,
+            "edge_auc": 0.4882260596546311,
+            "edge_ap": 0.5592123618444689,
+            "edge_brier": 0.25238332835173877,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  566,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  566,
+                  0
+                ],
+                "pairs": [
+                  84,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.018612600048072636
+          }
+        },
+        "gates": {
+          "unimodal": {
+            "token_ce": 3.498711585998535,
+            "token_accuracy": 0.034452296793460846,
+            "edge_bce": 0.6939360499382019,
+            "edge_auc": 0.48144712430426717,
+            "weights": [
+              0.0,
+              0.0
+            ]
+          },
+          "joint": {
+            "token_ce": 3.500868082046509,
+            "token_accuracy": 0.03621908277273178,
+            "edge_bce": 0.7041289806365967,
+            "edge_auc": 0.45882688739831595,
+            "weights": [
+              1.0,
+              1.0
+            ]
+          },
+          "learned": {
+            "token_ce": 3.4995362758636475,
+            "token_accuracy": 0.03710247203707695,
+            "edge_bce": 0.6939360499382019,
+            "edge_auc": 0.48144712430426717,
+            "weights": [
+              0.6628474911635456,
+              0.0
+            ]
+          },
+          "oracle_analysis_only": {
+            "token_ce": 3.498711585998535,
+            "token_accuracy": 0.034452296793460846,
+            "edge_bce": 0.6939360499382019,
+            "edge_auc": 0.48144712430426717,
+            "weights": [
+              0.0,
+              0.0
+            ]
+          }
+        }
+      },
+      {
+        "text_rate": 0.9,
+        "edge_rate": 0.9,
+        "initial_clocks": [
+          0.9,
+          0.9
+        ],
+        "tokens": 1377,
+        "pairs": 639,
+        "initial_token_ce": 3.4941837787628174,
+        "initial_edge_bce": 0.7040934562683105,
+        "structure_to_text": -0.002136707305908203,
+        "text_to_edge": -0.011148631572723389,
+        "metrics": {
+          "one_shot": {
+            "token_accuracy": 0.04284676909446716,
+            "edge_accuracy": 0.471048504114151,
+            "edge_auc": 0.48984691977498573,
+            "edge_ap": 0.4908140710818558,
+            "edge_brier": 0.25536172854813394,
+            "calls": 1,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  1377,
+                  0
+                ],
+                "pairs": [
+                  639,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.005946799996308982
+          },
+          "joint": {
+            "token_accuracy": 0.04429920017719269,
+            "edge_accuracy": 0.4773083031177521,
+            "edge_auc": 0.4817322958113644,
+            "edge_ap": 0.48174685378742055,
+            "edge_brier": 0.25704308532881004,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  345,
+                  0
+                ],
+                "pairs": [
+                  160,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  344,
+                  0
+                ],
+                "pairs": [
+                  160,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  344,
+                  0
+                ],
+                "pairs": [
+                  160,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  344,
+                  0
+                ],
+                "pairs": [
+                  159,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.01528720004716888
+          },
+          "text": {
+            "token_accuracy": 0.04139433428645134,
+            "edge_accuracy": 0.46791860461235046,
+            "edge_auc": 0.48562300319488816,
+            "edge_ap": 0.4937481590561196,
+            "edge_brier": 0.2563914577854938,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "text",
+                "tokens": [
+                  345,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  344,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  344,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  344,
+                  0
+                ],
+                "pairs": [
+                  639,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.018449399969540536
+          },
+          "edge": {
+            "token_accuracy": 0.046477850526571274,
+            "edge_accuracy": 0.4820031225681305,
+            "edge_auc": 0.4862894215880358,
+            "edge_ap": 0.4886311163312725,
+            "edge_brier": 0.25559581719826285,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  160,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  160,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  160,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  1377,
+                  0
+                ],
+                "pairs": [
+                  159,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.014882300049066544
+          },
+          "correct": {
+            "token_accuracy": 0.050108931958675385,
+            "edge_accuracy": 0.4882628917694092,
+            "edge_auc": 0.4808796722789549,
+            "edge_ap": 0.48420874072089465,
+            "edge_brier": 0.25733329807672983,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "correct",
+                "tokens": [
+                  345,
+                  0
+                ],
+                "pairs": [
+                  160,
+                  0
+                ]
+              },
+              {
+                "action": "rescore"
+              },
+              {
+                "action": "correct",
+                "tokens": [
+                  516,
+                  34
+                ],
+                "pairs": [
+                  240,
+                  16
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  550,
+                  0
+                ],
+                "pairs": [
+                  255,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.016059699992183596
+          },
+          "entropy": {
+            "token_accuracy": 0.046477850526571274,
+            "edge_accuracy": 0.4820031225681305,
+            "edge_auc": 0.4862894215880358,
+            "edge_ap": 0.4886311163312725,
+            "edge_brier": 0.25559581825882766,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  160,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  160,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  160,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  1377,
+                  0
+                ],
+                "pairs": [
+                  159,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.02087720000417903
+          },
+          "adaptive": {
+            "token_accuracy": 0.039941903203725815,
+            "edge_accuracy": 0.4866979718208313,
+            "edge_auc": 0.4911209549383563,
+            "edge_ap": 0.48880173686168693,
+            "edge_brier": 0.2558520187733851,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  160,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  160,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  689,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  688,
+                  0
+                ],
+                "pairs": [
+                  319,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.021502799994777888
+          }
+        },
+        "gates": {
+          "unimodal": {
+            "token_ce": 3.492047071456909,
+            "token_accuracy": 0.04139433428645134,
+            "edge_bce": 0.6929448246955872,
+            "edge_auc": 0.5161165448166369,
+            "weights": [
+              0.0,
+              0.0
+            ]
+          },
+          "joint": {
+            "token_ce": 3.4941835403442383,
+            "token_accuracy": 0.04284676909446716,
+            "edge_bce": 0.7040933966636658,
+            "edge_auc": 0.48984691977498573,
+            "weights": [
+              1.0,
+              1.0
+            ]
+          },
+          "learned": {
+            "token_ce": 3.494105100631714,
+            "token_accuracy": 0.0421205535531044,
+            "edge_bce": 0.6929448246955872,
+            "edge_auc": 0.5161165448166369,
+            "weights": [
+              0.9833138167067731,
+              0.0
+            ]
+          },
+          "oracle_analysis_only": {
+            "token_ce": 3.492047071456909,
+            "token_accuracy": 0.04139433428645134,
+            "edge_bce": 0.6929448246955872,
+            "edge_auc": 0.5161165448166369,
+            "weights": [
+              0.0,
+              0.0
+            ]
+          }
+        }
+      }
+    ]
+  },
+  {
+    "seed": 43,
+    "epochs": 120,
+    "width": 64,
+    "vocab": 32,
+    "best_fixed": "text",
+    "rollout_training": true,
+    "soft_edges": true,
+    "clock_training": "mixed",
+    "test_vocab_coverage": 1.0,
+    "dev_gain_spearman": 0.49695175948148773,
+    "dev_negative_gain_accuracy": 0.75,
+    "training_seconds": 1.7615714999847114,
+    "controller_seconds": 2.3385845000157133,
+    "checkpoint_sha256": "b58baf3dcada68db0cce318896391f2a85b33485bf6f80c1326200cec220c599",
+    "peak_mib": 45.7705078125,
+    "cases": [
+      {
+        "text_rate": 0.25,
+        "edge_rate": 0.75,
+        "initial_clocks": [
+          0.25,
+          0.75
+        ],
+        "tokens": 361,
+        "pairs": 552,
+        "initial_token_ce": 3.5784614086151123,
+        "initial_edge_bce": 0.6928364038467407,
+        "structure_to_text": -0.013637065887451172,
+        "text_to_edge": 0.00038689374923706055,
+        "metrics": {
+          "one_shot": {
+            "token_accuracy": 0.03878116235136986,
+            "edge_accuracy": 0.5163043737411499,
+            "edge_auc": 0.5511913357400722,
+            "edge_ap": 0.5492496603771025,
+            "edge_brier": 0.24984284065057366,
+            "calls": 1,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  361,
+                  0
+                ],
+                "pairs": [
+                  552,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.009986899967771024
+          },
+          "joint": {
+            "token_accuracy": 0.041551247239112854,
+            "edge_accuracy": 0.5253623127937317,
+            "edge_auc": 0.5396127338365606,
+            "edge_ap": 0.5444692520939791,
+            "edge_brier": 0.24995525172088395,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  91,
+                  0
+                ],
+                "pairs": [
+                  138,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  90,
+                  0
+                ],
+                "pairs": [
+                  138,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  90,
+                  0
+                ],
+                "pairs": [
+                  138,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  90,
+                  0
+                ],
+                "pairs": [
+                  138,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.02958769997349009
+          },
+          "text": {
+            "token_accuracy": 0.05540166050195694,
+            "edge_accuracy": 0.5253623127937317,
+            "edge_auc": 0.5485986215950115,
+            "edge_ap": 0.5453886175348535,
+            "edge_brier": 0.2491311056181326,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "text",
+                "tokens": [
+                  91,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  90,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  90,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  90,
+                  0
+                ],
+                "pairs": [
+                  552,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.02946460002567619
+          },
+          "edge": {
+            "token_accuracy": 0.04432132840156555,
+            "edge_accuracy": 0.5090579986572266,
+            "edge_auc": 0.5509681654085985,
+            "edge_ap": 0.5480460209531418,
+            "edge_brier": 0.24968772121123523,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  138,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  138,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  138,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  361,
+                  0
+                ],
+                "pairs": [
+                  138,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.030421300034504384
+          },
+          "correct": {
+            "token_accuracy": 0.049861494451761246,
+            "edge_accuracy": 0.5126811861991882,
+            "edge_auc": 0.5399671808336068,
+            "edge_ap": 0.5414032066988654,
+            "edge_brier": 0.25014399421072037,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "correct",
+                "tokens": [
+                  91,
+                  0
+                ],
+                "pairs": [
+                  138,
+                  0
+                ]
+              },
+              {
+                "action": "rescore"
+              },
+              {
+                "action": "correct",
+                "tokens": [
+                  135,
+                  9
+                ],
+                "pairs": [
+                  207,
+                  13
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  144,
+                  0
+                ],
+                "pairs": [
+                  220,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.03388270002324134
+          },
+          "entropy": {
+            "token_accuracy": 0.04432132840156555,
+            "edge_accuracy": 0.5090579986572266,
+            "edge_auc": 0.5509681654085985,
+            "edge_ap": 0.5480460209531418,
+            "edge_brier": 0.2496877217981234,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  138,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  138,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  138,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  361,
+                  0
+                ],
+                "pairs": [
+                  138,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.037270800035912544
+          },
+          "adaptive": {
+            "token_accuracy": 0.05817174166440964,
+            "edge_accuracy": 0.5163043737411499,
+            "edge_auc": 0.54562520511979,
+            "edge_ap": 0.5489001216761864,
+            "edge_brier": 0.24965082070659392,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  138,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  138,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  181,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  180,
+                  0
+                ],
+                "pairs": [
+                  276,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.03634280001278967
+          }
+        },
+        "gates": {
+          "unimodal": {
+            "token_ce": 3.564824342727661,
+            "token_accuracy": 0.030470913276076317,
+            "edge_bce": 0.6932232975959778,
+            "edge_auc": 0.4929307515589103,
+            "weights": [
+              0.0,
+              0.0
+            ]
+          },
+          "joint": {
+            "token_ce": 3.578461170196533,
+            "token_accuracy": 0.03878116235136986,
+            "edge_bce": 0.6928364038467407,
+            "edge_auc": 0.5511913357400722,
+            "weights": [
+              1.0,
+              1.0
+            ]
+          },
+          "learned": {
+            "token_ce": 3.566678762435913,
+            "token_accuracy": 0.030470913276076317,
+            "edge_bce": 0.6932232975959778,
+            "edge_auc": 0.4929307515589103,
+            "weights": [
+              0.25614809976573616,
+              0.0
+            ]
+          },
+          "oracle_analysis_only": {
+            "token_ce": 3.564824342727661,
+            "token_accuracy": 0.030470913276076317,
+            "edge_bce": 0.6916688680648804,
+            "edge_auc": 0.5509025270758122,
+            "weights": [
+              0.0,
+              0.5
+            ]
+          }
+        }
+      },
+      {
+        "text_rate": 0.5,
+        "edge_rate": 0.5,
+        "initial_clocks": [
+          0.5,
+          0.5
+        ],
+        "tokens": 767,
+        "pairs": 364,
+        "initial_token_ce": 3.54670786857605,
+        "initial_edge_bce": 0.6970649361610413,
+        "structure_to_text": -0.008224248886108398,
+        "text_to_edge": -0.005638778209686279,
+        "metrics": {
+          "one_shot": {
+            "token_accuracy": 0.02868317998945713,
+            "edge_accuracy": 0.4642857313156128,
+            "edge_auc": 0.5454020894071915,
+            "edge_ap": 0.5619211803890916,
+            "edge_brier": 0.2519439666882545,
+            "calls": 1,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  767,
+                  0
+                ],
+                "pairs": [
+                  364,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.009377899987157434
+          },
+          "joint": {
+            "token_accuracy": 0.04172099009156227,
+            "edge_accuracy": 0.4670329689979553,
+            "edge_auc": 0.5358965014577259,
+            "edge_ap": 0.5730108930448983,
+            "edge_brier": 0.25407396544931155,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  192,
+                  0
+                ],
+                "pairs": [
+                  91,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  192,
+                  0
+                ],
+                "pairs": [
+                  91,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  192,
+                  0
+                ],
+                "pairs": [
+                  91,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  191,
+                  0
+                ],
+                "pairs": [
+                  91,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.01947699999436736
+          },
+          "text": {
+            "token_accuracy": 0.035202085971832275,
+            "edge_accuracy": 0.5082417726516724,
+            "edge_auc": 0.5352891156462586,
+            "edge_ap": 0.5658587129314236,
+            "edge_brier": 0.25091492216802697,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "text",
+                "tokens": [
+                  192,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  192,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  192,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  191,
+                  0
+                ],
+                "pairs": [
+                  364,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.02623350004432723
+          },
+          "edge": {
+            "token_accuracy": 0.035202085971832275,
+            "edge_accuracy": 0.45604395866394043,
+            "edge_auc": 0.5368683187560739,
+            "edge_ap": 0.5589114329718453,
+            "edge_brier": 0.2549074503538021,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  91,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  91,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  91,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  767,
+                  0
+                ],
+                "pairs": [
+                  91,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.028748699987772852
+          },
+          "correct": {
+            "token_accuracy": 0.033898305147886276,
+            "edge_accuracy": 0.48076924681663513,
+            "edge_auc": 0.5423347910592808,
+            "edge_ap": 0.5716946931359556,
+            "edge_brier": 0.25329780160570337,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "correct",
+                "tokens": [
+                  192,
+                  0
+                ],
+                "pairs": [
+                  91,
+                  0
+                ]
+              },
+              {
+                "action": "rescore"
+              },
+              {
+                "action": "correct",
+                "tokens": [
+                  288,
+                  19
+                ],
+                "pairs": [
+                  137,
+                  9
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  306,
+                  0
+                ],
+                "pairs": [
+                  145,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.03214030002709478
+          },
+          "entropy": {
+            "token_accuracy": 0.035202085971832275,
+            "edge_accuracy": 0.45604395866394043,
+            "edge_auc": 0.5368683187560739,
+            "edge_ap": 0.5589114329718453,
+            "edge_brier": 0.25490745009809257,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  91,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  91,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  91,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  767,
+                  0
+                ],
+                "pairs": [
+                  91,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.03408930002478883
+          },
+          "adaptive": {
+            "token_accuracy": 0.033898305147886276,
+            "edge_accuracy": 0.4890109896659851,
+            "edge_auc": 0.5339224975704567,
+            "edge_ap": 0.5652758248953489,
+            "edge_brier": 0.25357626252210774,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  91,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  91,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  384,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  383,
+                  0
+                ],
+                "pairs": [
+                  182,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.03279789997031912
+          }
+        },
+        "gates": {
+          "unimodal": {
+            "token_ce": 3.5384836196899414,
+            "token_accuracy": 0.03259452432394028,
+            "edge_bce": 0.691426157951355,
+            "edge_auc": 0.4914662293488824,
+            "weights": [
+              0.0,
+              0.0
+            ]
+          },
+          "joint": {
+            "token_ce": 3.54670786857605,
+            "token_accuracy": 0.02868317998945713,
+            "edge_bce": 0.6970649361610413,
+            "edge_auc": 0.5454020894071915,
+            "weights": [
+              1.0,
+              1.0
+            ]
+          },
+          "learned": {
+            "token_ce": 3.538524627685547,
+            "token_accuracy": 0.03259452432394028,
+            "edge_bce": 0.6919288635253906,
+            "edge_auc": 0.5398748785228378,
+            "weights": [
+              0.02466508974987717,
+              0.2772966761259599
+            ]
+          },
+          "oracle_analysis_only": {
+            "token_ce": 3.5384836196899414,
+            "token_accuracy": 0.03259452432394028,
+            "edge_bce": 0.691426157951355,
+            "edge_auc": 0.4914662293488824,
+            "weights": [
+              0.0,
+              0.0
+            ]
+          }
+        }
+      },
+      {
+        "text_rate": 0.75,
+        "edge_rate": 0.25,
+        "initial_clocks": [
+          0.75,
+          0.25
+        ],
+        "tokens": 1158,
+        "pairs": 168,
+        "initial_token_ce": 3.5142524242401123,
+        "initial_edge_bce": 0.7014968395233154,
+        "structure_to_text": -0.00304412841796875,
+        "text_to_edge": -0.008149981498718262,
+        "metrics": {
+          "one_shot": {
+            "token_accuracy": 0.03454231470823288,
+            "edge_accuracy": 0.4821428656578064,
+            "edge_auc": 0.4671201814058956,
+            "edge_ap": 0.48140196712253436,
+            "edge_brier": 0.2541256723462606,
+            "calls": 1,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  1158,
+                  0
+                ],
+                "pairs": [
+                  168,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.011168900004122406
+          },
+          "joint": {
+            "token_accuracy": 0.03799654543399811,
+            "edge_accuracy": 0.4880952537059784,
+            "edge_auc": 0.44529478458049887,
+            "edge_ap": 0.4567915041304739,
+            "edge_brier": 0.256481759098015,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  290,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  290,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  289,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  289,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.025714999996125698
+          },
+          "text": {
+            "token_accuracy": 0.03367875516414642,
+            "edge_accuracy": 0.4821428656578064,
+            "edge_auc": 0.47406462585034015,
+            "edge_ap": 0.4733026340141523,
+            "edge_brier": 0.2551504645093482,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "text",
+                "tokens": [
+                  290,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  290,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  289,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  289,
+                  0
+                ],
+                "pairs": [
+                  168,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.028743600007146597
+          },
+          "edge": {
+            "token_accuracy": 0.030224524438381195,
+            "edge_accuracy": 0.4642857313156128,
+            "edge_auc": 0.46102607709750565,
+            "edge_ap": 0.4707998025773499,
+            "edge_brier": 0.25464418634109715,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  1158,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.029126300010830164
+          },
+          "correct": {
+            "token_accuracy": 0.03540587052702904,
+            "edge_accuracy": 0.4880952537059784,
+            "edge_auc": 0.4587585034013606,
+            "edge_ap": 0.4614743509065541,
+            "edge_brier": 0.2552184408185243,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "correct",
+                "tokens": [
+                  290,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              },
+              {
+                "action": "rescore"
+              },
+              {
+                "action": "correct",
+                "tokens": [
+                  434,
+                  29
+                ],
+                "pairs": [
+                  63,
+                  4
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  463,
+                  0
+                ],
+                "pairs": [
+                  67,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.029734999989159405
+          },
+          "entropy": {
+            "token_accuracy": 0.030224524438381195,
+            "edge_accuracy": 0.4642857313156128,
+            "edge_auc": 0.46102607709750565,
+            "edge_ap": 0.4707998025773499,
+            "edge_brier": 0.2546441865965163,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  1158,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.03406920004636049
+          },
+          "adaptive": {
+            "token_accuracy": 0.030224524438381195,
+            "edge_accuracy": 0.4642857313156128,
+            "edge_auc": 0.46102607709750565,
+            "edge_ap": 0.4707998025773499,
+            "edge_brier": 0.2546441874416934,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  1158,
+                  0
+                ],
+                "pairs": [
+                  42,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.02954770001815632
+          }
+        },
+        "gates": {
+          "unimodal": {
+            "token_ce": 3.5112082958221436,
+            "token_accuracy": 0.031088082119822502,
+            "edge_bce": 0.6933469176292419,
+            "edge_auc": 0.4489795918367347,
+            "weights": [
+              0.0,
+              0.0
+            ]
+          },
+          "joint": {
+            "token_ce": 3.5142524242401123,
+            "token_accuracy": 0.03454231470823288,
+            "edge_bce": 0.7014968395233154,
+            "edge_auc": 0.4671201814058956,
+            "weights": [
+              1.0,
+              1.0
+            ]
+          },
+          "learned": {
+            "token_ce": 3.5109755992889404,
+            "token_accuracy": 0.03195163980126381,
+            "edge_bce": 0.6939508318901062,
+            "edge_auc": 0.4501133786848073,
+            "weights": [
+              0.07110203331803847,
+              0.12188677561904276
+            ]
+          },
+          "oracle_analysis_only": {
+            "token_ce": 3.5107030868530273,
+            "token_accuracy": 0.03367875516414642,
+            "edge_bce": 0.6933469176292419,
+            "edge_auc": 0.4489795918367347,
+            "weights": [
+              0.25,
+              0.0
+            ]
+          }
+        }
+      },
+      {
+        "text_rate": 0.9,
+        "edge_rate": 0.9,
+        "initial_clocks": [
+          0.9,
+          0.9
+        ],
+        "tokens": 1377,
+        "pairs": 633,
+        "initial_token_ce": 3.493077516555786,
+        "initial_edge_bce": 0.6945004463195801,
+        "structure_to_text": 0.0025587081909179688,
+        "text_to_edge": -0.0012703537940979004,
+        "metrics": {
+          "one_shot": {
+            "token_accuracy": 0.03848946839570999,
+            "edge_accuracy": 0.5150079131126404,
+            "edge_auc": 0.5230208645302984,
+            "edge_ap": 0.501777079997147,
+            "edge_brier": 0.25066877399906884,
+            "calls": 1,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  1377,
+                  0
+                ],
+                "pairs": [
+                  633,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.012879199988674372
+          },
+          "joint": {
+            "token_accuracy": 0.030501089990139008,
+            "edge_accuracy": 0.5134281516075134,
+            "edge_auc": 0.5328441649196366,
+            "edge_ap": 0.5207969964735107,
+            "edge_brier": 0.25049479032762034,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  345,
+                  0
+                ],
+                "pairs": [
+                  159,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  344,
+                  0
+                ],
+                "pairs": [
+                  158,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  344,
+                  0
+                ],
+                "pairs": [
+                  158,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  344,
+                  0
+                ],
+                "pairs": [
+                  158,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.038516500033438206
+          },
+          "text": {
+            "token_accuracy": 0.03122730553150177,
+            "edge_accuracy": 0.5118483304977417,
+            "edge_auc": 0.5251272836178497,
+            "edge_ap": 0.5157087095280012,
+            "edge_brier": 0.2505197866714187,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "text",
+                "tokens": [
+                  345,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  344,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  344,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  344,
+                  0
+                ],
+                "pairs": [
+                  633,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.03952460002619773
+          },
+          "edge": {
+            "token_accuracy": 0.030501089990139008,
+            "edge_accuracy": 0.5007898807525635,
+            "edge_auc": 0.5204452430867524,
+            "edge_ap": 0.5019368124161523,
+            "edge_brier": 0.2511937068736266,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  159,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  158,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  158,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  1377,
+                  0
+                ],
+                "pairs": [
+                  158,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.03433300001779571
+          },
+          "correct": {
+            "token_accuracy": 0.036310821771621704,
+            "edge_accuracy": 0.5165876746177673,
+            "edge_auc": 0.5264749925127283,
+            "edge_ap": 0.5269678538774739,
+            "edge_brier": 0.25052241450405227,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "correct",
+                "tokens": [
+                  345,
+                  0
+                ],
+                "pairs": [
+                  159,
+                  0
+                ]
+              },
+              {
+                "action": "rescore"
+              },
+              {
+                "action": "correct",
+                "tokens": [
+                  516,
+                  34
+                ],
+                "pairs": [
+                  237,
+                  15
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  550,
+                  0
+                ],
+                "pairs": [
+                  252,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.03720439999597147
+          },
+          "entropy": {
+            "token_accuracy": 0.030501089990139008,
+            "edge_accuracy": 0.5007898807525635,
+            "edge_auc": 0.5204452430867524,
+            "edge_ap": 0.5019368124161523,
+            "edge_brier": 0.25119370739444136,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  159,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  158,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  158,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  1377,
+                  0
+                ],
+                "pairs": [
+                  158,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.04400180000811815
+          },
+          "adaptive": {
+            "token_accuracy": 0.030501089990139008,
+            "edge_accuracy": 0.5007898807525635,
+            "edge_auc": 0.5204452430867524,
+            "edge_ap": 0.5019368124161523,
+            "edge_brier": 0.25119370769551586,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  159,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  158,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  158,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  1377,
+                  0
+                ],
+                "pairs": [
+                  158,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.045705099997576326
+          }
+        },
+        "gates": {
+          "unimodal": {
+            "token_ce": 3.495636224746704,
+            "token_accuracy": 0.03558460250496864,
+            "edge_bce": 0.6932300329208374,
+            "edge_auc": 0.48537486273335334,
+            "weights": [
+              0.0,
+              0.0
+            ]
+          },
+          "joint": {
+            "token_ce": 3.493077516555786,
+            "token_accuracy": 0.03848946839570999,
+            "edge_bce": 0.6945004463195801,
+            "edge_auc": 0.5230208645302984,
+            "weights": [
+              1.0,
+              1.0
+            ]
+          },
+          "learned": {
+            "token_ce": 3.4951934814453125,
+            "token_accuracy": 0.03558460250496864,
+            "edge_bce": 0.6930570006370544,
+            "edge_auc": 0.5163971248876909,
+            "weights": [
+              0.07936868531609265,
+              0.0922371703454693
+            ]
+          },
+          "oracle_analysis_only": {
+            "token_ce": 3.493077516555786,
+            "token_accuracy": 0.03848946839570999,
+            "edge_bce": 0.6928967833518982,
+            "edge_auc": 0.522262154337626,
+            "weights": [
+              1.0,
+              0.25
+            ]
+          }
+        }
+      }
+    ]
+  },
+  {
+    "seed": 44,
+    "epochs": 120,
+    "width": 64,
+    "vocab": 32,
+    "best_fixed": "joint",
+    "rollout_training": true,
+    "soft_edges": true,
+    "clock_training": "mixed",
+    "test_vocab_coverage": 1.0,
+    "dev_gain_spearman": 0.6836076759698719,
+    "dev_negative_gain_accuracy": 0.7272727272727273,
+    "training_seconds": 2.2677236999734305,
+    "controller_seconds": 2.279485000006389,
+    "checkpoint_sha256": "fe83b4c29eb24875a9f98240a5a942ab1d1feba269b158fab4d8b3d303c8a219",
+    "peak_mib": 45.2265625,
+    "cases": [
+      {
+        "text_rate": 0.25,
+        "edge_rate": 0.75,
+        "initial_clocks": [
+          0.25,
+          0.75
+        ],
+        "tokens": 374,
+        "pairs": 539,
+        "initial_token_ce": 3.59090256690979,
+        "initial_edge_bce": 0.6950764060020447,
+        "structure_to_text": -0.007757663726806641,
+        "text_to_edge": -0.00021696090698242188,
+        "metrics": {
+          "one_shot": {
+            "token_accuracy": 0.02406417205929756,
+            "edge_accuracy": 0.48423007130622864,
+            "edge_auc": 0.499931129476584,
+            "edge_ap": 0.5062373489568,
+            "edge_brier": 0.25096238466397697,
+            "calls": 1,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  374,
+                  0
+                ],
+                "pairs": [
+                  539,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.013884199957828969
+          },
+          "joint": {
+            "token_accuracy": 0.02139037474989891,
+            "edge_accuracy": 0.5064935088157654,
+            "edge_auc": 0.49852617079889805,
+            "edge_ap": 0.5222503119639733,
+            "edge_brier": 0.2508381235347643,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  94,
+                  0
+                ],
+                "pairs": [
+                  135,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  94,
+                  0
+                ],
+                "pairs": [
+                  135,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  93,
+                  0
+                ],
+                "pairs": [
+                  135,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  93,
+                  0
+                ],
+                "pairs": [
+                  134,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.03683669999008998
+          },
+          "text": {
+            "token_accuracy": 0.01871657744050026,
+            "edge_accuracy": 0.4990723729133606,
+            "edge_auc": 0.5072314049586777,
+            "edge_ap": 0.5204686621575106,
+            "edge_brier": 0.2510751838459631,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "text",
+                "tokens": [
+                  94,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  94,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  93,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  93,
+                  0
+                ],
+                "pairs": [
+                  539,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.03798810002626851
+          },
+          "edge": {
+            "token_accuracy": 0.013368984684348106,
+            "edge_accuracy": 0.4953617751598358,
+            "edge_auc": 0.49767217630853994,
+            "edge_ap": 0.5029498804106174,
+            "edge_brier": 0.2509658259066971,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  135,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  135,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  135,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  374,
+                  0
+                ],
+                "pairs": [
+                  134,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.03373600001214072
+          },
+          "correct": {
+            "token_accuracy": 0.013368984684348106,
+            "edge_accuracy": 0.4935064911842346,
+            "edge_auc": 0.48701101928374657,
+            "edge_ap": 0.5123865929818916,
+            "edge_brier": 0.25109161841643135,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "correct",
+                "tokens": [
+                  94,
+                  0
+                ],
+                "pairs": [
+                  135,
+                  0
+                ]
+              },
+              {
+                "action": "rescore"
+              },
+              {
+                "action": "correct",
+                "tokens": [
+                  140,
+                  9
+                ],
+                "pairs": [
+                  202,
+                  13
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  149,
+                  0
+                ],
+                "pairs": [
+                  215,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.03994579997379333
+          },
+          "entropy": {
+            "token_accuracy": 0.013368984684348106,
+            "edge_accuracy": 0.4953617751598358,
+            "edge_auc": 0.49767217630853994,
+            "edge_ap": 0.5029498804106174,
+            "edge_brier": 0.25096582508521303,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  135,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  135,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  135,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  374,
+                  0
+                ],
+                "pairs": [
+                  134,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.044604499998968095
+          },
+          "adaptive": {
+            "token_accuracy": 0.013368984684348106,
+            "edge_accuracy": 0.4953617751598358,
+            "edge_auc": 0.49767217630853994,
+            "edge_ap": 0.5029498804106174,
+            "edge_brier": 0.2509658250495476,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  135,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  135,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  135,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  374,
+                  0
+                ],
+                "pairs": [
+                  134,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.044425199972465634
+          }
+        },
+        "gates": {
+          "unimodal": {
+            "token_ce": 3.5831449031829834,
+            "token_accuracy": 0.02406417205929756,
+            "edge_bce": 0.6948594450950623,
+            "edge_auc": 0.49191460055096425,
+            "weights": [
+              0.0,
+              0.0
+            ]
+          },
+          "joint": {
+            "token_ce": 3.59090256690979,
+            "token_accuracy": 0.02406417205929756,
+            "edge_bce": 0.6950764060020447,
+            "edge_auc": 0.499931129476584,
+            "weights": [
+              1.0,
+              1.0
+            ]
+          },
+          "learned": {
+            "token_ce": 3.5841615200042725,
+            "token_accuracy": 0.02139037474989891,
+            "edge_bce": 0.6950764060020447,
+            "edge_auc": 0.499931129476584,
+            "weights": [
+              0.26173182752638824,
+              1.0
+            ]
+          },
+          "oracle_analysis_only": {
+            "token_ce": 3.5831449031829834,
+            "token_accuracy": 0.02406417205929756,
+            "edge_bce": 0.6948029398918152,
+            "edge_auc": 0.4997933884297521,
+            "weights": [
+              0.0,
+              0.25
+            ]
+          }
+        }
+      },
+      {
+        "text_rate": 0.5,
+        "edge_rate": 0.5,
+        "initial_clocks": [
+          0.5,
+          0.5
+        ],
+        "tokens": 746,
+        "pairs": 345,
+        "initial_token_ce": 3.5607059001922607,
+        "initial_edge_bce": 0.699133574962616,
+        "structure_to_text": -0.005577802658081055,
+        "text_to_edge": -0.004364013671875,
+        "metrics": {
+          "one_shot": {
+            "token_accuracy": 0.024128686636686325,
+            "edge_accuracy": 0.4492753744125366,
+            "edge_auc": 0.44818181818181824,
+            "edge_ap": 0.4809972578664814,
+            "edge_brier": 0.252986110543961,
+            "calls": 1,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  746,
+                  0
+                ],
+                "pairs": [
+                  345,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.013321699982043356
+          },
+          "joint": {
+            "token_accuracy": 0.03619303181767464,
+            "edge_accuracy": 0.4521739184856415,
+            "edge_auc": 0.44767676767676773,
+            "edge_ap": 0.48094281051239623,
+            "edge_brier": 0.25299068188545815,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  187,
+                  0
+                ],
+                "pairs": [
+                  87,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  187,
+                  0
+                ],
+                "pairs": [
+                  86,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  186,
+                  0
+                ],
+                "pairs": [
+                  86,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  186,
+                  0
+                ],
+                "pairs": [
+                  86,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.03669540002010763
+          },
+          "text": {
+            "token_accuracy": 0.030831100419163704,
+            "edge_accuracy": 0.47246378660202026,
+            "edge_auc": 0.4598316498316498,
+            "edge_ap": 0.49373248886737137,
+            "edge_brier": 0.25273901501246704,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "text",
+                "tokens": [
+                  187,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  187,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  186,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  186,
+                  0
+                ],
+                "pairs": [
+                  345,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.03692640003282577
+          },
+          "edge": {
+            "token_accuracy": 0.02546916902065277,
+            "edge_accuracy": 0.4521739184856415,
+            "edge_auc": 0.44585858585858584,
+            "edge_ap": 0.47908016791130226,
+            "edge_brier": 0.2529676617162578,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  87,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  86,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  86,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  746,
+                  0
+                ],
+                "pairs": [
+                  86,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.037879399955272675
+          },
+          "correct": {
+            "token_accuracy": 0.029490618035197258,
+            "edge_accuracy": 0.46666666865348816,
+            "edge_auc": 0.4538383838383838,
+            "edge_ap": 0.4891126070381999,
+            "edge_brier": 0.25282476552138394,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "correct",
+                "tokens": [
+                  187,
+                  0
+                ],
+                "pairs": [
+                  87,
+                  0
+                ]
+              },
+              {
+                "action": "rescore"
+              },
+              {
+                "action": "correct",
+                "tokens": [
+                  280,
+                  18
+                ],
+                "pairs": [
+                  129,
+                  8
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  297,
+                  0
+                ],
+                "pairs": [
+                  137,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.03961659997003153
+          },
+          "entropy": {
+            "token_accuracy": 0.02546916902065277,
+            "edge_accuracy": 0.4521739184856415,
+            "edge_auc": 0.44585858585858584,
+            "edge_ap": 0.47908016791130226,
+            "edge_brier": 0.25296766227617984,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  87,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  86,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  86,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  746,
+                  0
+                ],
+                "pairs": [
+                  86,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.044121499988250434
+          },
+          "adaptive": {
+            "token_accuracy": 0.02546916902065277,
+            "edge_accuracy": 0.4521739184856415,
+            "edge_auc": 0.44585858585858584,
+            "edge_ap": 0.47908016791130226,
+            "edge_brier": 0.25296766270174476,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  87,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  86,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  86,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  746,
+                  0
+                ],
+                "pairs": [
+                  86,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.04436770000029355
+          }
+        },
+        "gates": {
+          "unimodal": {
+            "token_ce": 3.555128335952759,
+            "token_accuracy": 0.02546916902065277,
+            "edge_bce": 0.694769561290741,
+            "edge_auc": 0.48001683501683495,
+            "weights": [
+              0.0,
+              0.0
+            ]
+          },
+          "joint": {
+            "token_ce": 3.5607059001922607,
+            "token_accuracy": 0.024128686636686325,
+            "edge_bce": 0.699133574962616,
+            "edge_auc": 0.44818181818181824,
+            "weights": [
+              1.0,
+              1.0
+            ]
+          },
+          "learned": {
+            "token_ce": 3.557262420654297,
+            "token_accuracy": 0.02278820425271988,
+            "edge_bce": 0.6990267634391785,
+            "edge_auc": 0.4481481481481482,
+            "weights": [
+              0.5136623094304981,
+              0.9779577924901375
+            ]
+          },
+          "oracle_analysis_only": {
+            "token_ce": 3.555128335952759,
+            "token_accuracy": 0.02546916902065277,
+            "edge_bce": 0.694769561290741,
+            "edge_auc": 0.48001683501683495,
+            "weights": [
+              0.0,
+              0.0
+            ]
+          }
+        }
+      },
+      {
+        "text_rate": 0.75,
+        "edge_rate": 0.25,
+        "initial_clocks": [
+          0.75,
+          0.2499999850988388
+        ],
+        "tokens": 1179,
+        "pairs": 194,
+        "initial_token_ce": 3.5174388885498047,
+        "initial_edge_bce": 0.6923112869262695,
+        "structure_to_text": -0.00023484230041503906,
+        "text_to_edge": 0.0009208321571350098,
+        "metrics": {
+          "one_shot": {
+            "token_accuracy": 0.027141645550727844,
+            "edge_accuracy": 0.4999999701976776,
+            "edge_auc": 0.5354485544217689,
+            "edge_ap": 0.5193307222576538,
+            "edge_brier": 0.24958350858423017,
+            "calls": 1,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  1179,
+                  0
+                ],
+                "pairs": [
+                  194,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.014877599955070764
+          },
+          "joint": {
+            "token_accuracy": 0.027989821508526802,
+            "edge_accuracy": 0.48969072103500366,
+            "edge_auc": 0.5139243197278912,
+            "edge_ap": 0.502082735708707,
+            "edge_brier": 0.2504333534545944,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  295,
+                  0
+                ],
+                "pairs": [
+                  49,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  295,
+                  0
+                ],
+                "pairs": [
+                  49,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  295,
+                  0
+                ],
+                "pairs": [
+                  48,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  294,
+                  0
+                ],
+                "pairs": [
+                  48,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.03679709997959435
+          },
+          "text": {
+            "token_accuracy": 0.0330788791179657,
+            "edge_accuracy": 0.48969072103500366,
+            "edge_auc": 0.5097789115646258,
+            "edge_ap": 0.5031180704593565,
+            "edge_brier": 0.2509522827830159,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "text",
+                "tokens": [
+                  295,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  295,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  295,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  294,
+                  0
+                ],
+                "pairs": [
+                  194,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.03604879998601973
+          },
+          "edge": {
+            "token_accuracy": 0.027141645550727844,
+            "edge_accuracy": 0.48969072103500366,
+            "edge_auc": 0.5244472789115646,
+            "edge_ap": 0.5107216175747951,
+            "edge_brier": 0.2497287022534183,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  49,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  49,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  48,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  1179,
+                  0
+                ],
+                "pairs": [
+                  48,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.03839399997377768
+          },
+          "correct": {
+            "token_accuracy": 0.03223070502281189,
+            "edge_accuracy": 0.47422680258750916,
+            "edge_auc": 0.5212585034013606,
+            "edge_ap": 0.5130255467051441,
+            "edge_brier": 0.25020240585462666,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "correct",
+                "tokens": [
+                  295,
+                  0
+                ],
+                "pairs": [
+                  49,
+                  0
+                ]
+              },
+              {
+                "action": "rescore"
+              },
+              {
+                "action": "correct",
+                "tokens": [
+                  442,
+                  29
+                ],
+                "pairs": [
+                  73,
+                  4
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  471,
+                  0
+                ],
+                "pairs": [
+                  76,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.03709960001287982
+          },
+          "entropy": {
+            "token_accuracy": 0.027141645550727844,
+            "edge_accuracy": 0.48969072103500366,
+            "edge_auc": 0.5244472789115646,
+            "edge_ap": 0.5107216175747951,
+            "edge_brier": 0.24972870133627115,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  49,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  49,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  48,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  1179,
+                  0
+                ],
+                "pairs": [
+                  48,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.039522700011730194
+          },
+          "adaptive": {
+            "token_accuracy": 0.027141645550727844,
+            "edge_accuracy": 0.48969072103500366,
+            "edge_auc": 0.5244472789115646,
+            "edge_ap": 0.5107216175747951,
+            "edge_brier": 0.2497287020143854,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  49,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  49,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  48,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  1179,
+                  0
+                ],
+                "pairs": [
+                  48,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.046098000020720065
+          }
+        },
+        "gates": {
+          "unimodal": {
+            "token_ce": 3.5172040462493896,
+            "token_accuracy": 0.022900763899087906,
+            "edge_bce": 0.6932321190834045,
+            "edge_auc": 0.4691220238095238,
+            "weights": [
+              0.0,
+              0.0
+            ]
+          },
+          "joint": {
+            "token_ce": 3.5174388885498047,
+            "token_accuracy": 0.027141645550727844,
+            "edge_bce": 0.6923112869262695,
+            "edge_auc": 0.5354485544217689,
+            "weights": [
+              1.0,
+              1.0
+            ]
+          },
+          "learned": {
+            "token_ce": 3.5174388885498047,
+            "token_accuracy": 0.027141645550727844,
+            "edge_bce": 0.6926141977310181,
+            "edge_auc": 0.5351828231292518,
+            "weights": [
+              1.0,
+              0.46889801121670227
+            ]
+          },
+          "oracle_analysis_only": {
+            "token_ce": 3.5168538093566895,
+            "token_accuracy": 0.0220525860786438,
+            "edge_bce": 0.6923112869262695,
+            "edge_auc": 0.5354485544217689,
+            "weights": [
+              0.5,
+              1.0
+            ]
+          }
+        }
+      },
+      {
+        "text_rate": 0.9,
+        "edge_rate": 0.9,
+        "initial_clocks": [
+          0.9,
+          0.8999999463558197
+        ],
+        "tokens": 1400,
+        "pairs": 647,
+        "initial_token_ce": 3.505408763885498,
+        "initial_edge_bce": 0.695298433303833,
+        "structure_to_text": 0.0007469654083251953,
+        "text_to_edge": -0.002461850643157959,
+        "metrics": {
+          "one_shot": {
+            "token_accuracy": 0.029285714030265808,
+            "edge_accuracy": 0.4899536073207855,
+            "edge_auc": 0.4759992350353796,
+            "edge_ap": 0.46157262037148084,
+            "edge_brier": 0.25107223276964874,
+            "calls": 1,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  1400,
+                  0
+                ],
+                "pairs": [
+                  647,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.011542100051883608
+          },
+          "joint": {
+            "token_accuracy": 0.03285714238882065,
+            "edge_accuracy": 0.5038639903068542,
+            "edge_auc": 0.4757984318225282,
+            "edge_ap": 0.46247487314613334,
+            "edge_brier": 0.2513302132810209,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  350,
+                  0
+                ],
+                "pairs": [
+                  162,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  350,
+                  0
+                ],
+                "pairs": [
+                  162,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  350,
+                  0
+                ],
+                "pairs": [
+                  162,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  350,
+                  0
+                ],
+                "pairs": [
+                  161,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.03849380003521219
+          },
+          "text": {
+            "token_accuracy": 0.0357142835855484,
+            "edge_accuracy": 0.5007727742195129,
+            "edge_auc": 0.48967775865366225,
+            "edge_ap": 0.47462479627867105,
+            "edge_brier": 0.250991227799817,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "text",
+                "tokens": [
+                  350,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  350,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "text",
+                "tokens": [
+                  350,
+                  0
+                ],
+                "pairs": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  350,
+                  0
+                ],
+                "pairs": [
+                  647,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.03468310000607744
+          },
+          "edge": {
+            "token_accuracy": 0.03142857179045677,
+            "edge_accuracy": 0.4945904016494751,
+            "edge_auc": 0.47622872442149544,
+            "edge_ap": 0.46113290233522297,
+            "edge_brier": 0.25106718375159637,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  162,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  162,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  162,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  1400,
+                  0
+                ],
+                "pairs": [
+                  161,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.034822900022845715
+          },
+          "correct": {
+            "token_accuracy": 0.029285714030265808,
+            "edge_accuracy": 0.4992271959781647,
+            "edge_auc": 0.474134633773188,
+            "edge_ap": 0.46238399687537624,
+            "edge_brier": 0.2512359438183434,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "correct",
+                "tokens": [
+                  350,
+                  0
+                ],
+                "pairs": [
+                  162,
+                  0
+                ]
+              },
+              {
+                "action": "rescore"
+              },
+              {
+                "action": "correct",
+                "tokens": [
+                  525,
+                  35
+                ],
+                "pairs": [
+                  243,
+                  16
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  560,
+                  0
+                ],
+                "pairs": [
+                  258,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.03753979998873547
+          },
+          "entropy": {
+            "token_accuracy": 0.03142857179045677,
+            "edge_accuracy": 0.4945904016494751,
+            "edge_auc": 0.47622872442149544,
+            "edge_ap": 0.46113290233522297,
+            "edge_brier": 0.25106718416339113,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  162,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  162,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  162,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  1400,
+                  0
+                ],
+                "pairs": [
+                  161,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.04427930002566427
+          },
+          "adaptive": {
+            "token_accuracy": 0.03142857179045677,
+            "edge_accuracy": 0.4945904016494751,
+            "edge_auc": 0.47622872442149544,
+            "edge_ap": 0.46113290233522297,
+            "edge_brier": 0.25106718334877526,
+            "calls": 4,
+            "trace": [
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  162,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  162,
+                  0
+                ]
+              },
+              {
+                "action": "edge",
+                "tokens": [
+                  0,
+                  0
+                ],
+                "pairs": [
+                  162,
+                  0
+                ]
+              },
+              {
+                "action": "joint",
+                "tokens": [
+                  1400,
+                  0
+                ],
+                "pairs": [
+                  161,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.04174449999118224
+          }
+        },
+        "gates": {
+          "unimodal": {
+            "token_ce": 3.5061557292938232,
+            "token_accuracy": 0.027857143431901932,
+            "edge_bce": 0.692836582660675,
+            "edge_auc": 0.49142761522279593,
+            "weights": [
+              0.0,
+              0.0
+            ]
+          },
+          "joint": {
+            "token_ce": 3.505408763885498,
+            "token_accuracy": 0.029285714030265808,
+            "edge_bce": 0.695298433303833,
+            "edge_auc": 0.4759992350353796,
+            "weights": [
+              1.0,
+              1.0
+            ]
+          },
+          "learned": {
+            "token_ce": 3.505356788635254,
+            "token_accuracy": 0.029999999329447746,
+            "edge_bce": 0.6935582160949707,
+            "edge_auc": 0.4753490151080513,
+            "weights": [
+              0.6381390596690618,
+              0.3534525869319733
+            ]
+          },
+          "oracle_analysis_only": {
+            "token_ce": 3.505333662033081,
+            "token_accuracy": 0.029285714030265808,
+            "edge_bce": 0.692836582660675,
+            "edge_auc": 0.49142761522279593,
+            "weights": [
+              0.75,
+              0.0
+            ]
+          }
+        }
+      }
+    ]
+  }
+]

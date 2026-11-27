@@ -155,7 +155,8 @@ def run(name, seed, epochs, device, out):
             optimizer.step()
             head.eval()
             with torch.no_grad():
-                loss = F.cross_entropy(head(x, edges)[fit], y[fit]).item()
+                probabilities = torch.stack([head(v, edges)[fit].softmax(1) for v in inputs]).mean(0)
+                loss = F.nll_loss(probabilities.clamp_min(1e-9).log(), y[fit]).item()
                 if loss < best:
                     best = loss
                     state = {key: value.clone() for key, value in head.state_dict().items()}
@@ -199,12 +200,13 @@ def run(name, seed, epochs, device, out):
                     selected=[base, *(samples[i] for i in chosen)],
                     diffusion_raw_plus_4=[base, *samples[:4]],
                     mean_embedding=[shared(torch.stack(views).mean(0), edges).softmax(1)])
-    independent, independent_seconds = [base], []
+    independent, independent_seconds, independent_views = [base], [], []
     for k, (start, steps, rate) in enumerate(policies[:4]):
         set_seed(seed + 1000 + k)
         fitted, seconds = fit_denoiser()
         independent_seconds.append(seconds)
         view, _ = generate(fitted, x, pairs, alpha, start, steps, rate, seed*100+k)
+        independent_views.append(view)
         with torch.no_grad():
             independent.append(shared(view, edges).softmax(1))
     set_seed(seed + 2000)
@@ -216,6 +218,19 @@ def run(name, seed, epochs, device, out):
         arms["fixed_noise_autoencoder"] = [shared(view, edges).softmax(1)]
         arms["diffusion_one_at_30"] = samples[2:3]
         arms["independent_raw_plus_4"] = independent
+    representation_arms = dict(diffusion_5=views, gaussian_5=gaussian,
+                               diffusion_raw_plus_4=[x, *views[:4]],
+                               independent_raw_plus_4=[x, *independent_views],
+                               fixed_noise_autoencoder=[view], diffusion_one_at_30=views[2:3])
+    control_start = tick(device)
+    raw.eval()
+    for key, inputs in representation_arms.items():
+        method = fit_head(inputs, seed)
+        with torch.no_grad():
+            arms[f"raw_head_{key}"] = [raw(v, edges).softmax(1) for v in inputs]
+            arms[f"matched_head_{key}"] = [method(v, edges).softmax(1) for v in inputs]
+    control_seconds = tick(device)-control_start
+    with torch.no_grad():
         members = {key: torch.stack(values)[:, te] for key, values in arms.items()}
         results = {key: metrics(values.mean(0), y[te]) for key, values in members.items()}
         diversity_results = {key: diversity(values, y[te]) for key, values in members.items() if len(values) > 1}
@@ -228,6 +243,7 @@ def run(name, seed, epochs, device, out):
     return dict(seed=seed, epochs=epochs, metrics=results, diversity=diversity_results, policies=policies, fidelity=fidelity,
                 selection=chosen, denoisers=1, selected_calls=9-remaining_calls,
                 denoiser_seconds=denoiser_seconds, generation_seconds=generation, heads_seconds=heads_seconds,
+                matched_head_controls_seconds=control_seconds,
                 independent_denoiser_seconds=independent_seconds, autoencoder_seconds=autoencoder_seconds,
                 peak_mib=torch.cuda.max_memory_allocated(device)/2**20 if device.type == "cuda" else None)
 
@@ -242,8 +258,8 @@ def main():
     for name in args.datasets:
         rows = []
         for seed in args.seeds:
-            rows.append(run(name, seed, args.epochs, torch.device(args.device), "research_ensemble"))
-            save_json(rows, "research_ensemble", f"{name}.json")
+            rows.append(run(name, seed, args.epochs, torch.device(args.device), "research_ensemble_v2"))
+            save_json(rows, "research_ensemble_v2", f"{name}.json")
             print(name, seed, {k: round(v["accuracy"], 4) for k, v in rows[-1]["metrics"].items()}, flush=True)
 
 

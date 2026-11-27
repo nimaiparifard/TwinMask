@@ -3,7 +3,8 @@ import unittest
 import torch
 
 from scripts.research_ensemble import SAGE, generate, noise_view, schedule
-from scripts.research_twinmask import Case, SparseTwinMask, corruption, reconstruct, token_loss
+from scripts.research_twinmask import (Case, SparseTwinMask, advance, corruption, reconstruct,
+                                       resplit_link_data, synthetic_graph, token_loss)
 
 
 class ResearchPilotTests(unittest.TestCase):
@@ -43,6 +44,41 @@ class ResearchPilotTests(unittest.TestCase):
         self.assertEqual(result["calls"], 4)
         self.assertEqual(len(result["trace"]), 4)
         self.assertEqual(result["trace"][-1]["action"], "joint")
+
+    def test_asymmetric_clocks_and_masked_rescore(self):
+        ids = torch.tensor([[3, 4], [4, 5]])
+        pairs = torch.tensor([[0, 1], [1, 0]])
+        labels = torch.tensor([1, 0])
+        mask = torch.ones_like(ids, dtype=torch.bool)
+        case = Case(ids, ids, mask, pairs, labels, torch.ones(2, dtype=torch.bool),
+                    pairs[:, :0], (.25, .75), soft_edges=True)
+        model = SparseTwinMask(9, 2, width=8).eval()
+        start = case.initial()
+        self.assertEqual(case.clocks(start), (.25, .75))
+        with torch.no_grad():
+            state, _ = advance(case, start, case.predict(model, start), "text", 2)
+            self.assertEqual(case.clocks(state), (.125, .75))
+            for restored, expected in zip(case.without_generated(state), start):
+                torch.testing.assert_close(restored, expected)
+            result = reconstruct(model, case, "correct", 4, None)
+        self.assertEqual([step["action"] for step in result["trace"]],
+                         ["correct", "rescore", "correct", "joint"])
+
+    def test_synthetic_noise_and_resplit_do_not_change_candidate_truth(self):
+        reference = synthetic_graph("synthetic_reference")
+        noisy = synthetic_graph("synthetic_noisy_context")
+        for key in reference.keys() - {"noise_edges"}:
+            torch.testing.assert_close(reference[key], noisy[key])
+        resplit = resplit_link_data(reference, 42)
+        n = len(reference["tokens"])
+
+        def keys(pairs):
+            return set((pairs[0]*n+pairs[1]).tolist())
+
+        train, val, test = (keys(resplit[key]) for key in ("train_pos", "val_pos", "test_pos"))
+        self.assertFalse(train & (val | test))
+        self.assertFalse(keys(resplit["test_neg"]) & (train | val | test))
+        self.assertFalse(keys(noisy["noise_edges"]) & (train | val | test))
 
 
 if __name__ == "__main__":

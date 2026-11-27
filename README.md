@@ -5,7 +5,137 @@
 
 ---
 
+## Research correction and directional conditioning (V2)
+
+**Working title.** When Text and Topology Disagree: Adaptive Cross-Modal Conditioning for Incomplete Text-Attributed Graphs.
+
+The earlier sparse TwinMask run conditioned on the fraction of *initially masked targets* still pending. Both clocks therefore started at 1 for every nonempty modality, including in training. V2 starts each clock at its own nominal corruption rate and scales it by the fraction of its initial targets still pending. Tied training uses equal initial rates. Both training arms face the same independently masked evaluation cases.
+
+The denoiser is trained on both initially corrupted inputs and short rollouts containing its own detached predictions. The correction policy re-masks the generated block in a separate scoring pass and ranks each generated value by support for that value. Observations remain clamped. The rescoring pass counts against the same four-call budget. In the soft-edge variant, a generated pair contributes to message passing with its predicted probability, while observed positives retain unit weight. The hard-edge control uses thresholded generated edges.
+
+The primary V2 question is whether observed structure helps token recovery and observed text helps link recovery under each missingness pattern. One-shot directional conditioning compares a joint pass, text-only for token reconstruction, structure-only for link reconstruction, and a per-case learned mixture with a separate probability weight for each direction. The learned weights use corruption clocks and uncertainty summaries, with targets fitted on disjoint controller cases. An oracle selects weights against held-out labels for analysis only. One-shot here means no generated feedback. Learned conditioning requires three denoiser passes to produce its joint and unimodal probabilities.
+
+Across ten seeds on Cora, CiteSeer, and PubMed, the learned gate reduced mean token cross-entropy by 0.008, 0.019, and 0.022 respectively. Mean edge binary cross-entropy increased on all three. On PubMed, four-call adaptive reconstruction raised mean token accuracy from 30.68% to 31.12% and edge AUROC from 0.8552 to 0.8589 relative to one-shot. The validation-selected fixed four-call policy reached 31.39% and 0.8601. Cora and CiteSeer had small declines in edge AUROC relative to one-shot. In the symmetric Ensemble comparisons, the accuracy difference between five diffusion views and five Gaussian views stayed within 0.25 percentage points under either classifier protocol.
+
+The strongest literature overlap is UDPD §§3.3–4.1. It explicitly adjusts cross-branch interaction by node uncertainty while denoising two continuous embedding streams and evaluates downstream node classification. TAG-DLM injects topology into a masked diffusion language model and recovers a masked answer token for classification and candidate link decisions. V2 evaluates held-out content-token and candidate-edge reconstruction and directly measures whether removing cross-modal evidence lowers loss. A one-shot probability gate alone establishes no novelty claim. [UDPD](https://proceedings.mlr.press/v306/yu26ab.html) [TAG-DLM](https://arxiv.org/html/2606.31166v1)
+
+<!-- research-v2-results -->
+
+### Corrected experiment results
+
+TwinMask uses seeds 42–51 on the three citation datasets and seeds 42–44 for the ablations, extra datasets, and synthetic cases. Each seed has four jointly scored text/edge mask settings. The matched Ensemble comparison uses seeds 42–44.
+
+#### Ensemble classifier controls
+
+Test accuracy (%) uses the same representations, labeled split, classifier architecture, and training epochs within each comparison. The raw-only head sees only raw embeddings during training. Each matched head sees its own arm's representations and is selected using that arm's mean validation predictive distribution.
+
+| Dataset | Classifier | Diffusion-5 | Gaussian-5 | Raw + shared-4 | Raw + independent-4 |
+|---|---|---|---|---|---|
+| Cora | Raw-only | 84.81 | 84.87 | 85.24 | 85.06 |
+| Cora | Method-matched | 84.93 | 84.69 | 85.06 | 85.06 |
+| CiteSeer | Raw-only | 74.35 | 74.40 | 74.82 | 74.71 |
+| CiteSeer | Method-matched | 74.76 | 74.76 | 74.56 | 74.71 |
+| PubMed | Raw-only | 89.18 | 89.17 | 89.20 | 89.20 |
+| PubMed | Method-matched | 89.66 | 89.51 | 89.60 | 89.59 |
+
+Full metrics, denoiser and classifier timing, and ensemble diversity. [Cora](results/research_ensemble_v2/cora.json) [CiteSeer](results/research_ensemble_v2/citeseer.json) [PubMed](results/research_ensemble_v2/pubmed.json)
+
+#### TwinMask clocks, rollout, and correction
+
+Cells report mean token accuracy (%) / edge AUROC. One-shot uses one call. Joint, corrective, and adaptive schedules have four calls, including any rescoring. The fixed policy is selected on development cases.
+
+| Dataset | One-shot | Joint | Corrective | Adaptive | Selected fixed |
+|---|---|---|---|---|---|
+| Cora | 16.71 / 0.6812 | 17.02 / 0.6798 | 17.05 / 0.6816 | 16.82 / 0.6797 | 16.88 / 0.6799 |
+| CiteSeer | 13.29 / 0.6792 | 13.37 / 0.6776 | 13.40 / 0.6781 | 13.47 / 0.6783 | 13.34 / 0.6770 |
+| PubMed | 30.68 / 0.8552 | 31.41 / 0.8600 | 31.37 / 0.8600 | 31.12 / 0.8589 | 31.39 / 0.8601 |
+| WikiCS | 17.24 / 0.9063 | 16.80 / 0.9058 | 16.82 / 0.9070 | 17.17 / 0.9070 | 17.14 / 0.9066 |
+| Reddit | 12.21 / 0.7391 | 12.11 / 0.7389 | 12.15 / 0.7396 | 12.23 / 0.7395 | 12.14 / 0.7394 |
+| Instagram | 13.82 / 0.8743 | 14.05 / 0.8744 | 14.10 / 0.8755 | 13.89 / 0.8746 | 14.11 / 0.8748 |
+
+
+| Dataset | Adaptive comparator | Token accuracy change (pp) [95% CI] | Edge AUROC change [95% CI] |
+|---|---|---|---|
+| Cora | one shot | +0.1026 [-0.0138, +0.2191] | -0.0015 [-0.0029, -0.0001] |
+| Cora | fixed | -0.0665 [-0.3222, +0.1892] | -0.0002 [-0.0023, +0.0019] |
+| CiteSeer | one shot | +0.1811 [+0.0113, +0.3508] | -0.0009 [-0.0034, +0.0017] |
+| CiteSeer | fixed | +0.1226 [-0.0043, +0.2496] | +0.0013 [-0.0011, +0.0037] |
+| PubMed | one shot | +0.4401 [+0.3466, +0.5337] | +0.0037 [+0.0020, +0.0054] |
+| PubMed | fixed | -0.2673 [-0.3755, -0.1590] | -0.0011 [-0.0021, -0.0002] |
+
+Ablations use the same first three seed IDs. Mixed and tied refer to clock training. Hard-edge message passing and no-rollout training are separate ablations.
+
+| Dataset | Policy | Mixed | Tied | No rollout | Hard edges |
+|---|---|---|---|---|---|
+| Cora | one shot | 16.34 / 0.6813 | 16.52 / 0.6942 | 16.24 / 0.6770 | 16.37 / 0.6816 |
+| Cora | adaptive | 16.47 / 0.6805 | 16.81 / 0.6924 | 16.01 / 0.6750 | 16.44 / 0.6823 |
+| CiteSeer | one shot | 13.10 / 0.6835 | 13.12 / 0.6934 | 12.73 / 0.6712 | 13.12 / 0.6863 |
+| CiteSeer | adaptive | 13.30 / 0.6855 | 13.38 / 0.6861 | 12.69 / 0.6623 | 13.25 / 0.6891 |
+| PubMed | one shot | 30.54 / 0.8526 | 30.46 / 0.8528 | 30.01 / 0.8535 | 30.53 / 0.8543 |
+| PubMed | adaptive | 31.05 / 0.8587 | 30.88 / 0.8593 | 30.50 / 0.8562 | 31.04 / 0.8593 |
+
+Detailed corrected runs. [Cora](results/research_twinmask_v2/cora.json) [CiteSeer](results/research_twinmask_v2/citeseer.json) [PubMed](results/research_twinmask_v2/pubmed.json) [WikiCS](results/research_twinmask_v2/wikics.json) [Reddit](results/research_twinmask_v2/reddit.json) [Instagram](results/research_twinmask_v2/instagram.json)
+
+Detailed ablations. [Cora tied](results/research_twinmask_v2/cora_tied.json) [Cora no rollout](results/research_twinmask_v2/cora_no_rollout.json) [Cora hard](results/research_twinmask_v2/cora_hard.json) [CiteSeer tied](results/research_twinmask_v2/citeseer_tied.json) [CiteSeer no rollout](results/research_twinmask_v2/citeseer_no_rollout.json) [CiteSeer hard](results/research_twinmask_v2/citeseer_hard.json) [PubMed tied](results/research_twinmask_v2/pubmed_tied.json) [PubMed no rollout](results/research_twinmask_v2/pubmed_no_rollout.json) [PubMed hard](results/research_twinmask_v2/pubmed_hard.json)
+
+#### One-shot directional conditioning
+
+Cells report token cross-entropy / edge binary cross-entropy. Lower is better. Each seed contributes the mean over its four cases. The 95% paired t intervals are for learned minus joint loss and treat seeds as the run unit within each graph.
+
+| Dataset | Unimodal | Joint | Learned | Oracle | Token CE paired change [95% CI] | Edge BCE paired change [95% CI] |
+|---|---|---|---|---|---|---|
+| Cora | 4.8618 / 0.6845 | 4.8598 / 0.6467 | 4.8522 / 0.6506 | 4.8510 / 0.6458 | -0.0076 [-0.0124, -0.0028] | +0.0039 [+0.0008, +0.0069] |
+| CiteSeer | 5.1641 / 0.7133 | 5.1780 / 0.6468 | 5.1593 / 0.6503 | 5.1585 / 0.6466 | -0.0188 [-0.0243, -0.0132] | +0.0035 [-0.0001, +0.0071] |
+| PubMed | 3.9963 / 0.5672 | 4.0184 / 0.4946 | 3.9960 / 0.4976 | 3.9960 / 0.4946 | -0.0224 [-0.0288, -0.0159] | +0.0030 [-0.0000, +0.0059] |
+| WikiCS | 5.0541 / 0.4945 | 5.0585 / 0.4260 | 5.0434 / 0.4260 | 5.0430 / 0.4260 | -0.0151 [-0.0367, +0.0066] | +0.0000 [+0.0000, +0.0000] |
+| Reddit | 4.9682 / 0.6171 | 4.9656 / 0.6191 | 4.9627 / 0.6150 | 4.9625 / 0.6130 | -0.0030 [-0.0159, +0.0100] | -0.0041 [-0.0173, +0.0092] |
+| Instagram | 5.0314 / 0.5434 | 5.0202 / 0.4770 | 5.0173 / 0.4801 | 5.0170 / 0.4766 | -0.0029 [-0.0065, +0.0007] | +0.0031 [-0.0018, +0.0080] |
+
+Synthetic interventions change expected homophily (0.85 to 0.30), lexical signal (0.80 to 0.20), or add spurious test-context edges (25% of the number of real training edges), one factor at a time. The independently varied text and edge missingness cases are stored in the JSON. A positive evidence gain means that removing the other modality increased loss.
+
+| Synthetic case | Structure to text CE gain | Text to edge BCE gain | Joint CE / BCE | Learned CE / BCE |
+|---|---|---|---|---|
+| reference | +0.1397 | -0.0827 | 2.7725 / 0.8324 | 2.7736 / 0.5314 |
+| low homophily | -0.0671 | -0.0793 | 2.9402 / 0.7740 | 2.8729 / 0.6952 |
+| weak text | -0.0038 | -0.0047 | 3.5266 / 0.6981 | 3.5231 / 0.6938 |
+| noisy context | +0.1282 | +0.0156 | 2.7994 / 0.7262 | 2.8049 / 0.5362 |
+
+Synthetic runs. [reference](results/research_twinmask_v2/synthetic_reference.json) [low homophily](results/research_twinmask_v2/synthetic_low_homophily.json) [weak text](results/research_twinmask_v2/synthetic_weak_text.json) [noisy context](results/research_twinmask_v2/synthetic_noisy_context.json)
+
+#### Pretrained encoder, alternate split, and text audit
+
+
+| Cora configuration | Seeds | One-shot accuracy / AUROC | Adaptive accuracy / AUROC | Learned CE / BCE |
+|---|---|---|---|---|
+| Frozen DistilRoBERTa | 1 | 3.91 / 0.4902 | — | 9.5699 / 0.7205 |
+| Full lexical vocabulary smoke test | 1 | 4.69 / 0.5049 | 4.69 / 0.5034 | 10.3883 / 0.7336 |
+| Seed-specific link re-splits, CPU | 3 | 16.63 / 0.6878 | 16.75 / 0.6880 | 4.8530 / 0.6455 |
+
+The pretrained directional feasibility run uses 128 token positions, a 256-dimensional graph mixer, five training epochs, all 50,261 RoBERTa lexical IDs, and up to 128 masked token targets per case. The frozen encoder runs on the currently visible text. The CPU vocabulary smoke test uses up to 64 masked token targets per case. Other masked positions stay concealed. The feasibility rows use different encoders and target panels. A multi-seed pretrained comparison remains open. The alternate Cora protocol re-splits warm pairs per seed and preserves held-out positives outside training adjacency.
+[Pretrained run](results/research_twinmask_v2/cora_pretrained_full_vocab_directional.json) [Full vocabulary smoke test](results/research_twinmask_v2/cora_full_vocab.json) [Link re-splits](results/research_twinmask_v2/cora_resplit.json)
+
+The cached raw text audit counted blank strings and median whitespace-delimited words. WikiCS had 0 blank among 11,701 texts (median 219 words). Reddit had 0 among 33,434 (median 87). Instagram had 99 among 11,339 (median 16). These counts describe coverage and length. The ogbn-arxiv cache had 0 blanks among 169,343 texts (median 167). Its cached links are undirected and lack an evaluation-ready temporal split, so no ogbn-arxiv V2 result is reported.
+
+#### Reproduction commands
+
+```powershell
+python -m scripts.research_ensemble
+python -m scripts.research_twinmask --seeds 42 43 44 45 46 47 48 49 50 51
+python -m scripts.research_twinmask --clock-training tied
+python -m scripts.research_twinmask --no-rollout
+python -m scripts.research_twinmask --hard-edges
+python -m scripts.research_twinmask --datasets wikics reddit instagram
+python -m scripts.research_twinmask --datasets synthetic_reference synthetic_low_homophily synthetic_weak_text synthetic_noisy_context
+python -m scripts.research_twinmask --datasets cora --seeds 42 --epochs 5 --encoder hf_models/all-distilroberta-v1 --width 256 --length 128 --full-vocab --max-token-targets 128 --directional-only
+python -m scripts.research_twinmask --datasets cora --resplit-links --device cpu
+python -m scripts.research_twinmask --datasets cora --seeds 42 --epochs 5 --device cpu --full-vocab --max-token-targets 64
+python -m unittest scripts.test_research_pilots -v
+python -m scripts.report_research_v2
+```
+
 ## Research continuation pilots (2026-11-27)
+
+The following is the archived V1 report. Its sparse TwinMask clock comparison predates the correction above. Historical checkpoint replay used a separate implementation and protocol.
 
 Both research proposals were implemented as pilots. Each pilot ran on Cora, CiteSeer, and PubMed with paired seeds 42, 43, and 44 on an NVIDIA GeForce RTX 5070 (12 GiB, PyTorch 2.7.1+cu128). The results do not yet support a diffusion-specific ensemble advantage or an adaptive reconstruction advantage over one-shot inference.
 

@@ -1,0 +1,347 @@
+[
+  {
+    "seed": 42,
+    "epochs": 5,
+    "width": 256,
+    "vocab": 50261,
+    "best_fixed": null,
+    "rollout_training": true,
+    "soft_edges": true,
+    "clock_training": "mixed",
+    "encoder": "hf_models/all-distilroberta-v1",
+    "text_length": 128,
+    "resplit_links": false,
+    "full_vocab": true,
+    "max_token_targets": 128,
+    "test_vocab_coverage": 1.0,
+    "dev_gain_spearman": null,
+    "dev_negative_gain_accuracy": null,
+    "directional_only": true,
+    "training_seconds": 5.733841100009158,
+    "controller_seconds": 7.535700700012967,
+    "checkpoint_sha256": "55686290a8b97bfc9bda9d402ae755432c28de0be6b395dc003c107fc2506974",
+    "peak_mib": 721.5283203125,
+    "cases": [
+      {
+        "text_rate": 0.25,
+        "edge_rate": 0.75,
+        "initial_clocks": [
+          0.25,
+          0.75
+        ],
+        "tokens": 128,
+        "pairs": 708,
+        "initial_token_ce": 9.51608657836914,
+        "initial_edge_bce": 0.7120907306671143,
+        "structure_to_text": -0.005759239196777344,
+        "text_to_edge": 0.05496859550476074,
+        "metrics": {
+          "one_shot": {
+            "token_accuracy": 0.0078125,
+            "edge_accuracy": 0.49152541160583496,
+            "edge_auc": 0.5025497378438555,
+            "edge_ap": 0.5128061139890114,
+            "edge_brier": 0.25891639579003106,
+            "calls": 1,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  128,
+                  0
+                ],
+                "pairs": [
+                  708,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.617216200043913
+          }
+        },
+        "gates": {
+          "unimodal": {
+            "token_ce": 9.510327339172363,
+            "token_accuracy": 0.015625,
+            "edge_bce": 0.767059326171875,
+            "edge_auc": 0.5021267766365806,
+            "weights": [
+              0.0,
+              0.0
+            ]
+          },
+          "joint": {
+            "token_ce": 9.51608657836914,
+            "token_accuracy": 0.0078125,
+            "edge_bce": 0.7120906710624695,
+            "edge_auc": 0.5025497378438555,
+            "weights": [
+              1.0,
+              1.0
+            ]
+          },
+          "learned": {
+            "token_ce": 9.508084297180176,
+            "token_accuracy": 0.015625,
+            "edge_bce": 0.7121812105178833,
+            "edge_auc": 0.5024539730422083,
+            "weights": [
+              0.14485846474359954,
+              0.9908442090812751
+            ]
+          },
+          "oracle_analysis_only": {
+            "token_ce": 9.507086753845215,
+            "token_accuracy": 0.015625,
+            "edge_bce": 0.7120906710624695,
+            "edge_auc": 0.5025497378438555,
+            "weights": [
+              0.5,
+              1.0
+            ]
+          }
+        }
+      },
+      {
+        "text_rate": 0.5,
+        "edge_rate": 0.5,
+        "initial_clocks": [
+          0.5,
+          0.5
+        ],
+        "tokens": 128,
+        "pairs": 476,
+        "initial_token_ce": 9.342377662658691,
+        "initial_edge_bce": 0.7070679664611816,
+        "structure_to_text": 0.05559253692626953,
+        "text_to_edge": 0.0013995766639709473,
+        "metrics": {
+          "one_shot": {
+            "token_accuracy": 0.09375,
+            "edge_accuracy": 0.5105042457580566,
+            "edge_auc": 0.5004943502824859,
+            "edge_ap": 0.5177679103830652,
+            "edge_brier": 0.25671045579849855,
+            "calls": 1,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  128,
+                  0
+                ],
+                "pairs": [
+                  476,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.6233976000221446
+          }
+        },
+        "gates": {
+          "unimodal": {
+            "token_ce": 9.397970199584961,
+            "token_accuracy": 0.0859375,
+            "edge_bce": 0.7084675431251526,
+            "edge_auc": 0.523975988700565,
+            "weights": [
+              0.0,
+              0.0
+            ]
+          },
+          "joint": {
+            "token_ce": 9.342377662658691,
+            "token_accuracy": 0.09375,
+            "edge_bce": 0.7070679664611816,
+            "edge_auc": 0.5004943502824859,
+            "weights": [
+              1.0,
+              1.0
+            ]
+          },
+          "learned": {
+            "token_ce": 9.369958877563477,
+            "token_accuracy": 0.0859375,
+            "edge_bce": 0.7069486975669861,
+            "edge_auc": 0.500388418079096,
+            "weights": [
+              0.39984911918914773,
+              0.9699713931868491
+            ]
+          },
+          "oracle_analysis_only": {
+            "token_ce": 9.342377662658691,
+            "token_accuracy": 0.09375,
+            "edge_bce": 0.7063782811164856,
+            "edge_auc": 0.5117849576271186,
+            "weights": [
+              1.0,
+              0.5
+            ]
+          }
+        }
+      },
+      {
+        "text_rate": 0.75,
+        "edge_rate": 0.25,
+        "initial_clocks": [
+          0.75,
+          0.2499999850988388
+        ],
+        "tokens": 128,
+        "pairs": 242,
+        "initial_token_ce": 9.485705375671387,
+        "initial_edge_bce": 0.7653746604919434,
+        "structure_to_text": -0.016546249389648438,
+        "text_to_edge": 0.000581204891204834,
+        "metrics": {
+          "one_shot": {
+            "token_accuracy": 0.03125,
+            "edge_accuracy": 0.43388429284095764,
+            "edge_auc": 0.45737390350877194,
+            "edge_ap": 0.46526108061672183,
+            "edge_brier": 0.28366430697047695,
+            "calls": 1,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  128,
+                  0
+                ],
+                "pairs": [
+                  242,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.6262868999619968
+          }
+        },
+        "gates": {
+          "unimodal": {
+            "token_ce": 9.469159126281738,
+            "token_accuracy": 0.03125,
+            "edge_bce": 0.7659558653831482,
+            "edge_auc": 0.4501781798245614,
+            "weights": [
+              0.0,
+              0.0
+            ]
+          },
+          "joint": {
+            "token_ce": 9.485705375671387,
+            "token_accuracy": 0.03125,
+            "edge_bce": 0.7653746604919434,
+            "edge_auc": 0.45737390350877194,
+            "weights": [
+              1.0,
+              1.0
+            ]
+          },
+          "learned": {
+            "token_ce": 9.469902038574219,
+            "token_accuracy": 0.03125,
+            "edge_bce": 0.760762631893158,
+            "edge_auc": 0.4449013157894737,
+            "weights": [
+              0.23542905329203584,
+              0.4964761929287976
+            ]
+          },
+          "oracle_analysis_only": {
+            "token_ce": 9.469159126281738,
+            "token_accuracy": 0.03125,
+            "edge_bce": 0.7607605457305908,
+            "edge_auc": 0.44462719298245607,
+            "weights": [
+              0.0,
+              0.5
+            ]
+          }
+        }
+      },
+      {
+        "text_rate": 0.9,
+        "edge_rate": 0.9,
+        "initial_clocks": [
+          0.9,
+          0.9
+        ],
+        "tokens": 128,
+        "pairs": 868,
+        "initial_token_ce": 9.930624008178711,
+        "initial_edge_bce": 0.7061402201652527,
+        "structure_to_text": 0.05972099304199219,
+        "text_to_edge": -0.0018061995506286621,
+        "metrics": {
+          "one_shot": {
+            "token_accuracy": 0.0234375,
+            "edge_accuracy": 0.4907834231853485,
+            "edge_auc": 0.5003344801223242,
+            "edge_ap": 0.5056647592856237,
+            "edge_brier": 0.2563052431423889,
+            "calls": 1,
+            "trace": [
+              {
+                "action": "joint",
+                "tokens": [
+                  128,
+                  0
+                ],
+                "pairs": [
+                  868,
+                  0
+                ]
+              }
+            ],
+            "seconds": 0.6200151999946684
+          }
+        },
+        "gates": {
+          "unimodal": {
+            "token_ce": 9.990345001220703,
+            "token_accuracy": 0.0078125,
+            "edge_bce": 0.704334020614624,
+            "edge_auc": 0.5055879417261298,
+            "weights": [
+              0.0,
+              0.0
+            ]
+          },
+          "joint": {
+            "token_ce": 9.930624008178711,
+            "token_accuracy": 0.0234375,
+            "edge_bce": 0.7061402201652527,
+            "edge_auc": 0.5003344801223242,
+            "weights": [
+              1.0,
+              1.0
+            ]
+          },
+          "learned": {
+            "token_ce": 9.931817054748535,
+            "token_accuracy": 0.0234375,
+            "edge_bce": 0.7021487355232239,
+            "edge_auc": 0.4995221712538226,
+            "weights": [
+              0.9658076739854282,
+              0.7606656525433408
+            ]
+          },
+          "oracle_analysis_only": {
+            "token_ce": 9.930624008178711,
+            "token_accuracy": 0.0234375,
+            "edge_bce": 0.7003732323646545,
+            "edge_auc": 0.49906557934080864,
+            "weights": [
+              1.0,
+              0.5
+            ]
+          }
+        }
+      }
+    ]
+  }
+]
