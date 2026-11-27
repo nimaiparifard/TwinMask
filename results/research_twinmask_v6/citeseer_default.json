@@ -1,0 +1,1250 @@
+[
+  {
+    "family": "mlm",
+    "split": 3107,
+    "model_seed": 97,
+    "split_hash": "adc51c54c13a20317a630dc7c02087a13d2aae532dfac94c0c860ac2b6fdff12",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 6.143034219741821,
+            "edge": 0.689751923084259,
+            "token_accuracy": 0.033203125,
+            "edge_auc": 0.5578683414399619,
+            "conditioning_text": 0.0,
+            "conditioning_edge": -0.00029175753297749907
+          },
+          "score": 0.8858786183961779,
+          "gradients": {},
+          "train": [
+            6.5117824375629425,
+            null
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 6.021095633506775,
+            "edge": 0.6897664219141006,
+            "token_accuracy": 0.030598959419876337,
+            "edge_auc": 0.5595894625570842,
+            "conditioning_text": 0.0,
+            "conditioning_edge": -0.00030623575366917066
+          },
+          "score": 0.868294020551039,
+          "gradients": {},
+          "train": [
+            6.055943250656128,
+            null
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "91205e4fffde9a76af6b329d87561c9e29af1f789485c88c877802962e4df1b8",
+      "checkpoint_hash": "efd6e1bd42acefd234af506e786312c146c6fdafaaefdee8b1de183027096014",
+      "seconds": 1.3621940999873914
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\citeseer_3107_mlm_default.pt",
+    "checkpoint_file_sha256": "63a59abf33401712e1e17b6a7701b78841e8e0c53a836ea0376517ad44d06aad",
+    "test": {
+      "text": 5.939794063568115,
+      "edge": 0.6900060474872589,
+      "token_accuracy": 0.0455729179084301,
+      "edge_auc": 0.573334419038282,
+      "conditioning_text": 0.0,
+      "conditioning_edge": -0.0008358612249139696
+    }
+  },
+  {
+    "family": "structure",
+    "split": 3107,
+    "model_seed": 97,
+    "split_hash": "adc51c54c13a20317a630dc7c02087a13d2aae532dfac94c0c860ac2b6fdff12",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 7.020488619804382,
+            "edge": 0.640651598572731,
+            "token_accuracy": 0.001953125058207661,
+            "edge_auc": 0.6820796185538576,
+            "conditioning_text": -0.024511216208338737,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.924264884198466,
+          "gradients": {},
+          "train": [
+            null,
+            0.6425986066460609
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 7.033456563949585,
+            "edge": 0.6104584634304047,
+            "token_accuracy": 0.0013020833721384406,
+            "edge_auc": 0.7336823077408755,
+            "conditioning_text": -0.03747915988788009,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.8807053978597414,
+          "gradients": {},
+          "train": [
+            null,
+            0.6007503904402256
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "91205e4fffde9a76af6b329d87561c9e29af1f789485c88c877802962e4df1b8",
+      "checkpoint_hash": "38c585588dc0a244888d0833af75e6bcab762da87d84e7721301c07b62fbc641",
+      "seconds": 1.4021962999831885
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\citeseer_3107_structure_default.pt",
+    "checkpoint_file_sha256": "d6a27a3a865c2f386329882b74f814ea2444b72d4daf7354e3a92eaa7f80f33f",
+    "test": {
+      "text": 7.0180922746658325,
+      "edge": 0.5945845395326614,
+      "token_accuracy": 0.0032552084303461015,
+      "edge_auc": 0.7623759770366343,
+      "conditioning_text": -0.020568797830492258,
+      "conditioning_edge": 0.0
+    }
+  },
+  {
+    "family": "structure_gat",
+    "split": 3107,
+    "model_seed": 97,
+    "split_hash": "adc51c54c13a20317a630dc7c02087a13d2aae532dfac94c0c860ac2b6fdff12",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 7.067149639129639,
+            "edge": 0.6412220597267151,
+            "token_accuracy": 0.0006510416860692203,
+            "edge_auc": 0.6643247562583572,
+            "conditioning_text": -0.01808521489147097,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.9250878856763386,
+          "gradients": {},
+          "train": [
+            null,
+            0.6655563339591026
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 7.062501311302185,
+            "edge": 0.6036540120840073,
+            "token_accuracy": 0.0006510416860692203,
+            "edge_auc": 0.7332998139760958,
+            "conditioning_text": -0.013436930486932397,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.8708886496463237,
+          "gradients": {},
+          "train": [
+            null,
+            0.6061730235815048
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "1416d3cae831b9675b6bfd19e12f1ee557bac3381e469393106fcee6a2529eba",
+      "checkpoint_hash": "84022e30a65fdb73732f91b7dc32806cfb44101e0edc27bc65ee688471792684",
+      "seconds": 1.7102197999483906
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\citeseer_3107_structure_gat_default.pt",
+    "checkpoint_file_sha256": "02ff2fe7c0d58672da5a3ddae33872d6a3fc54ea4b4151dc1405f9c63fff1bb0",
+    "test": {
+      "text": 7.061364531517029,
+      "edge": 0.5860514044761658,
+      "token_accuracy": 0.0006510416860692203,
+      "edge_auc": 0.765139582685666,
+      "conditioning_text": -0.02732300665229559,
+      "conditioning_edge": 0.0
+    }
+  },
+  {
+    "family": "text_link",
+    "split": 3107,
+    "model_seed": 97,
+    "split_hash": "adc51c54c13a20317a630dc7c02087a13d2aae532dfac94c0c860ac2b6fdff12",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 7.007606506347656,
+            "edge": 0.702934592962265,
+            "token_accuracy": 0.0032552084303461015,
+            "edge_auc": 0.44392470171921433,
+            "conditioning_text": -0.02816892648115754,
+            "conditioning_edge": 0.0
+          },
+          "score": 1.0141202513359617,
+          "gradients": {},
+          "train": [
+            null,
+            0.6912637799978256
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 7.004742741584778,
+            "edge": 0.7260152250528336,
+            "token_accuracy": 0.0013020833721384406,
+            "edge_auc": 0.45793141851618324,
+            "conditioning_text": -0.022629070095717907,
+            "conditioning_edge": 0.0
+          },
+          "score": 1.0474185647936076,
+          "gradients": {},
+          "train": [
+            null,
+            0.6749491170048714
+          ]
+        }
+      ],
+      "best_step": 16,
+      "initialization_hash": "91205e4fffde9a76af6b329d87561c9e29af1f789485c88c877802962e4df1b8",
+      "checkpoint_hash": "94396bb660942c06b46631b46a87a8803812feff209673c8dc2f944309fccec0",
+      "seconds": 1.5092949999962002
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\citeseer_3107_text_link_default.pt",
+    "checkpoint_file_sha256": "d4b796687b883588841eca7a7d2018d5da025819e05b1e4abac7141e330da986",
+    "test": {
+      "text": 6.994415760040283,
+      "edge": 0.6982981413602829,
+      "token_accuracy": 0.001953125058207661,
+      "edge_auc": 0.5565883742668284,
+      "conditioning_text": -0.013279148028232157,
+      "conditioning_edge": 0.0
+    }
+  },
+  {
+    "family": "gae",
+    "split": 3107,
+    "model_seed": 97,
+    "split_hash": "adc51c54c13a20317a630dc7c02087a13d2aae532dfac94c0c860ac2b6fdff12",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 7.039039373397827,
+            "edge": 0.6583313792943954,
+            "token_accuracy": 0.001953125058207661,
+            "edge_auc": 0.6428931410757275,
+            "conditioning_text": -0.04306193394586444,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.9497714161696156,
+          "gradients": {},
+          "train": [
+            null,
+            0.6851615123450756
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 7.035324692726135,
+            "edge": 0.6403386443853378,
+            "token_accuracy": 0.0026041667442768812,
+            "edge_auc": 0.6873699567715664,
+            "conditioning_text": -0.03934724349528551,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.9238133867442884,
+          "gradients": {},
+          "train": [
+            null,
+            0.6423126645386219
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "91205e4fffde9a76af6b329d87561c9e29af1f789485c88c877802962e4df1b8",
+      "checkpoint_hash": "2b87da51809e292a3ffd150ff7756ca23c148b7964bfe395be6f6a533c055e14",
+      "seconds": 1.2289633000036702
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\citeseer_3107_gae_default.pt",
+    "checkpoint_file_sha256": "e3f7432dd2d24e51f69543d765501dfdc8a536c7634a29b6d25f44eb97d8bdc8",
+    "test": {
+      "text": 7.024822473526001,
+      "edge": 0.6241393536329269,
+      "token_accuracy": 0.001953125058207661,
+      "edge_auc": 0.7127124580481023,
+      "conditioning_text": -0.027299268636852503,
+      "conditioning_edge": 0.0
+    }
+  },
+  {
+    "family": "sage",
+    "split": 3107,
+    "model_seed": 97,
+    "split_hash": "adc51c54c13a20317a630dc7c02087a13d2aae532dfac94c0c860ac2b6fdff12",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 6.136873364448547,
+            "edge": 0.6429232060909271,
+            "token_accuracy": 0.030598958488553762,
+            "edge_auc": 0.7204605886969394,
+            "conditioning_text": 0.056537589989602566,
+            "conditioning_edge": 0.0186319169588387
+          },
+          "score": 0.9062661454623973,
+          "gradients": {},
+          "train": [
+            6.491092950105667,
+            0.6388479880988598
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 6.062357783317566,
+            "edge": 0.624964103102684,
+            "token_accuracy": 0.0299479179084301,
+            "edge_auc": 0.7214582235327748,
+            "conditioning_text": -0.008913129684515297,
+            "conditioning_edge": -0.0008345959613507148
+          },
+          "score": 0.8879384956964778,
+          "gradients": {},
+          "train": [
+            6.078262358903885,
+            0.6020017676055431
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "91205e4fffde9a76af6b329d87561c9e29af1f789485c88c877802962e4df1b8",
+      "checkpoint_hash": "4987ec96bb1cedf248336cb29a367fc24303ccac2d17d2a9df178e1b4251b06d",
+      "seconds": 1.2300893000210635
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\citeseer_3107_sage_default.pt",
+    "checkpoint_file_sha256": "507f0492307dae9b91d28239af02d5bbd564e25d1744f8926a84d1822808627e",
+    "test": {
+      "text": 5.978712439537048,
+      "edge": 0.6201503425836563,
+      "token_accuracy": 0.03450520895421505,
+      "edge_auc": 0.7499598314396121,
+      "conditioning_text": -0.0032234471291303635,
+      "conditioning_edge": -0.0010430747697682818
+    }
+  },
+  {
+    "family": "gat",
+    "split": 3107,
+    "model_seed": 97,
+    "split_hash": "adc51c54c13a20317a630dc7c02087a13d2aae532dfac94c0c860ac2b6fdff12",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 6.1645307540893555,
+            "edge": 0.6358156651258469,
+            "token_accuracy": 0.037760416977107525,
+            "edge_auc": 0.676371333160773,
+            "conditioning_text": 0.05737014673650265,
+            "conditioning_edge": -0.0009841630380833521
+          },
+          "score": 0.9031333557020245,
+          "gradients": {},
+          "train": [
+            6.535336434841156,
+            0.6706565394997597
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 6.068780064582825,
+            "edge": 0.6113017201423645,
+            "token_accuracy": 0.0358072929084301,
+            "edge_auc": 0.7302019815547991,
+            "conditioning_text": -0.021650082897394896,
+            "conditioning_edge": 0.0007585719613416586
+          },
+          "score": 0.8785462438523994,
+          "gradients": {},
+          "train": [
+            6.083925634622574,
+            0.6127083525061607
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "1416d3cae831b9675b6bfd19e12f1ee557bac3381e469393106fcee6a2529eba",
+      "checkpoint_hash": "1ea862c7c2a25fceccf14582c6af86b01e9b1b1d753b5a4de3319ab0d6f193a4",
+      "seconds": 1.465767199988477
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\citeseer_3107_gat_default.pt",
+    "checkpoint_file_sha256": "92974c480904e5d9bdcce396a81f3019cc8f8cf9d9b0279a5420342dac0910ac",
+    "test": {
+      "text": 5.970900297164917,
+      "edge": 0.599874883890152,
+      "token_accuracy": 0.045572918839752674,
+      "edge_auc": 0.7546536070029033,
+      "conditioning_text": -0.012556636647786945,
+      "conditioning_edge": 0.00020753024364239536
+    }
+  },
+  {
+    "family": "twinmask",
+    "split": 3107,
+    "model_seed": 97,
+    "split_hash": "adc51c54c13a20317a630dc7c02087a13d2aae532dfac94c0c860ac2b6fdff12",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.3333333333333333,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 6.15604293346405,
+            "edge": 0.6199580729007721,
+            "token_accuracy": 0.03125,
+            "edge_auc": 0.7107251768691352,
+            "conditioning_text": 0.048343438655138016,
+            "conditioning_edge": 0.0023509305538027547
+          },
+          "score": 0.891082512330186,
+          "gradients": {},
+          "train": [
+            6.506130337715149,
+            0.6506598852574825
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 6.068786144256592,
+            "edge": 0.6224240213632584,
+            "token_accuracy": 0.025390625465661287,
+            "edge_auc": 0.7154824272159874,
+            "conditioning_text": 0.017607856541872025,
+            "conditioning_edge": 0.001028271290124394
+          },
+          "score": 0.8865697266304746,
+          "gradients": {},
+          "train": [
+            6.092598617076874,
+            0.6124719008803368
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "91205e4fffde9a76af6b329d87561c9e29af1f789485c88c877802962e4df1b8",
+      "checkpoint_hash": "82c140f5daa7e045dc791598e37596d5bee8194bf778541fae4b6942447836a5",
+      "seconds": 1.3362131000030786
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\citeseer_3107_twinmask_default.pt",
+    "checkpoint_file_sha256": "4581a03c29dde2ab3a3f262c56abce619553a8b82821330d4070f175096f1505",
+    "test": {
+      "text": 5.986253261566162,
+      "edge": 0.6129342615604401,
+      "token_accuracy": 0.03190104337409139,
+      "edge_auc": 0.7502593881474386,
+      "conditioning_text": 0.016690858057700098,
+      "conditioning_edge": -0.00027950326693826355
+    }
+  },
+  {
+    "family": "mlm",
+    "split": 3137,
+    "model_seed": 97,
+    "split_hash": "bd7f410cadb6e982adb81531c4a8ab24da37748c2d7494b6ee836ec5eb2a9044",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 6.11214017868042,
+            "edge": 0.6902564615011215,
+            "token_accuracy": 0.039062500931322575,
+            "edge_auc": 0.5447707093333141,
+            "conditioning_text": 0.0,
+            "conditioning_edge": -0.00017023406326188706
+          },
+          "score": 0.8814234307099046,
+          "gradients": {},
+          "train": [
+            6.53961256146431,
+            null
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 5.967457413673401,
+            "edge": 0.6901399344205856,
+            "token_accuracy": 0.050130209885537624,
+            "edge_auc": 0.5504662187236292,
+            "conditioning_text": 0.0,
+            "conditioning_edge": -5.369826249079779e-05
+          },
+          "score": 0.8605589257461762,
+          "gradients": {},
+          "train": [
+            6.122199654579163,
+            null
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "91205e4fffde9a76af6b329d87561c9e29af1f789485c88c877802962e4df1b8",
+      "checkpoint_hash": "744f081615162ad23fa5eefd12e4079fbc62a1394add232c85c803c4ae480c22",
+      "seconds": 1.0170874999603257
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\citeseer_3137_mlm_default.pt",
+    "checkpoint_file_sha256": "215d017bfb9027b7131af6e9b17d0318b32fbddad36076e80ccd029c812a0b17",
+    "test": {
+      "text": 6.0061599016189575,
+      "edge": 0.6863037645816803,
+      "token_accuracy": 0.04882812686264515,
+      "edge_auc": 0.6150031679255297,
+      "conditioning_text": 0.0,
+      "conditioning_edge": 0.0004298763451515697
+    }
+  },
+  {
+    "family": "structure",
+    "split": 3137,
+    "model_seed": 97,
+    "split_hash": "bd7f410cadb6e982adb81531c4a8ab24da37748c2d7494b6ee836ec5eb2a9044",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 7.0022289752960205,
+            "edge": 0.620853379368782,
+            "token_accuracy": 0.0026041667442768812,
+            "edge_auc": 0.7242571851041036,
+            "conditioning_text": -0.014587669167667627,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.8957020915344962,
+          "gradients": {},
+          "train": [
+            null,
+            0.6491160169243813
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 7.005429625511169,
+            "edge": 0.6035946756601334,
+            "token_accuracy": 0.004557291860692203,
+            "edge_auc": 0.7405590554178904,
+            "conditioning_text": -0.01778841887426097,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.8708030452818567,
+          "gradients": {},
+          "train": [
+            null,
+            0.6060249134898186
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "91205e4fffde9a76af6b329d87561c9e29af1f789485c88c877802962e4df1b8",
+      "checkpoint_hash": "2de180c00d7cb05e3d24515808883a50bd443a2e04ae3fe9197b33a2d8968bc1",
+      "seconds": 0.9669656000332907
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\citeseer_3137_structure_default.pt",
+    "checkpoint_file_sha256": "9a2680f42f3a00d84d4df571964de20e38f264452e34b25ad45fc70d57fe404a",
+    "test": {
+      "text": 7.028867721557617,
+      "edge": 0.5946677774190903,
+      "token_accuracy": 0.003906250058207661,
+      "edge_auc": 0.737212401488641,
+      "conditioning_text": -0.020008483435958624,
+      "conditioning_edge": 0.0
+    }
+  },
+  {
+    "family": "structure_gat",
+    "split": 3137,
+    "model_seed": 97,
+    "split_hash": "bd7f410cadb6e982adb81531c4a8ab24da37748c2d7494b6ee836ec5eb2a9044",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 7.064898371696472,
+            "edge": 0.6305927932262421,
+            "token_accuracy": 0.001953125058207661,
+            "edge_auc": 0.7201084842963177,
+            "conditioning_text": -0.01473023509606719,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.909753095607819,
+          "gradients": {},
+          "train": [
+            null,
+            0.6701506078243256
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 7.064708352088928,
+            "edge": 0.6038633733987808,
+            "token_accuracy": 0.001953125058207661,
+            "edge_auc": 0.7489022873587301,
+            "conditioning_text": -0.014540362288244069,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.8711906941769015,
+          "gradients": {},
+          "train": [
+            null,
+            0.6171789169311523
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "1416d3cae831b9675b6bfd19e12f1ee557bac3381e469393106fcee6a2529eba",
+      "checkpoint_hash": "9e1424187a63f1f08c3f05855dd49af216965137dd53332eef0cf2c5c02edd0e",
+      "seconds": 1.1949933000141755
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\citeseer_3137_structure_gat_default.pt",
+    "checkpoint_file_sha256": "3bb097bc397b042d625c878acf85d2b44211efa675a26751ff4722c3b9ca5839",
+    "test": {
+      "text": 7.0615726709365845,
+      "edge": 0.5902155786752701,
+      "token_accuracy": 0.001953125058207661,
+      "edge_auc": 0.7463399346234232,
+      "conditioning_text": -0.025408478919416666,
+      "conditioning_edge": 0.0
+    }
+  },
+  {
+    "family": "text_link",
+    "split": 3137,
+    "model_seed": 97,
+    "split_hash": "bd7f410cadb6e982adb81531c4a8ab24da37748c2d7494b6ee836ec5eb2a9044",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 6.988438963890076,
+            "edge": 0.6913589388132095,
+            "token_accuracy": 0.001953125058207661,
+            "edge_auc": 0.5397357727322272,
+            "conditioning_text": -0.01312724407762289,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.9974201125000737,
+          "gradients": {},
+          "train": [
+            null,
+            0.6853823661804199
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 6.987993359565735,
+            "edge": 0.6886165589094162,
+            "token_accuracy": 0.0006510416860692203,
+            "edge_auc": 0.5445180871339643,
+            "conditioning_text": -0.014040223381016403,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.9934636946126375,
+          "gradients": {},
+          "train": [
+            null,
+            0.677875179797411
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "91205e4fffde9a76af6b329d87561c9e29af1f789485c88c877802962e4df1b8",
+      "checkpoint_hash": "e52c0643d9f8874c7fb2d23a448a80aaf6680081f58b8ace2bc18b3f53dcb3e9",
+      "seconds": 1.1109807000029832
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\citeseer_3137_text_link_default.pt",
+    "checkpoint_file_sha256": "67556bf4f09150282d009d94b8d26ed0ef18fdd4ef002a989b62c4b36169dfb2",
+    "test": {
+      "text": 7.028590083122253,
+      "edge": 0.6951674968004227,
+      "token_accuracy": 0.0013020833721384406,
+      "edge_auc": 0.5239788502143624,
+      "conditioning_text": -0.01975566241890192,
+      "conditioning_edge": 0.0
+    }
+  },
+  {
+    "family": "gae",
+    "split": 3137,
+    "model_seed": 97,
+    "split_hash": "bd7f410cadb6e982adb81531c4a8ab24da37748c2d7494b6ee836ec5eb2a9044",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 7.016650319099426,
+            "edge": 0.6565946340560913,
+            "token_accuracy": 0.0,
+            "edge_auc": 0.6918790458907624,
+            "conditioning_text": -0.029008856043219566,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.9472658224270266,
+          "gradients": {},
+          "train": [
+            null,
+            0.6849713400006294
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 7.014437556266785,
+            "edge": 0.6675886660814285,
+            "token_accuracy": 0.0006510416860692203,
+            "edge_auc": 0.6969573695052252,
+            "conditioning_text": -0.02679618028923869,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.9631268579093551,
+          "gradients": {},
+          "train": [
+            null,
+            0.6427528485655785
+          ]
+        }
+      ],
+      "best_step": 16,
+      "initialization_hash": "91205e4fffde9a76af6b329d87561c9e29af1f789485c88c877802962e4df1b8",
+      "checkpoint_hash": "e4851cb4445d2378e9e6ca04a34050dbf5901d0093af827854e59d27944b855a",
+      "seconds": 0.9176445999764837
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\citeseer_3137_gae_default.pt",
+    "checkpoint_file_sha256": "4f62d602156521d0b8092aef4a840c4d92c2b99368d131774f162d4e9ce93c37",
+    "test": {
+      "text": 7.037488579750061,
+      "edge": 0.6324885189533234,
+      "token_accuracy": 0.0026041667442768812,
+      "edge_auc": 0.6962944748673348,
+      "conditioning_text": -0.028629382140934467,
+      "conditioning_edge": 0.0
+    }
+  },
+  {
+    "family": "sage",
+    "split": 3137,
+    "model_seed": 97,
+    "split_hash": "bd7f410cadb6e982adb81531c4a8ab24da37748c2d7494b6ee836ec5eb2a9044",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 6.101102709770203,
+            "edge": 0.6213469207286835,
+            "token_accuracy": 0.0397135429084301,
+            "edge_auc": 0.7338835671875085,
+            "conditioning_text": 0.06927332282066345,
+            "conditioning_edge": 0.044235993176698685
+          },
+          "score": 0.8881229267608386,
+          "gradients": {},
+          "train": [
+            6.532588362693787,
+            0.634931281208992
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 5.9914644956588745,
+            "edge": 0.6041447520256042,
+            "token_accuracy": 0.0436197929084301,
+            "edge_auc": 0.7422660995338546,
+            "conditioning_text": 0.0014991947682574391,
+            "conditioning_edge": 0.0044346564882289385
+          },
+          "score": 0.8678087960738661,
+          "gradients": {},
+          "train": [
+            6.140216648578644,
+            0.6100278533995152
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "91205e4fffde9a76af6b329d87561c9e29af1f789485c88c877802962e4df1b8",
+      "checkpoint_hash": "9a2c58d84a057a646402626268f6a252e068d06c0e429846d1782303883e0271",
+      "seconds": 1.201893099991139
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\citeseer_3137_sage_default.pt",
+    "checkpoint_file_sha256": "817bce9ff49eb5034aa066b1f32c6580ef56dba6bed623d100ee72a62c9328bc",
+    "test": {
+      "text": 6.032353162765503,
+      "edge": 0.5963050872087479,
+      "token_accuracy": 0.034505209885537624,
+      "edge_auc": 0.7318026359986931,
+      "conditioning_text": -0.00495588086778298,
+      "conditioning_edge": -0.0001822198391892016
+    }
+  },
+  {
+    "family": "gat",
+    "split": 3137,
+    "model_seed": 97,
+    "split_hash": "bd7f410cadb6e982adb81531c4a8ab24da37748c2d7494b6ee836ec5eb2a9044",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 6.129228591918945,
+            "edge": 0.635672852396965,
+            "token_accuracy": 0.0299479179084301,
+            "edge_auc": 0.7206951996671018,
+            "conditioning_text": 0.07186258211731911,
+            "conditioning_edge": -0.002155551395844668
+          },
+          "score": 0.9004848996730743,
+          "gradients": {},
+          "train": [
+            6.565212428569794,
+            0.6742379739880562
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 5.996399760246277,
+            "edge": 0.6020301133394241,
+            "token_accuracy": 0.04427083395421505,
+            "edge_auc": 0.7415237502655702,
+            "conditioning_text": 0.005003558151656762,
+            "conditioning_edge": 0.00712405052036047
+          },
+          "score": 0.8666392606013,
+          "gradients": {},
+          "train": [
+            6.1414810717105865,
+            0.619137704372406
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "1416d3cae831b9675b6bfd19e12f1ee557bac3381e469393106fcee6a2529eba",
+      "checkpoint_hash": "2e301f85a281cb6c2bde717f70a1959ee1906598cedfab8a94224d48e61ca9d0",
+      "seconds": 0.7520623000455089
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\citeseer_3137_gat_default.pt",
+    "checkpoint_file_sha256": "a448f53d4387883c0b0d86d47aa65aba42602dd3119a05d987c056542d634ec0",
+    "test": {
+      "text": 6.039520621299744,
+      "edge": 0.5905690044164658,
+      "token_accuracy": 0.03710937686264515,
+      "edge_auc": 0.7357567660019617,
+      "conditioning_text": -0.0032495534978806973,
+      "conditioning_edge": 0.004388447821838781
+    }
+  },
+  {
+    "family": "twinmask",
+    "split": 3137,
+    "model_seed": 97,
+    "split_hash": "bd7f410cadb6e982adb81531c4a8ab24da37748c2d7494b6ee836ec5eb2a9044",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.3333333333333333,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 6.106131076812744,
+            "edge": 0.616134375333786,
+            "token_accuracy": 0.0397135429084301,
+            "edge_auc": 0.7310847318335363,
+            "conditioning_text": 0.08250421285629272,
+            "conditioning_edge": 0.007289139903150499
+          },
+          "score": 0.8847254370546503,
+          "gradients": {},
+          "train": [
+            6.539903819561005,
+            0.634118240326643
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 6.005375146865845,
+            "edge": 0.6365918666124344,
+            "token_accuracy": 0.04036458441987634,
+            "edge_auc": 0.7232002200460232,
+            "conditioning_text": 0.01912810793146491,
+            "conditioning_edge": -0.019950976595282555
+          },
+          "score": 0.8922174597818537,
+          "gradients": {},
+          "train": [
+            6.143844872713089,
+            0.61626997590065
+          ]
+        }
+      ],
+      "best_step": 16,
+      "initialization_hash": "91205e4fffde9a76af6b329d87561c9e29af1f789485c88c877802962e4df1b8",
+      "checkpoint_hash": "7ce71a0e1c05368223909944f3fa9705d9b8e0080ab75d493bb4fd1c884a4d23",
+      "seconds": 0.7527975999983028
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\citeseer_3137_twinmask_default.pt",
+    "checkpoint_file_sha256": "6fb3291f4511c6dfa3e41f7fa1e1b67ebbc32bf0bef9d383d58c52c1f0f2838c",
+    "test": {
+      "text": 6.048184752464294,
+      "edge": 0.6356599032878876,
+      "token_accuracy": 0.03450520895421505,
+      "edge_auc": 0.7054144638326014,
+      "conditioning_text": 0.012156692799180746,
+      "conditioning_edge": -0.023867559619247913
+    }
+  }
+]

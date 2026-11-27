@@ -1,0 +1,1526 @@
+[
+  {
+    "family": "mlm",
+    "length": 16,
+    "vocabulary": 256,
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16,
+      "vocab_limit": 256
+    },
+    "test": {
+      "ce": 3.9292162656784058,
+      "accuracy": 0.1889716051518917,
+      "panels": [
+        {
+          "targets": 554,
+          "ce": 3.696810483932495,
+          "accuracy": 0.23465703427791595
+        },
+        {
+          "targets": 1153,
+          "ce": 3.8491265773773193,
+          "accuracy": 0.2003469318151474
+        },
+        {
+          "targets": 1697,
+          "ce": 4.012808322906494,
+          "accuracy": 0.17560401558876038
+        },
+        {
+          "targets": 2065,
+          "ce": 4.1581196784973145,
+          "accuracy": 0.1452784389257431
+        }
+      ]
+    },
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 4.5145343542099,
+            "edge": 0.6965739727020264,
+            "token_accuracy": 0.1393229216337204,
+            "edge_auc": 0.6503991671534497,
+            "conditioning_text": 0.0,
+            "conditioning_edge": 0.009703300893306732
+          },
+          "score": 0.8124300957458713,
+          "gradients": {},
+          "train": [
+            4.972382128238678,
+            null
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 4.344617128372192,
+            "edge": 0.6985498070716858,
+            "token_accuracy": 0.14778646267950535,
+            "edge_auc": 0.6516648975840892,
+            "conditioning_text": 0.0,
+            "conditioning_edge": 0.007727450341917574
+          },
+          "score": 0.7818519990419509,
+          "gradients": {},
+          "train": [
+            4.4865612387657166,
+            null
+          ]
+        },
+        {
+          "step": 64,
+          "dev": {
+            "text": 4.087545990943909,
+            "edge": 0.7004202902317047,
+            "token_accuracy": 0.1731770895421505,
+            "edge_auc": 0.6515239289374557,
+            "conditioning_text": 0.0,
+            "conditioning_edge": 0.005856978241354227
+          },
+          "score": 0.7355897907148393,
+          "gradients": {},
+          "train": [
+            4.298663601279259,
+            null
+          ]
+        },
+        {
+          "step": 100,
+          "dev": {
+            "text": 3.891726076602936,
+            "edge": 0.7019231468439102,
+            "token_accuracy": 0.1966145895421505,
+            "edge_auc": 0.6493365118209801,
+            "conditioning_text": 0.0,
+            "conditioning_edge": 0.00435409601777792
+          },
+          "score": 0.7003502777828732,
+          "gradients": {},
+          "train": [
+            4.042164305845897,
+            null
+          ]
+        }
+      ],
+      "best_step": 100,
+      "initialization_hash": "0826f21558791372aefe358e416daa2f4028a5a9ecf511fa99f70203ce9c42be",
+      "checkpoint_hash": "5eef37bc695017998e9c3fd90af28a4a674a667bb40b26af5987c56641bd0d41",
+      "seconds": 5.2952472000033595
+    }
+  },
+  {
+    "family": "sage",
+    "length": 16,
+    "vocabulary": 256,
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16,
+      "vocab_limit": 256
+    },
+    "test": {
+      "ce": 3.941948115825653,
+      "accuracy": 0.18932488560676575,
+      "panels": [
+        {
+          "targets": 554,
+          "ce": 3.7063419818878174,
+          "accuracy": 0.23104692995548248
+        },
+        {
+          "targets": 1153,
+          "ce": 3.871142864227295,
+          "accuracy": 0.20294883847236633
+        },
+        {
+          "targets": 1697,
+          "ce": 4.02744197845459,
+          "accuracy": 0.17560401558876038
+        },
+        {
+          "targets": 2065,
+          "ce": 4.16286563873291,
+          "accuracy": 0.1476997584104538
+        }
+      ]
+    },
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 4.558438539505005,
+            "edge": 0.6417997479438782,
+            "token_accuracy": 0.13736979477107525,
+            "edge_auc": 0.685639443228568,
+            "conditioning_text": 0.003016056682099588,
+            "conditioning_edge": 0.005393817904405296
+          },
+          "score": 0.8731261764907665,
+          "gradients": {},
+          "train": [
+            4.987125337123871,
+            0.6636889427900314
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 4.411747097969055,
+            "edge": 0.642257496714592,
+            "token_accuracy": 0.14453125558793545,
+            "edge_auc": 0.6924729355780894,
+            "conditioning_text": -0.013151723134797066,
+            "conditioning_edge": 0.028539540246129036
+          },
+          "score": 0.8602571659861056,
+          "gradients": {},
+          "train": [
+            4.546013534069061,
+            0.624363150447607
+          ]
+        },
+        {
+          "step": 64,
+          "dev": {
+            "text": 4.13029420375824,
+            "edge": 0.6366578191518784,
+            "token_accuracy": 0.1588541716337204,
+            "edge_auc": 0.696534906733177,
+            "conditioning_text": 0.013068955158814788,
+            "conditioning_edge": 0.0006361972336890176
+          },
+          "score": 0.8308928926920225,
+          "gradients": {},
+          "train": [
+            4.3556525856256485,
+            0.6194412037730217
+          ]
+        },
+        {
+          "step": 100,
+          "dev": {
+            "text": 3.909818649291992,
+            "edge": 0.634478822350502,
+            "token_accuracy": 0.1953125074505806,
+            "edge_auc": 0.70046172788981,
+            "conditioning_text": 0.02380938734859228,
+            "conditioning_edge": 0.006594129139557481
+          },
+          "score": 0.8094828228247906,
+          "gradients": {},
+          "train": [
+            4.076201233598921,
+            0.6149482925732931
+          ]
+        }
+      ],
+      "best_step": 100,
+      "initialization_hash": "0826f21558791372aefe358e416daa2f4028a5a9ecf511fa99f70203ce9c42be",
+      "checkpoint_hash": "80a650ac2b2dc027eb03e87e7c8d656dd01d2aec0f4ff793415e4a3846f6ca73",
+      "seconds": 3.886176100000739
+    }
+  },
+  {
+    "family": "mlm",
+    "length": 16,
+    "vocabulary": 1024,
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16,
+      "vocab_limit": 1024
+    },
+    "test": {
+      "ce": 4.412946462631226,
+      "accuracy": 0.16213448159396648,
+      "panels": [
+        {
+          "targets": 554,
+          "ce": 4.2378950119018555,
+          "accuracy": 0.20397111773490906
+        },
+        {
+          "targets": 1153,
+          "ce": 4.336559295654297,
+          "accuracy": 0.17953166365623474
+        },
+        {
+          "targets": 1697,
+          "ce": 4.478133678436279,
+          "accuracy": 0.150265172123909
+        },
+        {
+          "targets": 2065,
+          "ce": 4.599197864532471,
+          "accuracy": 0.11476997286081314
+        }
+      ]
+    },
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 5.8385114669799805,
+            "edge": 0.6932492852210999,
+            "token_accuracy": 0.0859375037252903,
+            "edge_auc": 0.5225082106194657,
+            "conditioning_text": 0.0,
+            "conditioning_edge": -0.00017846899208961986
+          },
+          "score": 0.8419638059701129,
+          "gradients": {},
+          "train": [
+            6.355105936527252,
+            null
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 5.612888693809509,
+            "edge": 0.6932421624660492,
+            "token_accuracy": 0.09375000186264515,
+            "edge_auc": 0.5223979422151245,
+            "conditioning_text": 0.0,
+            "conditioning_edge": -0.00017138337716460228
+          },
+          "score": 0.8094270524009017,
+          "gradients": {},
+          "train": [
+            5.809161514043808,
+            null
+          ]
+        },
+        {
+          "step": 64,
+          "dev": {
+            "text": 5.386106967926025,
+            "edge": 0.6935295015573502,
+            "token_accuracy": 0.1171875037252903,
+            "edge_auc": 0.5175114274619237,
+            "conditioning_text": 0.0,
+            "conditioning_edge": -0.00045867291191825643
+          },
+          "score": 0.7767231678355957,
+          "gradients": {},
+          "train": [
+            5.681441992521286,
+            null
+          ]
+        },
+        {
+          "step": 100,
+          "dev": {
+            "text": 5.163819789886475,
+            "edge": 0.6934614479541779,
+            "token_accuracy": 0.1315104216337204,
+            "edge_auc": 0.514114411945406,
+            "conditioning_text": 0.0,
+            "conditioning_edge": -0.00039064145494194236
+          },
+          "score": 0.7446674359082,
+          "gradients": {},
+          "train": [
+            5.395439253913032,
+            null
+          ]
+        }
+      ],
+      "best_step": 100,
+      "initialization_hash": "91205e4fffde9a76af6b329d87561c9e29af1f789485c88c877802962e4df1b8",
+      "checkpoint_hash": "9968a74ad236db437de02ac4bbad456f2b85369e04ab530b5fa3a5be7d0ce6a4",
+      "seconds": 2.3673419000115246
+    }
+  },
+  {
+    "family": "sage",
+    "length": 16,
+    "vocabulary": 1024,
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16,
+      "vocab_limit": 1024
+    },
+    "test": {
+      "ce": 4.472269654273987,
+      "accuracy": 0.17034046724438667,
+      "panels": [
+        {
+          "targets": 554,
+          "ce": 4.322798728942871,
+          "accuracy": 0.19494584202766418
+        },
+        {
+          "targets": 1153,
+          "ce": 4.399819850921631,
+          "accuracy": 0.1925411969423294
+        },
+        {
+          "targets": 1697,
+          "ce": 4.524013042449951,
+          "accuracy": 0.16263996064662933
+        },
+        {
+          "targets": 2065,
+          "ce": 4.642446994781494,
+          "accuracy": 0.13123486936092377
+        }
+      ]
+    },
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 5.822297096252441,
+            "edge": 0.644773930311203,
+            "token_accuracy": 0.06770833674818277,
+            "edge_auc": 0.6888867219257886,
+            "conditioning_text": 0.08554061874747276,
+            "conditioning_edge": -0.001702718400338199
+          },
+          "score": 0.8849188526760671,
+          "gradients": {},
+          "train": [
+            6.3287851214408875,
+            0.6612235829234123
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 5.662931203842163,
+            "edge": 0.6395321935415268,
+            "token_accuracy": 0.0944010429084301,
+            "edge_auc": 0.7003532570966193,
+            "conditioning_text": -0.018003556411713362,
+            "conditioning_edge": 0.007463848334737122
+          },
+          "score": 0.8696467694460159,
+          "gradients": {},
+          "train": [
+            5.844809055328369,
+            0.6219367384910583
+          ]
+        },
+        {
+          "step": 64,
+          "dev": {
+            "text": 5.4635703563690186,
+            "edge": 0.6398812830448151,
+            "token_accuracy": 0.1080729179084301,
+            "edge_auc": 0.6969325937114915,
+            "conditioning_text": -0.012014616666419897,
+            "conditioning_edge": -0.0009607757092453539
+          },
+          "score": 0.8555238058206176,
+          "gradients": {},
+          "train": [
+            5.746918484568596,
+            0.617720577865839
+          ]
+        },
+        {
+          "step": 100,
+          "dev": {
+            "text": 5.2160032987594604,
+            "edge": 0.638995036482811,
+            "token_accuracy": 0.13606771267950535,
+            "edge_auc": 0.6942868104688684,
+            "conditioning_text": 0.006330779462587088,
+            "conditioning_edge": 0.004037925158627331
+          },
+          "score": 0.8370338595541845,
+          "gradients": {},
+          "train": [
+            5.468232380019294,
+            0.6141474660899904
+          ]
+        }
+      ],
+      "best_step": 100,
+      "initialization_hash": "91205e4fffde9a76af6b329d87561c9e29af1f789485c88c877802962e4df1b8",
+      "checkpoint_hash": "4ff43482aa60be2a8e0fe5c3656a3d37c83f1cc7a69225b2ed5e1a16b4bea3d2",
+      "seconds": 2.405110399995465
+    }
+  },
+  {
+    "family": "mlm",
+    "length": 16,
+    "vocabulary": 4096,
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16,
+      "vocab_limit": 4096
+    },
+    "test": {
+      "ce": 4.923345327377319,
+      "accuracy": 0.14268329925835133,
+      "panels": [
+        {
+          "targets": 554,
+          "ce": 4.778001308441162,
+          "accuracy": 0.17328520119190216
+        },
+        {
+          "targets": 1153,
+          "ce": 4.854057312011719,
+          "accuracy": 0.1595837026834488
+        },
+        {
+          "targets": 1697,
+          "ce": 4.977845191955566,
+          "accuracy": 0.1255156248807907
+        },
+        {
+          "targets": 2065,
+          "ce": 5.08347749710083,
+          "accuracy": 0.11234866827726364
+        }
+      ]
+    },
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 6.972899675369263,
+            "edge": 0.6830371618270874,
+            "token_accuracy": 0.05794270895421505,
+            "edge_auc": 0.6369956627002709,
+            "conditioning_text": 0.0,
+            "conditioning_edge": 0.0006545293945237063
+          },
+          "score": 0.8382401975344159,
+          "gradients": {},
+          "train": [
+            7.7848305106163025,
+            null
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 6.592363476753235,
+            "edge": 0.683209016919136,
+            "token_accuracy": 0.07877604477107525,
+            "edge_auc": 0.6391961908760058,
+            "conditioning_text": 0.0,
+            "conditioning_edge": 0.0004826399890589528
+          },
+          "score": 0.7924944169915454,
+          "gradients": {},
+          "train": [
+            7.056202471256256,
+            null
+          ]
+        },
+        {
+          "step": 64,
+          "dev": {
+            "text": 6.423883676528931,
+            "edge": 0.6831952333450317,
+            "token_accuracy": 0.08919271267950535,
+            "edge_auc": 0.636770832385029,
+            "conditioning_text": 0.0,
+            "conditioning_edge": 0.0004964230283803772
+          },
+          "score": 0.7722407854185226,
+          "gradients": {},
+          "train": [
+            6.815477475523949,
+            null
+          ]
+        },
+        {
+          "step": 100,
+          "dev": {
+            "text": 6.253069996833801,
+            "edge": 0.6828837543725967,
+            "token_accuracy": 0.0983072929084301,
+            "edge_auc": 0.6326861622124778,
+            "conditioning_text": 0.0,
+            "conditioning_edge": 0.0008079126528173219
+          },
+          "score": 0.751706588846758,
+          "gradients": {},
+          "train": [
+            6.686564379268223,
+            null
+          ]
+        }
+      ],
+      "best_step": 100,
+      "initialization_hash": "26191b9c23232e02b8b0c803993add15fc3cd58e46c16ab75bddbf632d75d476",
+      "checkpoint_hash": "9c47f3c676e706b72cae3e5bf62ee31916d33211e50899bda8d51e7d690773f5",
+      "seconds": 2.2075780000304803
+    }
+  },
+  {
+    "family": "sage",
+    "length": 16,
+    "vocabulary": 4096,
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16,
+      "vocab_limit": 4096
+    },
+    "test": {
+      "ce": 5.028761863708496,
+      "accuracy": 0.14287319406867027,
+      "panels": [
+        {
+          "targets": 554,
+          "ce": 4.901219844818115,
+          "accuracy": 0.17689530551433563
+        },
+        {
+          "targets": 1153,
+          "ce": 4.964268684387207,
+          "accuracy": 0.15351258218288422
+        },
+        {
+          "targets": 1697,
+          "ce": 5.08107852935791,
+          "accuracy": 0.12728343904018402
+        },
+        {
+          "targets": 2065,
+          "ce": 5.168480396270752,
+          "accuracy": 0.11380144953727722
+        }
+      ]
+    },
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 6.972488880157471,
+            "edge": 0.6455260664224625,
+            "token_accuracy": 0.048828125931322575,
+            "edge_auc": 0.6714678142160134,
+            "conditioning_text": 0.09134840406477451,
+            "conditioning_edge": -0.0004450363267096691
+          },
+          "score": 0.8847440344944766,
+          "gradients": {},
+          "train": [
+            7.782820850610733,
+            0.6520075462758541
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 6.603703498840332,
+            "edge": 0.6466223001480103,
+            "token_accuracy": 0.08203125186264515,
+            "edge_auc": 0.6967670559139667,
+            "conditioning_text": 0.015487879980355501,
+            "conditioning_edge": 0.0006534201311296783
+          },
+          "score": 0.863368216108477,
+          "gradients": {},
+          "train": [
+            7.070818394422531,
+            0.6245631128549576
+          ]
+        },
+        {
+          "step": 64,
+          "dev": {
+            "text": 6.491088628768921,
+            "edge": 0.6351581513881683,
+            "token_accuracy": 0.0833333358168602,
+            "edge_auc": 0.7006559949240299,
+            "conditioning_text": -0.0293353870511055,
+            "conditioning_edge": 0.00206514066667296
+          },
+          "score": 0.8483296385407959,
+          "gradients": {},
+          "train": [
+            6.8453738540410995,
+            0.6176326461136341
+          ]
+        },
+        {
+          "step": 100,
+          "dev": {
+            "text": 6.330836653709412,
+            "edge": 0.6431846022605896,
+            "token_accuracy": 0.09700520988553762,
+            "edge_auc": 0.692720152099599,
+            "conditioning_text": -0.022241057362407446,
+            "conditioning_edge": -0.0004168693267274648
+          },
+          "score": 0.8444872330974711,
+          "gradients": {},
+          "train": [
+            6.7287883626090155,
+            0.6140987293587791
+          ]
+        }
+      ],
+      "best_step": 100,
+      "initialization_hash": "26191b9c23232e02b8b0c803993add15fc3cd58e46c16ab75bddbf632d75d476",
+      "checkpoint_hash": "02a1f895a41e8e382a1a3fcaefb9b830d5e0455ec4c64cbf4f8a3c1f14752ed9",
+      "seconds": 3.72316170000704
+    }
+  },
+  {
+    "family": "mlm",
+    "length": 32,
+    "vocabulary": 1024,
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 32,
+      "vocab_limit": 1024
+    },
+    "test": {
+      "ce": 4.482779264450073,
+      "accuracy": 0.16932689771056175,
+      "panels": [
+        {
+          "targets": 554,
+          "ce": 4.307053565979004,
+          "accuracy": 0.2057761698961258
+        },
+        {
+          "targets": 1153,
+          "ce": 4.395608901977539,
+          "accuracy": 0.18300087749958038
+        },
+        {
+          "targets": 1697,
+          "ce": 4.553675174713135,
+          "accuracy": 0.1543901115655899
+        },
+        {
+          "targets": 2065,
+          "ce": 4.674779415130615,
+          "accuracy": 0.13414043188095093
+        }
+      ]
+    },
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 5.854573607444763,
+            "edge": 0.6928843706846237,
+            "token_accuracy": 0.055419282987713814,
+            "edge_auc": 0.5515579385739916,
+            "conditioning_text": 0.0,
+            "conditioning_edge": -0.0012911273370264098
+          },
+          "score": 0.8442801054231909,
+          "gradients": {},
+          "train": [
+            6.337002843618393,
+            null
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 5.638883709907532,
+            "edge": 0.6930351257324219,
+            "token_accuracy": 0.08936610259115696,
+            "edge_auc": 0.548069129227489,
+            "conditioning_text": 0.0,
+            "conditioning_edge": -0.0014418788196053356
+          },
+          "score": 0.8131757583534254,
+          "gradients": {},
+          "train": [
+            5.690766781568527,
+            null
+          ]
+        },
+        {
+          "step": 64,
+          "dev": {
+            "text": 5.456689476966858,
+            "edge": 0.693466305732727,
+            "token_accuracy": 0.09649218991398811,
+            "edge_auc": 0.5416836616866296,
+            "conditioning_text": 0.0,
+            "conditioning_edge": -0.0018730913288891315
+          },
+          "score": 0.7869017755651577,
+          "gradients": {},
+          "train": [
+            5.569165617227554,
+            null
+          ]
+        },
+        {
+          "step": 100,
+          "dev": {
+            "text": 5.234067440032959,
+            "edge": 0.6929224729537964,
+            "token_accuracy": 0.12418974936008453,
+            "edge_auc": 0.5463693876058335,
+            "conditioning_text": 0.0,
+            "conditioning_edge": -0.0013292227231431752
+          },
+          "score": 0.7547977540915749,
+          "gradients": {},
+          "train": [
+            5.377080533239576,
+            null
+          ]
+        }
+      ],
+      "best_step": 100,
+      "initialization_hash": "a0b1ef15bd540b339d31c82f95ecbeaa1ce0b0e8f1249ce69ffd76368a923e7a",
+      "checkpoint_hash": "dabfb91f6f9800dd1228a1e4b29422fbc28ab15808662a35b73e5899316eb9b8",
+      "seconds": 2.28547719999915
+    }
+  },
+  {
+    "family": "sage",
+    "length": 32,
+    "vocabulary": 1024,
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 32,
+      "vocab_limit": 1024
+    },
+    "test": {
+      "ce": 4.580107569694519,
+      "accuracy": 0.1586986668407917,
+      "panels": [
+        {
+          "targets": 554,
+          "ce": 4.435282230377197,
+          "accuracy": 0.18953068554401398
+        },
+        {
+          "targets": 1153,
+          "ce": 4.5085344314575195,
+          "accuracy": 0.17085863649845123
+        },
+        {
+          "targets": 1697,
+          "ce": 4.644694805145264,
+          "accuracy": 0.14849735796451569
+        },
+        {
+          "targets": 2065,
+          "ce": 4.731918811798096,
+          "accuracy": 0.1259079873561859
+        }
+      ]
+    },
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 5.848738312721252,
+            "edge": 0.650999441742897,
+            "token_accuracy": 0.03505345853045583,
+            "edge_auc": 0.6816324137595088,
+            "conditioning_text": 0.08054437302052975,
+            "conditioning_edge": 0.012681937543675303
+          },
+          "score": 0.8913161358616934,
+          "gradients": {},
+          "train": [
+            6.314922243356705,
+            0.6482041962444782
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 5.6996437311172485,
+            "edge": 0.6358499675989151,
+            "token_accuracy": 0.06513345055282116,
+            "edge_auc": 0.70377632762855,
+            "conditioning_text": -0.013206537172663957,
+            "conditioning_edge": -0.0028431226674001664
+          },
+          "score": 0.8696377367314335,
+          "gradients": {},
+          "train": [
+            5.711368143558502,
+            0.6252995170652866
+          ]
+        },
+        {
+          "step": 64,
+          "dev": {
+            "text": 5.524254083633423,
+            "edge": 0.6409353017807007,
+            "token_accuracy": 0.09658046625554562,
+            "edge_auc": 0.7060677267510347,
+            "conditioning_text": 0.008355102327186614,
+            "conditioning_edge": -0.004246995551511645
+          },
+          "score": 0.8606596785516929,
+          "gradients": {},
+          "train": [
+            5.6261414140462875,
+            0.6209472920745611
+          ]
+        },
+        {
+          "step": 100,
+          "dev": {
+            "text": 5.319890260696411,
+            "edge": 0.6303887665271759,
+            "token_accuracy": 0.11578638851642609,
+            "edge_auc": 0.7076125121438965,
+            "conditioning_text": 0.025695007760077715,
+            "conditioning_edge": 0.0004524341784417629
+          },
+          "score": 0.8383164468771791,
+          "gradients": {},
+          "train": [
+            5.452509522438049,
+            0.6173598385519452
+          ]
+        }
+      ],
+      "best_step": 100,
+      "initialization_hash": "a0b1ef15bd540b339d31c82f95ecbeaa1ce0b0e8f1249ce69ffd76368a923e7a",
+      "checkpoint_hash": "3dbb1e62fbbe776d9c64a7ea407c0147879f115006bf981282081f40a123ceba",
+      "seconds": 2.7332319000270218
+    }
+  },
+  {
+    "family": "mlm",
+    "length": 64,
+    "vocabulary": 1024,
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 64,
+      "vocab_limit": 1024
+    },
+    "test": {
+      "ce": 4.784378886222839,
+      "accuracy": 0.1427750401198864,
+      "panels": [
+        {
+          "targets": 554,
+          "ce": 4.689181804656982,
+          "accuracy": 0.17870035767555237
+        },
+        {
+          "targets": 1153,
+          "ce": 4.732940673828125,
+          "accuracy": 0.1526452749967575
+        },
+        {
+          "targets": 1697,
+          "ce": 4.802997589111328,
+          "accuracy": 0.13612256944179535
+        },
+        {
+          "targets": 2065,
+          "ce": 4.912395477294922,
+          "accuracy": 0.10363195836544037
+        }
+      ]
+    },
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 5.892643332481384,
+            "edge": 0.6905358284711838,
+            "token_accuracy": 0.043767400085926056,
+            "edge_auc": 0.5563243952725976,
+            "conditioning_text": 0.0,
+            "conditioning_edge": 0.00021437685791170225
+          },
+          "score": 0.8497700887460546,
+          "gradients": {},
+          "train": [
+            6.147766053676605,
+            null
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 5.844619035720825,
+            "edge": 0.6902862191200256,
+            "token_accuracy": 0.07618200033903122,
+            "edge_auc": 0.563703994293739,
+            "conditioning_text": 0.0,
+            "conditioning_edge": 0.0004640008646674687
+          },
+          "score": 0.8428445701599836,
+          "gradients": {},
+          "train": [
+            5.545778751373291,
+            null
+          ]
+        },
+        {
+          "step": 64,
+          "dev": {
+            "text": 5.706632614135742,
+            "edge": 0.6903586387634277,
+            "token_accuracy": 0.09123313054442406,
+            "edge_auc": 0.5613049277059448,
+            "conditioning_text": 0.0,
+            "conditioning_edge": 0.00039156561433628667
+          },
+          "score": 0.8229457357829283,
+          "gradients": {},
+          "train": [
+            5.408718705177307,
+            null
+          ]
+        },
+        {
+          "step": 100,
+          "dev": {
+            "text": 5.519774556159973,
+            "edge": 0.6902819275856018,
+            "token_accuracy": 0.1055951751768589,
+            "edge_auc": 0.5627138636847892,
+            "conditioning_text": 0.0,
+            "conditioning_edge": 0.0004683008355641505
+          },
+          "score": 0.7959991891230068,
+          "gradients": {},
+          "train": [
+            5.316751453611586,
+            null
+          ]
+        }
+      ],
+      "best_step": 100,
+      "initialization_hash": "3495375530a03436f9e9d6286dd82e82fe5fa5d40db695476049a1bbffdbd347",
+      "checkpoint_hash": "06798bb55e7a8f0e73343333bc1313eb052c0f54cc57d263c0567c749e8a657f",
+      "seconds": 2.397902199998498
+    }
+  },
+  {
+    "family": "sage",
+    "length": 64,
+    "vocabulary": 1024,
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 64,
+      "vocab_limit": 1024
+    },
+    "test": {
+      "ce": 4.865729093551636,
+      "accuracy": 0.13143178261816502,
+      "panels": [
+        {
+          "targets": 554,
+          "ce": 4.789498805999756,
+          "accuracy": 0.1696750819683075
+        },
+        {
+          "targets": 1153,
+          "ce": 4.828171253204346,
+          "accuracy": 0.1448395550251007
+        },
+        {
+          "targets": 1697,
+          "ce": 4.862843990325928,
+          "accuracy": 0.11726576834917068
+        },
+        {
+          "targets": 2065,
+          "ce": 4.982402324676514,
+          "accuracy": 0.09394672513008118
+        }
+      ]
+    },
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 5.9262775182724,
+            "edge": 0.6440166682004929,
+            "token_accuracy": 0.06677171029150486,
+            "edge_auc": 0.6887722439847506,
+            "conditioning_text": 0.022164499619975686,
+            "conditioning_edge": 0.014975411351770163
+          },
+          "score": 0.8918700412217415,
+          "gradients": {},
+          "train": [
+            6.130976885557175,
+            0.6425598226487637
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 5.920083045959473,
+            "edge": 0.6532614082098007,
+            "token_accuracy": 0.04440494952723384,
+            "edge_auc": 0.7003837026353393,
+            "conditioning_text": -0.08974452130496502,
+            "conditioning_edge": 0.027798456139862537
+          },
+          "score": 0.8980920632866465,
+          "gradients": {},
+          "train": [
+            5.567596435546875,
+            0.6163638941943645
+          ]
+        },
+        {
+          "step": 64,
+          "dev": {
+            "text": 5.788594484329224,
+            "edge": 0.6291003525257111,
+            "token_accuracy": 0.08450619503855705,
+            "edge_auc": 0.7007673306331609,
+            "conditioning_text": -0.05516553670167923,
+            "conditioning_edge": 0.0010125861736014485
+          },
+          "score": 0.8711826522668589,
+          "gradients": {},
+          "train": [
+            5.450060114264488,
+            0.6188224740326405
+          ]
+        },
+        {
+          "step": 100,
+          "dev": {
+            "text": 5.599144339561462,
+            "edge": 0.6315409988164902,
+            "token_accuracy": 0.09910714626312256,
+            "edge_auc": 0.700220099807347,
+            "conditioning_text": -0.02515025297179818,
+            "conditioning_edge": 0.004314568359404802
+          },
+          "score": 0.8592830324298084,
+          "gradients": {},
+          "train": [
+            5.365818500518799,
+            0.6145702335569594
+          ]
+        }
+      ],
+      "best_step": 100,
+      "initialization_hash": "3495375530a03436f9e9d6286dd82e82fe5fa5d40db695476049a1bbffdbd347",
+      "checkpoint_hash": "53e60d60a97194b5e459d6768193f393a95a0878fdeb772bf25345dfc19d9ff8",
+      "seconds": 2.7652608000207692
+    }
+  },
+  {
+    "family": "mlm",
+    "length": 128,
+    "vocabulary": 1024,
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 128,
+      "vocab_limit": 1024
+    },
+    "test": {
+      "ce": 4.999089002609253,
+      "accuracy": 0.1149551272392273,
+      "panels": [
+        {
+          "targets": 554,
+          "ce": 4.943645477294922,
+          "accuracy": 0.12635378539562225
+        },
+        {
+          "targets": 1153,
+          "ce": 4.958770275115967,
+          "accuracy": 0.1274935007095337
+        },
+        {
+          "targets": 1697,
+          "ce": 5.0145649909973145,
+          "accuracy": 0.10960518568754196
+        },
+        {
+          "targets": 2065,
+          "ce": 5.079375267028809,
+          "accuracy": 0.09636803716421127
+        }
+      ]
+    },
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 5.84429144859314,
+            "edge": 0.6875026971101761,
+            "token_accuracy": 0.02587535185739398,
+            "edge_auc": 0.5999069282658593,
+            "conditioning_text": 0.0,
+            "conditioning_edge": -0.0015748009536764584
+          },
+          "score": 0.842797329265387,
+          "gradients": {},
+          "train": [
+            6.181812614202499,
+            null
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 5.855701446533203,
+            "edge": 0.6885250955820084,
+            "token_accuracy": 0.08872447721660137,
+            "edge_auc": 0.5964400760188164,
+            "conditioning_text": 0.0,
+            "conditioning_edge": -0.00259725988144055
+          },
+          "score": 0.8444427495657596,
+          "gradients": {},
+          "train": [
+            5.385090500116348,
+            null
+          ]
+        },
+        {
+          "step": 64,
+          "dev": {
+            "text": 5.694570422172546,
+            "edge": 0.6876346617937088,
+            "token_accuracy": 0.09322555735707283,
+            "edge_auc": 0.6003072904384199,
+            "conditioning_text": 0.0,
+            "conditioning_edge": -0.0017067755106836557
+          },
+          "score": 0.8212062634686044,
+          "gradients": {},
+          "train": [
+            5.316968634724617,
+            null
+          ]
+        },
+        {
+          "step": 100,
+          "dev": {
+            "text": 5.5700448751449585,
+            "edge": 0.6875429898500443,
+            "token_accuracy": 0.10826178640127182,
+            "edge_auc": 0.6016101839667158,
+            "conditioning_text": 0.0,
+            "conditioning_edge": -0.001615149827557616
+          },
+          "score": 0.8032486035224314,
+          "gradients": {},
+          "train": [
+            5.229946825239393,
+            null
+          ]
+        }
+      ],
+      "best_step": 100,
+      "initialization_hash": "b9acf19a95448bd02c54a018a9db011d7f085fdf5c40665a66979f0502c81213",
+      "checkpoint_hash": "da024e55d27ac61329d19473ca47f5631bbfeb5ac4884ed332e39a470aa8bd20",
+      "seconds": 3.7451541000045836
+    }
+  },
+  {
+    "family": "sage",
+    "length": 128,
+    "vocabulary": 1024,
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 128,
+      "vocab_limit": 1024
+    },
+    "test": {
+      "ce": 5.053164958953857,
+      "accuracy": 0.10097111389040947,
+      "panels": [
+        {
+          "targets": 554,
+          "ce": 5.014593601226807,
+          "accuracy": 0.11913357675075531
+        },
+        {
+          "targets": 1153,
+          "ce": 5.022273063659668,
+          "accuracy": 0.10928013920783997
+        },
+        {
+          "targets": 1697,
+          "ce": 5.062352180480957,
+          "accuracy": 0.09605185687541962
+        },
+        {
+          "targets": 2065,
+          "ce": 5.113440990447998,
+          "accuracy": 0.07941888272762299
+        }
+      ]
+    },
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 5.862396717071533,
+            "edge": 0.6522498279809952,
+            "token_accuracy": 0.02587535185739398,
+            "edge_auc": 0.666032190647336,
+            "conditioning_text": 0.05348054994828999,
+            "conditioning_edge": 0.006898878607898951
+          },
+          "score": 0.8932029288411034,
+          "gradients": {},
+          "train": [
+            6.137534707784653,
+            0.6559006609022617
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 5.906838774681091,
+            "edge": 0.657063901424408,
+            "token_accuracy": 0.07588600926101208,
+            "edge_auc": 0.6674090013007875,
+            "conditioning_text": -0.11348121799528599,
+            "conditioning_edge": -0.00263384609388595
+          },
+          "score": 0.8998800131553621,
+          "gradients": {},
+          "train": [
+            5.39702507853508,
+            0.6269315741956234
+          ]
+        },
+        {
+          "step": 64,
+          "dev": {
+            "text": 5.767022371292114,
+            "edge": 0.6469636410474777,
+            "token_accuracy": 0.08235599100589752,
+            "edge_auc": 0.6739746569302044,
+            "conditioning_text": -0.05488713691011071,
+            "conditioning_edge": 3.8336365832947195e-05
+          },
+          "score": 0.8825128485933045,
+          "gradients": {},
+          "train": [
+            5.347314655780792,
+            0.6232011448591948
+          ]
+        },
+        {
+          "step": 100,
+          "dev": {
+            "text": 5.607071399688721,
+            "edge": 0.6535569876432419,
+            "token_accuracy": 0.09322555735707283,
+            "edge_auc": 0.6726607444155812,
+            "conditioning_text": -0.011753868777304888,
+            "conditioning_edge": 0.004487611644435674
+          },
+          "score": 0.8757357866654165,
+          "gradients": {},
+          "train": [
+            5.257797227965461,
+            0.6095856428146362
+          ]
+        }
+      ],
+      "best_step": 100,
+      "initialization_hash": "b9acf19a95448bd02c54a018a9db011d7f085fdf5c40665a66979f0502c81213",
+      "checkpoint_hash": "f0fbfbcd2c7887ff397528389436791399c1f9befea1a9bbf6a3b90276a55800",
+      "seconds": 4.778330400004052
+    }
+  }
+]

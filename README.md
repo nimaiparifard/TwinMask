@@ -5,6 +5,240 @@
 
 ---
 
+<!-- research-v6-results -->
+
+## TwinMask V5.1 and V6 · Hyperparameter optimization and transfer
+
+V5.1 removes the out-of-scope CLI-variable reference in the mechanism study. The CLI now regenerates all 54 synthetic rows. The [artifact manifest](results/research_twinmask_v6/manifest.json) records the repository base commit, current source hashes, graph reference hashes, and saved checkpoint hashes.
+
+**What the longer run changes.** The paired development sweep compares the joint-minus-MLM text CE gap at 32 and 1,000 updates. On Cora, it was +0.0244 and +0.0346. On PubMed, it was +0.0603 and +0.0005. The late Cora edge-loss curves also show overfitting, which matters when choosing the checkpoint.
+
+### Optimization protocol
+
+All eight reconstruction families get 12 Optuna TPE trials per dataset with median pruning and common 64-update screening caps. The best three completed configurations are checked on a second training seed using development only. For MLM, structure GNN, GraphSAGE, and TwinMask on Cora and PubMed, the study expands to 30 trials per family. The top two then train for up to 300 updates on two development seeds, and the configuration and common checkpoint step are frozen before locked evaluation. The main objectives are CE for MLM, BCE for edge-only models, and the equally weighted mean of CE/log(vocabulary) and BCE/log(2) for joint models. Family comparisons use loss for the applicable task only.
+
+The untouched search-test pool is partitioned into two disjoint sets of node and link targets. Search fit/development have no access to their target labels or positive edges as observations. Each locked fold uses a separate fit/dev repartition and fresh model parameters. Transductive observed context and repeated use of the same real graphs remain part of the protocol. Amazon Computers uses one 6,000-node induced sample, with two target folds. The default comparator uses 32 updates under the same V6 data and training protocol.
+
+Learning rate, weight decay, width, layers, dropout, branch LR, cosine scheduling, fusion scale, modality dropout, rollout frequency, and task weights are logged for all applicable families. The table shows the selected configurations and held-out scores. Cora/PubMed rows prefer the extended result where available. The last column is tuned minus default loss on the same folds.
+
+| Dataset | Model | Trials | LR / WD | Width / layers / dropout | Updates | Test CE or BCE | Loss shift vs default |
+|---|---|---|---|---|---|---|---|
+| Cora | mlm | 30 | 0.007 / 0.06 | 64 / 2 / 0 | 300 | 4.6103 | -0.9960 |
+| Cora | structure | 30 | 0.00061 / 0.0068 | 256 / 3 / 0.3 | 64 | 0.5880 | -0.0120 |
+| Cora | structure_gat | 12 | 0.00042 / 0.015 | 256 / 1 / 0 | 64 | 0.5915 | -0.0131 |
+| Cora | text_link | 12 | 0.00014 / 1.5e-05 | 256 / 2 / 0 | 64 | 0.6848 | +0.0019 |
+| Cora | gae | 12 | 0.0012 / 4.9e-06 | 256 / 3 / 0.3 | 64 | 0.6619 | -0.0137 |
+| Cora | sage | 30 | 0.0057 / 1.5e-05 | 128 / 1 / 0 | 160 | 4.7076 / 0.5945 | -0.9663 / -0.0097 |
+| Cora | gat | 12 | 0.0053 / 0.089 | 48 / 1 / 0 | 64 | 5.3720 / 0.6042 | -0.2919 / -0.0059 |
+| Cora | twinmask | 30 | 0.0069 / 0.0063 | 64 / 2 / 0 | 100 | 4.9273 / 0.6029 | -0.7517 / -0.0012 |
+| CiteSeer | mlm | 12 | 0.0081 / 7.1e-06 | 256 / 1 / 0 | 64 | 5.6836 | -0.2893 |
+| CiteSeer | structure | 12 | 0.0047 / 0.00047 | 48 / 2 / 0 | 64 | 0.5701 | -0.0245 |
+| CiteSeer | structure_gat | 12 | 0.00067 / 0.022 | 256 / 3 / 0 | 64 | 0.5775 | -0.0106 |
+| CiteSeer | text_link | 12 | 0.0036 / 0.00018 | 64 / 2 / 0 | 32 | 0.7027 | +0.0060 |
+| CiteSeer | gae | 12 | 0.003 / 0.01 | 48 / 2 / 0 | 32 | 0.6283 | +0.0000 |
+| CiteSeer | sage | 12 | 0.0085 / 2.8e-05 | 64 / 2 / 0.3 | 64 | 5.7316 / 0.5882 | -0.2740 / -0.0201 |
+| CiteSeer | gat | 12 | 0.0084 / 7.3e-05 | 48 / 2 / 0.3 | 64 | 5.8118 / 0.5922 | -0.1935 / -0.0030 |
+| CiteSeer | twinmask | 12 | 0.0062 / 0.001 | 48 / 3 / 0 | 64 | 5.6025 / 0.5910 | -0.4147 / -0.0333 |
+| PubMed | mlm | 30 | 0.0069 / 4.9e-06 | 256 / 3 / 0 | 300 | 3.6573 | -1.4372 |
+| PubMed | structure | 30 | 0.0031 / 8.6e-05 | 256 / 3 / 0 | 300 | 0.3437 | -0.0628 |
+| PubMed | structure_gat | 12 | 0.0064 / 1.2e-05 | 48 / 3 / 0 | 64 | 0.3628 | -0.0842 |
+| PubMed | text_link | 12 | 0.00042 / 0.015 | 256 / 1 / 0 | 32 | 0.6931 | -0.0009 |
+| PubMed | gae | 12 | 0.00088 / 2.8e-06 | 256 / 3 / 0.3 | 64 | 0.5805 | -0.0075 |
+| PubMed | sage | 30 | 0.0069 / 0.0013 | 64 / 2 / 0.2 | 300 | 3.7942 / 0.3469 | -1.4470 / -0.0726 |
+| PubMed | gat | 12 | 0.0084 / 2.9e-05 | 128 / 2 / 0.3 | 64 | 4.4748 / 0.3796 | -0.7579 / -0.0598 |
+| PubMed | twinmask | 30 | 0.0077 / 0.056 | 64 / 3 / 0 | 300 | 3.6953 / 0.3644 | -1.5616 / -0.0624 |
+| Amazon Computers | mlm | 12 | 0.0047 / 0.00047 | 48 / 2 / 0 | 64 | 5.5377 | -0.2859 |
+| Amazon Computers | structure | 12 | 0.0047 / 0.00047 | 48 / 2 / 0 | 64 | 0.5028 | +0.0059 |
+| Amazon Computers | structure_gat | 12 | 0.0017 / 1.4e-06 | 256 / 3 / 0 | 64 | 0.4991 | +0.0030 |
+| Amazon Computers | text_link | 12 | 0.00042 / 0.015 | 256 / 1 / 0 | 64 | 0.6754 | -0.0054 |
+| Amazon Computers | gae | 12 | 0.00014 / 1.5e-05 | 256 / 2 / 0 | 64 | 0.6322 | +0.0022 |
+| Amazon Computers | sage | 12 | 0.0085 / 7.4e-05 | 48 / 2 / 0.3 | 64 | 5.6015 / 0.4978 | -0.2612 / +0.0017 |
+| Amazon Computers | gat | 12 | 0.0045 / 0.00075 | 256 / 3 / 0 | 64 | 5.5232 / 0.4953 | -0.3182 / -0.0015 |
+| Amazon Computers | twinmask | 12 | 0.007 / 5.8e-06 | 48 / 2 / 0 | 64 | 5.4975 / 0.5165 | -0.3727 / +0.0151 |
+
+Full profiles, intermediate objectives, completed/pruned trial counts, and per-fold outputs are in the JSON files below.
+
+![Development trial history and development loss-weight Pareto points](results/research_twinmask_v6/search_and_pareto.png)
+
+### Convergence, directional training, and gradient interventions
+
+Cora and PubMed convergence runs use paired training masks, matched updates from 32 to 1,000 and a fixed 48-wide model. The measured development loss is held out from weight fitting. Training losses are averages since the preceding checkpoint.
+
+![Paired training and development loss curves at 32, 100, 300, 600 and 1000 updates](results/research_twinmask_v6/convergence.png)
+
+The table uses the first locked fold, equal 100-update budgets, and a shared initialization for arms with the same architecture. Gradient cosine is recorded before gradient projection on parameters differentiable for both tasks. GradNorm denotes a closed-form balancing proxy and CAGrad uses an approximate 65-point two-task solver.
+
+| Dataset | Arm | Token CE | Edge BCE | Edge AUROC | Mean gradient cosine | Learned text / edge gates |
+|---|---|---|---|---|---|---|
+| Cora | independent | 5.2331 | 0.5941 | 0.7585 | 0.0000 | — |
+| Cora | structure guided | 5.2866 | 0.5952 | 0.7534 | -0.0644 | — |
+| Cora | text guided | 5.2321 | 0.5925 | 0.7606 | -0.0202 | — |
+| Cora | bidirectional | 5.2814 | 0.5946 | 0.7538 | 0.0392 | — |
+| Cora | stop gradient | 5.2996 | 0.5923 | 0.7633 | — | — |
+| Cora | pcgrad | 5.2924 | 0.5942 | 0.7544 | 0.0310 | — |
+| Cora | gradnorm proxy | 5.3801 | 0.5890 | 0.7632 | 0.0435 | — |
+| Cora | cagrad grid | 5.3122 | 0.5914 | 0.7570 | -0.0198 | — |
+| Cora | selected loss weight | 5.2872 | 0.5936 | 0.7501 | -0.0053 | — |
+| Cora | structural statistics | 5.2850 | 0.5881 | 0.7601 | 0.0702 | — |
+| Cora | small transformer | 5.6872 | 0.5914 | 0.7520 | 0.0565 | — |
+| Cora | learned gates | 5.2523 | 0.5929 | 0.7509 | -0.0147 | 0.466 / 0.490 |
+| PubMed | independent | 4.4987 | 0.3940 | 0.8976 | 0.0000 | — |
+| PubMed | structure guided | 4.5723 | 0.4057 | 0.8898 | 0.0172 | — |
+| PubMed | text guided | 4.4958 | 0.3992 | 0.8960 | 0.0106 | — |
+| PubMed | bidirectional | 4.5675 | 0.4085 | 0.8895 | -0.0165 | — |
+| PubMed | stop gradient | 4.5932 | 0.3994 | 0.8962 | — | — |
+| PubMed | pcgrad | 4.5713 | 0.4057 | 0.8901 | -0.0068 | — |
+| PubMed | gradnorm proxy | 4.6168 | 0.4014 | 0.8938 | -0.0153 | — |
+| PubMed | cagrad grid | 4.5946 | 0.4014 | 0.8934 | 0.0141 | — |
+| PubMed | selected loss weight | 4.5744 | 0.4192 | 0.8844 | -0.0755 | — |
+| PubMed | structural statistics | 4.5451 | 0.3918 | 0.8990 | 0.0294 | — |
+| PubMed | small transformer | 4.9334 | 0.4000 | 0.8943 | -0.1041 | — |
+| PubMed | learned gates | 4.5386 | 0.3991 | 0.8954 | -0.0059 | 0.458 / 0.496 |
+
+![Shared gradient alignment under selected mitigation methods](results/research_twinmask_v6/gradient_alignment.png)
+
+Hard-negative controls use only observed degrees or observed two-hop paths to propose negatives, then reject every true reference edge. The candidate composition changes, so ranking results represent a stress test rather than interchangeable samples.
+
+| Dataset | Negatives | Matched proposals | Edge BCE | Edge AUROC |
+|---|---|---|---|---|
+| Cora | uniform | — | 0.5946 | 0.7538 |
+| Cora | degree | 202 | 0.7848 | 0.5840 |
+| Cora | two_hop | 202 | 0.8449 | 0.5283 |
+| PubMed | uniform | — | 0.4085 | 0.8895 |
+| PubMed | degree | 1700 | 0.8494 | 0.6142 |
+| PubMed | two_hop | 1700 | 0.8920 | 0.5873 |
+
+### Encoder and vocabulary controls
+
+Capacity changes below share exact token positions and truth IDs from the common 256-token fitting-derived vocabulary. Raw CE still scores each model's native alphabet. DistilRoBERTa uses cached contextual representations of the actual masked inputs and a trained projection. Its short mask-bank feasibility study uses four development settings and a single locked fold.
+
+| Cora encoder | Task | Positions | Vocabulary | Test CE | Token accuracy |
+|---|---|---|---|---|---|
+| CNN | mlm | 16 | 256 | 3.9292 | 0.1890 |
+| CNN | sage | 16 | 256 | 3.9419 | 0.1893 |
+| CNN | mlm | 16 | 1024 | 4.4129 | 0.1621 |
+| CNN | sage | 16 | 1024 | 4.4723 | 0.1703 |
+| CNN | mlm | 16 | 4096 | 4.9233 | 0.1427 |
+| CNN | sage | 16 | 4096 | 5.0288 | 0.1429 |
+| CNN | mlm | 32 | 1024 | 4.4828 | 0.1693 |
+| CNN | sage | 32 | 1024 | 4.5801 | 0.1587 |
+| CNN | mlm | 64 | 1024 | 4.7844 | 0.1428 |
+| CNN | sage | 64 | 1024 | 4.8657 | 0.1314 |
+| CNN | mlm | 128 | 1024 | 4.9991 | 0.1150 |
+| CNN | sage | 128 | 1024 | 5.0532 | 0.1010 |
+
+
+| Cora frozen encoder | Selected LR | Fusion | Updates | Test CE | Test token accuracy |
+|---|---|---|---|---|---|
+| mlm | 0.003 | 0.5 | 32 | 5.9587 | 0.0560 |
+| sage | 0.001 | 1.0 | 64 | 5.9265 | 0.0671 |
+
+### Teacher calibration, local utility, and diffusion policies
+
+Each selector family gets ten TPE trials per direction and dataset on Cora and PubMed. The search covers LR, decay, width, 70/200/500-update caps, message cost, rank weight, and decision weight or temperature where applicable. Teachers use independently tuned backbones and development-only temperature/family choice. The mixture and stacking searches use development labels, as does the choice of rollout horizon from 1, 2, 4, and 8. The selected configurations and evaluated stages use the same locked targets as the reconstruction study.
+
+| Dataset | Task | Stage | LR / width / updates | Rank / decision / cost | Locked loss | Matched random |
+|---|---|---|---|---|---|---|
+| Cora | text | loo | 0.0063 / 32 / 200 | 0.15 / 0 / 0.1 | 5.1785 | 5.1792 |
+| Cora | text | shapley | 0.00024 / 48 / 70 | 0 / 0 / 0 | 5.1768 | 5.1765 |
+| Cora | text | set | 0.00091 / 48 / 70 | 0.15 / 0 / 0.04 | 5.1763 | 5.1770 |
+| Cora | text | decision | 0.0059 / 96 / 70 | 1 / 0.3 / 0 | 5.1771 | 5.1775 |
+| Cora | text | distilled | 0.00024 / 48 / 35 | 0 / 0 / 0 | 5.1773 | 5.1775 |
+| Cora | edge | loo | 0.0018 / 96 / 200 | 0.5 / 0 / 0.01 | 0.5875 | 0.5876 |
+| Cora | edge | shapley | 0.0063 / 32 / 300 | 0.15 / 0 / 0.1 | 0.5881 | 0.5880 |
+| Cora | edge | set | 0.01 / 48 / 500 | 1 / 0 / 0 | 0.5875 | 0.5875 |
+| Cora | edge | decision | 0.0021 / 48 / 500 | 1 / 0.5 / 0 | 0.5878 | 0.5877 |
+| Cora | edge | distilled | 0.01 / 48 / 300 | 1 / 0 / 0 | 0.5874 | 0.5876 |
+| PubMed | text | loo | 0.00024 / 48 / 200 | 0 / 0 / 0 | 4.3095 | 4.3101 |
+| PubMed | text | shapley | 0.0063 / 32 / 500 | 0.15 / 0 / 0.1 | 4.3101 | 4.3101 |
+| PubMed | text | set | 0.01 / 48 / 35 | 1 / 0 / 0 | 4.3099 | 4.3103 |
+| PubMed | text | decision | 0.0011 / 48 / 500 | 0.5 / 0.5 / 0 | 4.3101 | 4.3107 |
+| PubMed | text | distilled | 0.00024 / 48 / 35 | 0 / 0 / 0 | 4.3122 | 4.3108 |
+| PubMed | edge | loo | 0.0063 / 32 / 200 | 0.15 / 0 / 0.1 | 0.3818 | 0.3818 |
+| PubMed | edge | shapley | 0.0063 / 32 / 200 | 0.15 / 0 / 0.1 | 0.3818 | 0.3818 |
+| PubMed | edge | set | 0.00024 / 48 / 70 | 0 / 0 / 0 | 0.3820 | 0.3820 |
+| PubMed | edge | decision | 0.00029 / 32 / 35 | 0.15 / 0.1 / 0.1 | 0.3819 | 0.3819 |
+| PubMed | edge | distilled | 0.0063 / 32 / 200 | 0.15 / 0 / 0.1 | 0.3813 | 0.3814 |
+
+
+| Dataset | Task | Horizon | Mixture temperature | Expected hard loss | Uniform | Tuned mixture | Tuned stacking |
+|---|---|---|---|---|---|---|---|
+| Cora | text | 1 | 0.01 | 5.1776 | 5.1785 | 5.1779 | 5.1777 |
+| Cora | edge | 1 | 0.01 | 0.5867 | 0.5873 | 0.5873 | 0.5874 |
+| PubMed | text | 1 | 1.0 | 4.3111 | 4.3109 | 4.3109 | 4.3108 |
+| PubMed | edge | 1 | 0.01 | 0.3809 | 0.3819 | 0.3817 | 0.3819 |
+
+
+| Dataset | Task | Unscaled / calibrated NLL | Unscaled / calibrated Brier | Unscaled / calibrated ECE |
+|---|---|---|---|---|
+| Cora | text | 5.1567 / 5.1567 | 0.9374 / 0.9374 | 0.0258 / 0.0258 |
+| Cora | edge | 0.5802 / 0.5865 | 0.1986 / 0.2018 | 0.0804 / 0.0893 |
+| PubMed | text | 4.4696 / 4.4696 | 0.8092 / 0.8092 | 0.0314 / 0.0314 |
+| PubMed | edge | 0.3638 / 0.3700 | 0.1152 / 0.1161 | 0.0392 / 0.0432 |
+
+### Embedding denoiser and ensemble controls
+
+On Cora and CiteSeer, the shared diffusion denoiser uses a separate ten-trial search. The raw, Gaussian and diffusion classifier arms each get ten development trials. The matched raw-head comparison fixes the classifier, policy, seeds and Gaussian cosine distortion target.
+
+| Dataset | Arm | Hidden / LR / updates | Test accuracy | Test NLL |
+|---|---|---|---|---|
+| Cora | raw | 256 / 0.00035 / 40 | 0.8398 | 0.4804 |
+| Cora | diffusion | 64 / 0.0022 / 40 | 0.8465 | 0.5110 |
+| Cora | gaussian | 64 / 0.0022 / 40 | 0.8471 | 0.5136 |
+| CiteSeer | raw | 256 / 0.00035 / 40 | 0.7644 | 0.6821 |
+| CiteSeer | diffusion | 64 / 0.0022 / 40 | 0.7727 | 0.6902 |
+| CiteSeer | gaussian | 64 / 0.0022 / 40 | 0.7743 | 0.6937 |
+
+![Held-out classification accuracy from tuned ensemble arms](results/research_twinmask_v6/ensemble_controls.png)
+
+### Original V2 backbone and V3/V4.1 selector audit
+
+On Cora, the original SparseTwinMask decoder and graph mixer are trained from scratch in a ten-trial development study and evaluated on the two reserved V6 folds. For the frozen original V2 checkpoints, we also tune the V3/V4.1 message-panel LOO, Shapley, set, and decision stages with ten trials for each direction and family. Those selector results use the matched-context historical audit split and are exploratory. This pilot preserves the historical branch behavior for comparison.
+
+| Original V2 | LR | Width | Updates | Locked token CE | Locked edge BCE |
+|---|---|---|---|---|---|
+| Cora | 0.00292 | 96 | 64 | 5.4167 | 0.6848 |
+
+
+| Task | Local selector | LR / width / updates | Held-out loss | Matched random |
+|---|---|---|---|---|
+| text | loo | 0.01 / 48 / 70 | 4.8668 | 4.8694 |
+| text | shapley | 0.00024 / 48 / 70 | 4.8713 | 4.8718 |
+| text | set | 0.01 / 48 / 300 | 4.8683 | 4.8693 |
+| text | decision | 0.0059 / 96 / 120 | 4.8722 | 4.8733 |
+| edge | loo | 0.0018 / 96 / 120 | 0.6839 | 0.6854 |
+| edge | shapley | 0.00011 / 96 / 200 | 0.6856 | 0.6834 |
+| edge | set | 0.01 / 48 / 500 | 0.6826 | 0.6830 |
+| edge | decision | 0.00032 / 32 / 70 | 0.6839 | 0.6843 |
+
+### Artifacts and commands
+
+Scope. The expanded equal-budget search is limited to four families on Cora and PubMed. The local legacy, pretrained, and orthogonal capacity studies are Cora feasibility runs. There is no RoBERTa PEFT run, full-graph Amazon run, or re-tuning of every published competitor or archived script.
+
+Backbone trials and locked folds. [Cora search](results/research_twinmask_v6/cora_search.json) [Cora locked](results/research_twinmask_v6/cora_locked.json) [Cora default](results/research_twinmask_v6/cora_default.json) [CiteSeer search](results/research_twinmask_v6/citeseer_search.json) [CiteSeer locked](results/research_twinmask_v6/citeseer_locked.json) [CiteSeer default](results/research_twinmask_v6/citeseer_default.json) [PubMed search](results/research_twinmask_v6/pubmed_search.json) [PubMed locked](results/research_twinmask_v6/pubmed_locked.json) [PubMed default](results/research_twinmask_v6/pubmed_default.json) [Amazon Computers search](results/research_twinmask_v6/computer_search.json) [Amazon Computers locked](results/research_twinmask_v6/computer_locked.json) [Amazon Computers default](results/research_twinmask_v6/computer_default.json)
+
+Expanded search, transfer diagnostics, and downstream stages. [cora_deep_search](results/research_twinmask_v6/cora_deep_search.json) [cora_deep_locked](results/research_twinmask_v6/cora_deep_locked.json) [cora_analysis](results/research_twinmask_v6/cora_analysis.json) [cora_weight_sweep](results/research_twinmask_v6/cora_weight_sweep.json) [cora_gates](results/research_twinmask_v6/cora_gates.json) [cora_selectors](results/research_twinmask_v6/cora_selectors.json) [cora_calibration](results/research_twinmask_v6/cora_calibration.json) [pubmed_deep_search](results/research_twinmask_v6/pubmed_deep_search.json) [pubmed_deep_locked](results/research_twinmask_v6/pubmed_deep_locked.json) [pubmed_analysis](results/research_twinmask_v6/pubmed_analysis.json) [pubmed_weight_sweep](results/research_twinmask_v6/pubmed_weight_sweep.json) [pubmed_gates](results/research_twinmask_v6/pubmed_gates.json) [pubmed_selectors](results/research_twinmask_v6/pubmed_selectors.json) [pubmed_calibration](results/research_twinmask_v6/pubmed_calibration.json)
+
+Additional encoder/classifier controls. [cora_capacity](results/research_twinmask_v6/cora_capacity.json) [cora_pretrained](results/research_twinmask_v6/cora_pretrained.json) [cora_ensemble](results/research_twinmask_v6/cora_ensemble.json) [citeseer_ensemble](results/research_twinmask_v6/citeseer_ensemble.json) [cora_legacy](results/research_twinmask_v6/cora_legacy.json)
+
+```powershell
+# Requires the existing TwinMask dependencies plus optuna and matplotlib.
+python -m scripts.research_twinmask_v5 --mechanism-study
+python -m scripts.research_twinmask_v6 --trials 12 --trial-updates 64
+python -m scripts.research_twinmask_v6 --default-control
+python -m scripts.research_twinmask_v6_refine --trials 30
+python -m scripts.research_twinmask_v6_analysis
+python -m scripts.research_twinmask_v6_analysis --gates-only
+python -m scripts.research_twinmask_v6_selectors --trials 10
+python -m scripts.research_twinmask_v6_selectors --calibration-only
+python -m scripts.research_twinmask_v6_pretrained
+python -m scripts.research_twinmask_v6_capacity
+python -m scripts.research_twinmask_v6_ensemble
+python -m scripts.research_twinmask_v6_legacy
+python -m unittest scripts.test_research_pilots scripts.test_research_twinmask_v3 scripts.test_research_twinmask_v4 scripts.test_research_twinmask_v5 scripts.test_research_twinmask_v6
+python -m scripts.report_research_twinmask_v6
+```
+
 <!-- research-v41-v5 -->
 
 ## TwinMask V4.1 · Correctness and protocol audit

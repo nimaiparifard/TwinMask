@@ -15,18 +15,19 @@ from twinmask.data import load
 
 
 class SAGE(nn.Module):
-    def __init__(self, width, output, conditional=False):
+    def __init__(self, width, output, conditional=False, *, hidden=128, dropout=.2):
         super().__init__()
-        self.first = SAGEConv(width, 128)
-        self.last = SAGEConv(128, output)
-        self.condition = nn.Sequential(TimeEmb(128)) if conditional else None
-        self.edge_condition = nn.Linear(1, 128) if conditional else None
+        self.first = SAGEConv(width, hidden)
+        self.last = SAGEConv(hidden, output)
+        self.condition = nn.Sequential(TimeEmb(hidden)) if conditional else None
+        self.edge_condition = nn.Linear(1, hidden) if conditional else None
+        self.dropout = dropout
 
     def forward(self, x, edges, t=None, rate=0):
         h = self.first(x, edges)
         if self.condition is not None:
             h = h + self.condition(t / 100) + self.edge_condition(h.new_tensor([[rate]]))
-        return self.last(F.dropout(F.gelu(h), .2, self.training), edges)
+        return self.last(F.dropout(F.gelu(h), self.dropout, self.training), edges)
 
 
 def schedule(device):

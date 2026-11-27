@@ -6,12 +6,12 @@
     "vocab": 128,
     "text": {
       "full": 4.9702301025390625,
-      "conditioning_gain": -0.06547912210226059,
+      "conditioning_gain": -0.06547912955284119,
       "harmful_fraction": 0.5416666865348816
     },
     "edge": {
       "full": 0.6906788349151611,
-      "conditioning_gain": 8.780261123320088e-05,
+      "conditioning_gain": 8.779640484135598e-05,
       "harmful_fraction": 0.375
     }
   },
@@ -21,8 +21,8 @@
     "graph_seed": 3103,
     "vocab": 128,
     "text": {
-      "full": 4.885029315948486,
-      "conditioning_gain": 0.040798481553792953,
+      "full": 4.8850297927856445,
+      "conditioning_gain": 0.04079759493470192,
       "harmful_fraction": 0.4895833432674408
     },
     "edge": {
@@ -38,12 +38,12 @@
     "vocab": 128,
     "text": {
       "full": 4.866924285888672,
-      "conditioning_gain": 0.09395277500152588,
+      "conditioning_gain": 0.09395270049571991,
       "harmful_fraction": 0.3645833432674408
     },
     "edge": {
       "full": 0.6933274269104004,
-      "conditioning_gain": -0.00029648159397765994,
+      "conditioning_gain": -0.0002964797313325107,
       "harmful_fraction": 0.4791666865348816
     }
   },
@@ -54,12 +54,12 @@
     "vocab": 128,
     "text": {
       "full": 5.017153739929199,
-      "conditioning_gain": -0.06953185796737671,
+      "conditioning_gain": -0.06953182071447372,
       "harmful_fraction": 0.5729166865348816
     },
     "edge": {
       "full": 0.6953768730163574,
-      "conditioning_gain": -0.000590504496358335,
+      "conditioning_gain": -0.0005904994904994965,
       "harmful_fraction": 0.5
     }
   },
@@ -75,7 +75,7 @@
     },
     "edge": {
       "full": 0.69439697265625,
-      "conditioning_gain": 0.002155581023544073,
+      "conditioning_gain": 0.0021556008141487837,
       "harmful_fraction": 0.4791666865348816
     }
   },
@@ -85,13 +85,13 @@
     "graph_seed": 3109,
     "vocab": 128,
     "text": {
-      "full": 4.93852424621582,
-      "conditioning_gain": 0.009132346138358116,
+      "full": 4.938523769378662,
+      "conditioning_gain": 0.009132375940680504,
       "harmful_fraction": 0.46875
     },
     "edge": {
-      "full": 0.6937209963798523,
-      "conditioning_gain": 0.0008472918416373432,
+      "full": 0.6937209367752075,
+      "conditioning_gain": 0.0008473756606690586,
       "harmful_fraction": 0.4479166865348816
     }
   },
@@ -102,7 +102,7 @@
     "vocab": 128,
     "text": {
       "full": 4.971368312835693,
-      "conditioning_gain": -0.07277803868055344,
+      "conditioning_gain": -0.07277798652648926,
       "harmful_fraction": 0.5520833730697632
     },
     "edge": {
@@ -118,12 +118,12 @@
     "vocab": 128,
     "text": {
       "full": 4.976012229919434,
-      "conditioning_gain": -0.05714336037635803,
+      "conditioning_gain": -0.057143330574035645,
       "harmful_fraction": 0.65625
     },
     "edge": {
       "full": 0.6941838264465332,
-      "conditioning_gain": 0.00035928748548030853,
+      "conditioning_gain": 0.0003592719731386751,
       "harmful_fraction": 0.4479166865348816
     }
   },
@@ -133,13 +133,13 @@
     "graph_seed": 3109,
     "vocab": 128,
     "text": {
-      "full": 4.984023571014404,
-      "conditioning_gain": -0.02400819957256317,
+      "full": 4.984025001525879,
+      "conditioning_gain": -0.02401081472635269,
       "harmful_fraction": 0.5416666865348816
     },
     "edge": {
-      "full": 0.6902846693992615,
-      "conditioning_gain": 0.0004330681113060564,
+      "full": 0.6902843713760376,
+      "conditioning_gain": 0.0004329737275838852,
       "harmful_fraction": 0.5
     }
   },
@@ -150,12 +150,12 @@
     "vocab": 128,
     "text": {
       "full": 4.971990585327148,
-      "conditioning_gain": -0.03842098265886307,
+      "conditioning_gain": -0.038420915603637695,
       "harmful_fraction": 0.5520833730697632
     },
     "edge": {
       "full": 0.6959519386291504,
-      "conditioning_gain": 9.04574990272522e-05,
+      "conditioning_gain": 9.045936167240143e-05,
       "harmful_fraction": 0.4895833432674408
     }
   },
@@ -166,12 +166,12 @@
     "vocab": 128,
     "text": {
       "full": 4.962275981903076,
-      "conditioning_gain": -0.02127830684185028,
+      "conditioning_gain": -0.021278267726302147,
       "harmful_fraction": 0.4791666865348816
     },
     "edge": {
       "full": 0.705940842628479,
-      "conditioning_gain": -0.00035724230110645294,
+      "conditioning_gain": -0.0003572299028746784,
       "harmful_fraction": 0.4791666865348816
     }
   },
@@ -182,12 +182,12 @@
     "vocab": 128,
     "text": {
       "full": 4.97773551940918,
-      "conditioning_gain": -0.0227506160736084,
+      "conditioning_gain": -0.02275080792605877,
       "harmful_fraction": 0.5
     },
     "edge": {
       "full": 0.6924629211425781,
-      "conditioning_gain": 0.0005836642230860889,
+      "conditioning_gain": 0.0005836549098603427,
       "harmful_fraction": 0.46875
     }
   },
@@ -198,12 +198,12 @@
     "vocab": 128,
     "text": {
       "full": 4.989291191101074,
-      "conditioning_gain": -0.042066872119903564,
+      "conditioning_gain": -0.04206690192222595,
       "harmful_fraction": 0.5416666865348816
     },
     "edge": {
       "full": 0.6933068633079529,
-      "conditioning_gain": -0.0002161078155040741,
+      "conditioning_gain": -0.00021610471594613045,
       "harmful_fraction": 0.4375
     }
   },
@@ -214,12 +214,12 @@
     "vocab": 128,
     "text": {
       "full": 4.969116687774658,
-      "conditioning_gain": -0.03529871255159378,
+      "conditioning_gain": -0.03529864549636841,
       "harmful_fraction": 0.6041666865348816
     },
     "edge": {
       "full": 0.6905770301818848,
-      "conditioning_gain": -0.00013938857591710985,
+      "conditioning_gain": -0.00013938173651695251,
       "harmful_fraction": 0.5104166865348816
     }
   },
@@ -229,13 +229,13 @@
     "graph_seed": 3109,
     "vocab": 128,
     "text": {
-      "full": 4.983978271484375,
-      "conditioning_gain": -0.020541857928037643,
+      "full": 4.983977794647217,
+      "conditioning_gain": -0.020542463287711143,
       "harmful_fraction": 0.5208333730697632
     },
     "edge": {
-      "full": 0.6951019763946533,
-      "conditioning_gain": 0.0005276085576042533,
+      "full": 0.6951021552085876,
+      "conditioning_gain": 0.0005275061121210456,
       "harmful_fraction": 0.4895833432674408
     }
   },
@@ -246,7 +246,7 @@
     "vocab": 128,
     "text": {
       "full": 4.992183685302734,
-      "conditioning_gain": -0.06987680494785309,
+      "conditioning_gain": -0.06987681984901428,
       "harmful_fraction": 0.53125
     },
     "edge": {
@@ -262,12 +262,12 @@
     "vocab": 128,
     "text": {
       "full": 4.910565376281738,
-      "conditioning_gain": -0.03306138515472412,
+      "conditioning_gain": -0.03306137025356293,
       "harmful_fraction": 0.4895833432674408
     },
     "edge": {
-      "full": 0.701026201248169,
-      "conditioning_gain": -0.0008772140135988593,
+      "full": 0.7010263204574585,
+      "conditioning_gain": -0.000877218961250037,
       "harmful_fraction": 0.53125
     }
   },
@@ -278,12 +278,12 @@
     "vocab": 128,
     "text": {
       "full": 4.905559062957764,
-      "conditioning_gain": 0.06922333687543869,
+      "conditioning_gain": 0.06922286003828049,
       "harmful_fraction": 0.4166666865348816
     },
     "edge": {
-      "full": 0.6945213079452515,
-      "conditioning_gain": -0.00011275212455075234,
+      "full": 0.694521427154541,
+      "conditioning_gain": -0.00011274777352809906,
       "harmful_fraction": 0.3958333432674408
     }
   },
@@ -294,12 +294,12 @@
     "vocab": 128,
     "text": {
       "full": 4.971990585327148,
-      "conditioning_gain": -0.03842096030712128,
+      "conditioning_gain": -0.03842092305421829,
       "harmful_fraction": 0.5520833730697632
     },
     "edge": {
       "full": 0.6959519386291504,
-      "conditioning_gain": 9.046185004990548e-05,
+      "conditioning_gain": 9.046246850630268e-05,
       "harmful_fraction": 0.4895833432674408
     }
   },
@@ -310,12 +310,12 @@
     "vocab": 128,
     "text": {
       "full": 4.962275981903076,
-      "conditioning_gain": -0.021278327330946922,
+      "conditioning_gain": -0.021278318017721176,
       "harmful_fraction": 0.4791666865348816
     },
     "edge": {
       "full": 0.705940842628479,
-      "conditioning_gain": -0.0003572491405066103,
+      "conditioning_gain": -0.00035723921610042453,
       "harmful_fraction": 0.4791666865348816
     }
   },
@@ -326,12 +326,12 @@
     "vocab": 128,
     "text": {
       "full": 4.97773551940918,
-      "conditioning_gain": -0.022750407457351685,
+      "conditioning_gain": -0.022750690579414368,
       "harmful_fraction": 0.5
     },
     "edge": {
-      "full": 0.6924629211425781,
-      "conditioning_gain": 0.0005836536874994636,
+      "full": 0.6924630999565125,
+      "conditioning_gain": 0.0005836667260155082,
       "harmful_fraction": 0.46875
     }
   },
@@ -342,12 +342,12 @@
     "vocab": 128,
     "text": {
       "full": 5.018651962280273,
-      "conditioning_gain": 0.0008896440267562866,
+      "conditioning_gain": 0.0008896663784980774,
       "harmful_fraction": 0.5416666865348816
     },
     "edge": {
-      "full": 0.7008697986602783,
-      "conditioning_gain": 0.0012754276394844055,
+      "full": 0.7008699178695679,
+      "conditioning_gain": 0.0012754289200529456,
       "harmful_fraction": 0.4895833432674408
     }
   },
@@ -358,12 +358,12 @@
     "vocab": 128,
     "text": {
       "full": 4.918030261993408,
-      "conditioning_gain": 0.0395105704665184,
+      "conditioning_gain": 0.03951049596071243,
       "harmful_fraction": 0.5208333730697632
     },
     "edge": {
       "full": 0.707646369934082,
-      "conditioning_gain": -0.0021097189746797085,
+      "conditioning_gain": -0.0021097473800182343,
       "harmful_fraction": 0.5416666865348816
     }
   },
@@ -373,13 +373,13 @@
     "graph_seed": 3109,
     "vocab": 128,
     "text": {
-      "full": 4.926835060119629,
-      "conditioning_gain": 0.05904533714056015,
+      "full": 4.926834583282471,
+      "conditioning_gain": 0.059045370668172836,
       "harmful_fraction": 0.40625
     },
     "edge": {
       "full": 0.6958977580070496,
-      "conditioning_gain": 0.0007131783058866858,
+      "conditioning_gain": 0.0007131844758987427,
       "harmful_fraction": 0.4895833432674408
     }
   },
@@ -390,12 +390,12 @@
     "vocab": 128,
     "text": {
       "full": 4.936877250671387,
-      "conditioning_gain": -0.01682012900710106,
+      "conditioning_gain": -0.016820153221488,
       "harmful_fraction": 0.5208333730697632
     },
     "edge": {
       "full": 0.700213611125946,
-      "conditioning_gain": 0.0015631256392225623,
+      "conditioning_gain": 0.0015631181886419654,
       "harmful_fraction": 0.4895833432674408
     }
   },
@@ -406,12 +406,12 @@
     "vocab": 128,
     "text": {
       "full": 4.944902420043945,
-      "conditioning_gain": 0.05915842950344086,
+      "conditioning_gain": 0.05915844440460205,
       "harmful_fraction": 0.4895833432674408
     },
     "edge": {
       "full": 0.7057622671127319,
-      "conditioning_gain": 0.0009307774598710239,
+      "conditioning_gain": 0.0009307749569416046,
       "harmful_fraction": 0.4270833432674408
     }
   },
@@ -422,12 +422,12 @@
     "vocab": 128,
     "text": {
       "full": 4.965699672698975,
-      "conditioning_gain": 0.08861544728279114,
+      "conditioning_gain": 0.08861532062292099,
       "harmful_fraction": 0.4895833432674408
     },
     "edge": {
-      "full": 0.6939784288406372,
-      "conditioning_gain": 0.0001295376569032669,
+      "full": 0.693978488445282,
+      "conditioning_gain": 0.00012952214456163347,
       "harmful_fraction": 0.5
     }
   },
@@ -438,12 +438,12 @@
     "vocab": 128,
     "text": {
       "full": 4.971990585327148,
-      "conditioning_gain": -0.03842095658183098,
+      "conditioning_gain": -0.038420919328927994,
       "harmful_fraction": 0.5520833730697632
     },
     "edge": {
-      "full": 0.6959518790245056,
-      "conditioning_gain": 9.046619379660115e-05,
+      "full": 0.6959519386291504,
+      "conditioning_gain": 9.045501792570576e-05,
       "harmful_fraction": 0.4895833432674408
     }
   },
@@ -454,12 +454,12 @@
     "vocab": 128,
     "text": {
       "full": 4.962275981903076,
-      "conditioning_gain": -0.021278303116559982,
+      "conditioning_gain": -0.021278318017721176,
       "harmful_fraction": 0.4791666865348816
     },
     "edge": {
       "full": 0.705940842628479,
-      "conditioning_gain": -0.0003572398272808641,
+      "conditioning_gain": -0.00035723362816497684,
       "harmful_fraction": 0.4791666865348816
     }
   },
@@ -469,13 +469,13 @@
     "graph_seed": 3109,
     "vocab": 128,
     "text": {
-      "full": 4.977735996246338,
-      "conditioning_gain": -0.02275063842535019,
+      "full": 4.97773551940918,
+      "conditioning_gain": -0.02275046333670616,
       "harmful_fraction": 0.5
     },
     "edge": {
       "full": 0.6924629211425781,
-      "conditioning_gain": 0.0005836623604409397,
+      "conditioning_gain": 0.0005836561322212219,
       "harmful_fraction": 0.46875
     }
   },
@@ -486,12 +486,12 @@
     "vocab": 128,
     "text": {
       "full": 4.973150253295898,
-      "conditioning_gain": -0.03958047553896904,
+      "conditioning_gain": -0.039580438286066055,
       "harmful_fraction": 0.5520833730697632
     },
     "edge": {
       "full": 0.6942907571792603,
-      "conditioning_gain": 0.00022697634994983673,
+      "conditioning_gain": 0.0002269800752401352,
       "harmful_fraction": 0.4895833432674408
     }
   },
@@ -502,12 +502,12 @@
     "vocab": 128,
     "text": {
       "full": 4.96226692199707,
-      "conditioning_gain": -0.02126937173306942,
+      "conditioning_gain": -0.021269416436553,
       "harmful_fraction": 0.4895833432674408
     },
     "edge": {
       "full": 0.706413209438324,
-      "conditioning_gain": -0.0002637102152220905,
+      "conditioning_gain": -0.0002637126890476793,
       "harmful_fraction": 0.4375
     }
   },
@@ -517,13 +517,13 @@
     "graph_seed": 3109,
     "vocab": 128,
     "text": {
-      "full": 4.978435516357422,
-      "conditioning_gain": -0.02345097064971924,
+      "full": 4.978436470031738,
+      "conditioning_gain": -0.023451123386621475,
       "harmful_fraction": 0.5104166865348816
     },
     "edge": {
       "full": 0.6927241086959839,
-      "conditioning_gain": 0.0006327287992462516,
+      "conditioning_gain": 0.0006327461451292038,
       "harmful_fraction": 0.46875
     }
   },
@@ -534,12 +534,12 @@
     "vocab": 128,
     "text": {
       "full": 4.975559234619141,
-      "conditioning_gain": -0.041989296674728394,
+      "conditioning_gain": -0.04198932275176048,
       "harmful_fraction": 0.5520833730697632
     },
     "edge": {
-      "full": 0.6940441131591797,
-      "conditioning_gain": 0.0003041799063794315,
+      "full": 0.6940442323684692,
+      "conditioning_gain": 0.0003041829913854599,
       "harmful_fraction": 0.4895833432674408
     }
   },
@@ -549,13 +549,13 @@
     "graph_seed": 3103,
     "vocab": 128,
     "text": {
-      "full": 4.962243556976318,
-      "conditioning_gain": -0.021245529875159264,
+      "full": 4.96224308013916,
+      "conditioning_gain": -0.021245446056127548,
       "harmful_fraction": 0.5
     },
     "edge": {
       "full": 0.7072482109069824,
-      "conditioning_gain": -0.0003250657464377582,
+      "conditioning_gain": -0.0003250669687986374,
       "harmful_fraction": 0.4479166865348816
     }
   },
@@ -565,13 +565,13 @@
     "graph_seed": 3109,
     "vocab": 128,
     "text": {
-      "full": 4.978692054748535,
-      "conditioning_gain": -0.02370775118470192,
+      "full": 4.978692531585693,
+      "conditioning_gain": -0.023708008229732513,
       "harmful_fraction": 0.53125
     },
     "edge": {
-      "full": 0.6922974586486816,
-      "conditioning_gain": 0.0006662986124865711,
+      "full": 0.6922973990440369,
+      "conditioning_gain": 0.0006663265521638095,
       "harmful_fraction": 0.5104166865348816
     }
   },
@@ -582,12 +582,12 @@
     "vocab": 128,
     "text": {
       "full": 4.976485729217529,
-      "conditioning_gain": -0.042915862053632736,
+      "conditioning_gain": -0.04291588068008423,
       "harmful_fraction": 0.5520833730697632
     },
     "edge": {
       "full": 0.693511962890625,
-      "conditioning_gain": 0.00044077140046283603,
+      "conditioning_gain": 0.0004407720116432756,
       "harmful_fraction": 0.4895833432674408
     }
   },
@@ -598,12 +598,12 @@
     "vocab": 128,
     "text": {
       "full": 4.962565898895264,
-      "conditioning_gain": -0.02156801149249077,
+      "conditioning_gain": -0.02156805619597435,
       "harmful_fraction": 0.5
     },
     "edge": {
       "full": 0.7092987298965454,
-      "conditioning_gain": -6.735946226399392e-05,
+      "conditioning_gain": -6.736814975738525e-05,
       "harmful_fraction": 0.3958333432674408
     }
   },
@@ -614,12 +614,12 @@
     "vocab": 128,
     "text": {
       "full": 4.978285789489746,
-      "conditioning_gain": -0.023301109671592712,
+      "conditioning_gain": -0.023300927132368088,
       "harmful_fraction": 0.53125
     },
     "edge": {
       "full": 0.6923272013664246,
-      "conditioning_gain": 0.0008949408074840903,
+      "conditioning_gain": 0.000894897326361388,
       "harmful_fraction": 0.4895833432674408
     }
   },
@@ -629,13 +629,13 @@
     "graph_seed": 3101,
     "vocab": 32,
     "text": {
-      "full": 3.5354881286621094,
-      "conditioning_gain": -0.035140398889780045,
+      "full": 3.5354878902435303,
+      "conditioning_gain": -0.03514007106423378,
       "harmful_fraction": 0.5625
     },
     "edge": {
-      "full": 0.6959576606750488,
-      "conditioning_gain": 0.0002979127166327089,
+      "full": 0.6959578394889832,
+      "conditioning_gain": 0.00029792700661346316,
       "harmful_fraction": 0.4895833432674408
     }
   },
@@ -646,12 +646,12 @@
     "vocab": 32,
     "text": {
       "full": 3.4970920085906982,
-      "conditioning_gain": -0.005153884645551443,
+      "conditioning_gain": -0.005154383834451437,
       "harmful_fraction": 0.5416666865348816
     },
     "edge": {
-      "full": 0.6917373538017273,
-      "conditioning_gain": -0.00018914106476586312,
+      "full": 0.691737174987793,
+      "conditioning_gain": -0.0001891212014015764,
       "harmful_fraction": 0.4895833432674408
     }
   },
@@ -666,8 +666,8 @@
       "harmful_fraction": 0.59375
     },
     "edge": {
-      "full": 0.6955089569091797,
-      "conditioning_gain": -0.0004967482527717948,
+      "full": 0.6955090761184692,
+      "conditioning_gain": -0.0004967581480741501,
       "harmful_fraction": 0.4895833432674408
     }
   },
@@ -678,7 +678,7 @@
     "vocab": 128,
     "text": {
       "full": 4.971990585327148,
-      "conditioning_gain": -0.03842092677950859,
+      "conditioning_gain": -0.038420937955379486,
       "harmful_fraction": 0.5520833730697632
     },
     "edge": {
@@ -694,12 +694,12 @@
     "vocab": 128,
     "text": {
       "full": 4.962275981903076,
-      "conditioning_gain": -0.02127828821539879,
+      "conditioning_gain": -0.02127828262746334,
       "harmful_fraction": 0.4791666865348816
     },
     "edge": {
       "full": 0.705940842628479,
-      "conditioning_gain": -0.0003572373534552753,
+      "conditioning_gain": -0.0003572454152163118,
       "harmful_fraction": 0.4791666865348816
     }
   },
@@ -709,13 +709,13 @@
     "graph_seed": 3109,
     "vocab": 128,
     "text": {
-      "full": 4.977735996246338,
-      "conditioning_gain": -0.022750627249479294,
+      "full": 4.977736949920654,
+      "conditioning_gain": -0.02275088056921959,
       "harmful_fraction": 0.5
     },
     "edge": {
-      "full": 0.6924628615379333,
-      "conditioning_gain": 0.0005836555501446128,
+      "full": 0.692462682723999,
+      "conditioning_gain": 0.0005836679483763874,
       "harmful_fraction": 0.46875
     }
   },
@@ -726,12 +726,12 @@
     "vocab": 512,
     "text": {
       "full": 6.370043754577637,
-      "conditioning_gain": -0.0023752599954605103,
+      "conditioning_gain": -0.0023752301931381226,
       "harmful_fraction": 0.5104166865348816
     },
     "edge": {
-      "full": 0.6980317831039429,
-      "conditioning_gain": 0.0010249025654047728,
+      "full": 0.6980318427085876,
+      "conditioning_gain": 0.0010249000042676926,
       "harmful_fraction": 0.4895833432674408
     }
   },
@@ -742,12 +742,12 @@
     "vocab": 512,
     "text": {
       "full": 6.396773338317871,
-      "conditioning_gain": 0.05721338093280792,
+      "conditioning_gain": 0.05721346661448479,
       "harmful_fraction": 0.4166666865348816
     },
     "edge": {
       "full": 0.6936030387878418,
-      "conditioning_gain": -5.941465497016907e-05,
+      "conditioning_gain": -5.941217386862263e-05,
       "harmful_fraction": 0.4375
     }
   },
@@ -757,13 +757,13 @@
     "graph_seed": 3109,
     "vocab": 512,
     "text": {
-      "full": 6.487393856048584,
-      "conditioning_gain": 0.04385083168745041,
+      "full": 6.487393379211426,
+      "conditioning_gain": 0.04385083541274071,
       "harmful_fraction": 0.53125
     },
     "edge": {
       "full": 0.707831084728241,
-      "conditioning_gain": 0.001196323661133647,
+      "conditioning_gain": 0.0011963112046942115,
       "harmful_fraction": 0.4583333432674408
     }
   },
@@ -774,12 +774,12 @@
     "vocab": 1004,
     "text": {
       "full": 7.091134548187256,
-      "conditioning_gain": 0.006839454174041748,
+      "conditioning_gain": 0.0068395137786865234,
       "harmful_fraction": 0.5729166865348816
     },
     "edge": {
       "full": 0.6943625211715698,
-      "conditioning_gain": 5.2578747272491455e-05,
+      "conditioning_gain": 5.257999146124348e-05,
       "harmful_fraction": 0.46875
     }
   },
@@ -790,12 +790,12 @@
     "vocab": 1004,
     "text": {
       "full": 7.151523590087891,
-      "conditioning_gain": -0.021114930510520935,
+      "conditioning_gain": -0.021114831790328026,
       "harmful_fraction": 0.5104166865348816
     },
     "edge": {
       "full": 0.6989073753356934,
-      "conditioning_gain": 0.0050279200077056885,
+      "conditioning_gain": 0.005027918145060539,
       "harmful_fraction": 0.4270833432674408
     }
   },
@@ -805,13 +805,13 @@
     "graph_seed": 3109,
     "vocab": 1012,
     "text": {
-      "full": 7.094524383544922,
-      "conditioning_gain": -0.056784071028232574,
+      "full": 7.094523906707764,
+      "conditioning_gain": -0.056784000247716904,
       "harmful_fraction": 0.4895833432674408
     },
     "edge": {
       "full": 0.6952664852142334,
-      "conditioning_gain": 0.00010860587644856423,
+      "conditioning_gain": 0.00010860338807106018,
       "harmful_fraction": 0.3854166865348816
     }
   },
@@ -827,7 +827,7 @@
     },
     "edge": {
       "full": 0.6953705549240112,
-      "conditioning_gain": 0.0009060613811016083,
+      "conditioning_gain": 0.000906059518456459,
       "harmful_fraction": 0.4895833432674408
     }
   },
@@ -838,12 +838,12 @@
     "vocab": 50261,
     "text": {
       "full": 11.03993034362793,
-      "conditioning_gain": -0.038178544491529465,
+      "conditioning_gain": -0.0381784662604332,
       "harmful_fraction": 0.5416666865348816
     },
     "edge": {
       "full": 0.6934075355529785,
-      "conditioning_gain": -9.144905197899789e-05,
+      "conditioning_gain": -9.143973875325173e-05,
       "harmful_fraction": 0.4895833432674408
     }
   },
@@ -854,12 +854,12 @@
     "vocab": 50261,
     "text": {
       "full": 11.003602981567383,
-      "conditioning_gain": 0.02210361883044243,
+      "conditioning_gain": 0.022103678435087204,
       "harmful_fraction": 0.5
     },
     "edge": {
       "full": 0.6933051943778992,
-      "conditioning_gain": 0.0003417165426071733,
+      "conditioning_gain": 0.0003417208790779114,
       "harmful_fraction": 0.3645833432674408
     }
   }

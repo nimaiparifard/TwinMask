@@ -60,16 +60,17 @@ class SetUtility(nn.Module):
         return mean, spread
 
 
-def subset_objective(mean, spread, utility, masks, allowed, decision_weight=0., uncertainty=False):
+def subset_objective(mean, spread, utility, masks, allowed, decision_weight=0., uncertainty=False, *,
+                     rank_weight=.15, temperature=.35):
     error = F.smooth_l1_loss(mean[allowed], utility[allowed])
     delta = utility - utility.roll(1, 0)
     pairs = allowed & allowed.roll(1, 0) & (delta != 0)
-    if pairs.any():
-        error = error + .15*F.softplus(-delta[pairs].sign()*(mean - mean.roll(1, 0))[pairs]).mean()
+    if rank_weight and pairs.any():
+        error = error + rank_weight*F.softplus(-delta[pairs].sign()*(mean - mean.roll(1, 0))[pairs]).mean()
     if decision_weight:
         count = masks.sum(-1)
         for budget in (1, 2, 3):
-            probabilities = (mean / .35).masked_fill(~(allowed & (count <= budget)), -torch.inf).softmax(0)
+            probabilities = (mean / temperature).masked_fill(~(allowed & (count <= budget)), -torch.inf).softmax(0)
             error = error - decision_weight*(probabilities*utility).sum(0).mean()/3
     if uncertainty:
         stochastic = allowed & (spread > 0)

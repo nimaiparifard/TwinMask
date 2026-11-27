@@ -37,32 +37,55 @@ def as_log_probs(logits, direction):
 
 
 class IsolatedTwin(nn.Module):
-    def __init__(self, vocab, width=48, architecture="sage"):
+    def __init__(self, vocab, width=48, architecture="sage", *, depth=2, length=16,
+                 dropout=0., fusion=1., structural_stats=False, text_encoder="cnn"):
         super().__init__()
         self.architecture = architecture
         self.vocab = vocab
         self.emb = nn.Embedding(vocab, width)
-        self.position = nn.Parameter(torch.randn(16, width)*.02)
-        self.local = nn.Conv1d(width, width, 3, padding=1)
-        self.structure = nn.Linear(3, width)
-        layer = GATConv if architecture == "gat" else SAGEConv
-        self.layers = nn.ModuleList(layer(width, width) for _ in range(2))
+        self.position = nn.Parameter(torch.randn(length, width)*.02)
+        self.local = (nn.Conv1d(width, width, 3, padding=1) if text_encoder == "cnn" else
+                      nn.TransformerEncoderLayer(width, 4, width*2, dropout, batch_first=True))
+        self.structure = nn.Linear(6 if structural_stats else 3, width)
+        layer = GATConv if architecture in ("gat", "structure_gat") else SAGEConv
+        self.layers = nn.ModuleList(layer(width, width) for _ in range(depth))
+        self.dropout, self.fusion, self.structural_stats = dropout, fusion, structural_stats
+        self.text_encoder = text_encoder
+        self.directions = (1., 1.)
+        self.detach_cross = False
+        self.register_parameter("gate_logits", None)
         self.t_fuse = nn.Linear(width, width, bias=False)
         self.e_fuse = nn.Linear(width, width, bias=False)
         self.token = nn.Sequential(nn.LayerNorm(width), nn.Linear(width, vocab))
         self.link = nn.Sequential(nn.Linear(4*width, width), nn.GELU(), nn.Linear(width, 1))
         self.decode_gae = nn.Linear(width, width, bias=False)
 
+    def encode_text(self, ids):
+        local = self.emb(ids) + self.position[:ids.shape[1]]
+        if self.text_encoder == "cnn":
+            local = local + F.gelu(self.local(local.transpose(1, 2)).transpose(1, 2))
+        else:
+            padding = ids == PAD
+            padding[:, 0] &= ~padding.all(1)
+            local = self.local(local, src_key_padding_mask=padding)
+        return F.dropout(local, self.dropout, self.training)
+
     def streams(self, ids, pairs, states, base, clocks):
         present = torch.cat((base, pairs[:, states == 1]), 1)
         adjacency = torch.cat((present, present.flip(0)), 1)
         degree = torch.bincount(adjacency[1], minlength=len(ids)).float().log1p()
-        structure = self.structure(torch.stack((degree, (degree == 0).float(),
-                                                torch.full_like(degree, clocks[1])), 1))
+        features = [degree, (degree == 0).float(), torch.full_like(degree, clocks[1])]
+        if self.structural_stats:
+            src, dst = adjacency
+            count = torch.bincount(dst, minlength=len(ids)).clamp_min(1)
+            one_hop = torch.zeros_like(degree).index_add_(0, dst, degree[src])/count
+            two_hop = torch.zeros_like(degree).index_add_(0, dst, one_hop[src])/count
+            variance = torch.zeros_like(degree).index_add_(0, dst, degree[src].square())/count-one_hop.square()
+            features.extend((one_hop, two_hop, variance.clamp_min(0).sqrt()))
+        structure = self.structure(torch.stack(features, 1))
         for layer in self.layers:
             structure = structure + F.gelu(layer(structure, adjacency))
-        local = self.emb(ids) + self.position[:ids.shape[1]]
-        local = local + F.gelu(self.local(local.transpose(1, 2)).transpose(1, 2))
+        local = self.encode_text(ids)
         visible = (ids != PAD)[..., None]
         semantic = (local*visible).sum(1)/visible.sum(1).clamp_min(1)
         return local, semantic, structure, adjacency, degree
@@ -86,15 +109,22 @@ class IsolatedTwin(nn.Module):
         neighbor = torch.zeros_like(structure).index_add_(0, dst, structure[src])
         count = torch.bincount(dst, minlength=len(ids)).clamp_min(1)
         text_joint = structure+neighbor/count[:, None]
-        logits_text = (self.token(local[row, col]+self.t_fuse(text_joint[row])), self.token(local[row, col]))
+        if self.detach_cross:
+            text_joint = text_joint.detach()
+        directions = self.directions if self.gate_logits is None else self.gate_logits.sigmoid()
+        logits_text = (self.token(local[row, col]+self.fusion*directions[0]*self.t_fuse(text_joint[row])),
+                       self.token(local[row, col]))
         neighbor_text = torch.zeros_like(semantic).index_add_(0, dst, semantic[src])/count[:, None]
         cross = (semantic[a]+semantic[b]+neighbor_text[a]+neighbor_text[b])/4
+        if self.detach_cross:
+            cross = cross.detach()
+        cross = cross*self.fusion*directions[1]
         without = torch.zeros_like(cross)
         logits_edge = (self.edge_scores(structure[a], structure[b], cross),
                        self.edge_scores(structure[a], structure[b], without))
         if self.architecture == "text_link":
             logits_edge = (self.edge_scores(semantic[a], semantic[b], without),)*2
-        if self.architecture in ("structure", "gae"):
+        if self.architecture in ("structure", "structure_gat", "gae"):
             logits_edge = (logits_edge[1],)*2
         if self.architecture == "mlm":
             logits_text = (logits_text[1],)*2
@@ -217,16 +247,22 @@ def temporal(model, case, seed, steps=4):
     return output
 
 
-def prepare_cases(data, base, positives, negatives, split_seed, device, vocab_limit=1024):
-    raw = data["tokens"][:, 1:17].long().to(device)
+def prepare_cases(data, base, positives, negatives, split_seed, device, vocab_limit=1024, *, length=16,
+                  fixed_vocab=None, train_fraction=.6, node_groups=None):
+    raw = data["tokens"][:, 1:length+1].long().to(device)
     n = len(raw)
     seeded = torch.Generator().manual_seed(split_seed+17)
     order = torch.randperm(n, generator=seeded).to(device)
-    fit, dev, test = order.split([n*3//5, n//5, n-n*3//5-n//5])
+    nfit = int(n*train_fraction)
+    fit, dev, test = order.split([nfit, n//5, n-nfit-n//5])
+    if node_groups is not None:
+        fit, dev, test = (block.to(device) for block in node_groups)
     valid = (raw > 2) & (raw < 50264)
     count = torch.bincount(raw[fit][valid[fit]], minlength=50265)
     vocab = (torch.arange(3, 50264, device=device) if vocab_limit is None else
              count.topk(min(vocab_limit, int((count > 0).sum()))).indices)
+    if fixed_vocab is not None:
+        vocab = fixed_vocab.to(device)
     lookup = torch.full((50265,), OTHER, dtype=torch.long, device=device)
     lookup[vocab] = torch.arange(3, len(vocab)+3, device=device)
     ids = lookup[raw].masked_fill(~valid, PAD)
@@ -243,6 +279,7 @@ def prepare_cases(data, base, positives, negatives, split_seed, device, vocab_li
         return Case(backdrop, ids, corruption(pool, rates[0], rng), pairs[:, shuffle], labels[shuffle],
                     corruption(torch.ones_like(labels).bool(), rates[1], rng), base.to(device), rates)
 
+    make.vocabulary = vocab
     return make, ids, len(vocab)+3, (fit, dev, test)
 
 
@@ -263,7 +300,8 @@ def fusion_panel(model, case, direction, target_index):
         message = torch.cat((structure[:, None], incoming), 1)[row]
         valid = torch.cat((torch.ones_like(flags[:, :1]), flags), 1)[row]
         ground = case.x_truth[target_index]
-        dec = lambda fused: model.token(local[row, col] + model.t_fuse(fused))
+        scale = model.directions[0] if model.gate_logits is None else model.gate_logits[0].sigmoid()
+        dec = lambda fused: model.token(local[row, col] + model.fusion*scale*model.t_fuse(fused))
         context = local[row, col]
         target_degree = degree[row]
     else:
@@ -272,7 +310,9 @@ def fusion_panel(model, case, direction, target_index):
         message = torch.stack((semantic[a], semantic[b], incoming[a], incoming[b]), 1)/4
         valid = torch.stack((torch.ones_like(a).bool(), torch.ones_like(b).bool(), degree[a] > 0, degree[b] > 0), 1)
         ground = case.a_truth[target_index]
-        dec = lambda fused: model.edge_scores(structure[a].expand_as(fused), structure[b].expand_as(fused), fused)
+        scale = model.directions[1] if model.gate_logits is None else model.gate_logits[1].sigmoid()
+        dec = lambda fused: model.edge_scores(structure[a].expand_as(fused), structure[b].expand_as(fused),
+                                             model.fusion*scale*fused)
         context = (structure[a]+structure[b])/2
         target_degree = (degree[a]+degree[b])/2
     masks, allowed = enumerate_subsets(valid)
@@ -344,12 +384,12 @@ def mixture_feasible(masks, allowed):
     return allowed & ((masks.sum(-1) <= 2) | all_kept)
 
 
-def fit_stacking(dev):
+def fit_stacking(dev, steps=70, regularization=0.):
     # Shared nonnegative weights, fitted on the development targets only.
     weights = nn.Parameter(dev[0][0].new_zeros(dev[0][0].shape[0]))
     optimizer = torch.optim.Adam([weights], lr=.06)
-    for _ in range(70):
-        loss = 0.
+    for _ in range(steps):
+        loss = regularization*weights.square().mean()
         for logp, mask, allowed, truth, _, _ in dev:
             keep = mixture_feasible(mask, allowed)
             probability = weights[:, None].expand_as(keep).masked_fill(~keep, -torch.inf).softmax(0)
@@ -362,7 +402,7 @@ def fit_stacking(dev):
 
 
 @torch.no_grad()
-def evaluate_expected(rows, direction, temperatures, chosen, alternatives, weights, seed):
+def evaluate_expected(rows, direction, temperatures, chosen, alternatives, weights, seed, mixture_temperature=.15):
     rng = torch.Generator(device=rows[0][0].device).manual_seed(seed)
     out = []
     for logp, mask, allowed, truth, logits, degree in rows:
@@ -381,7 +421,7 @@ def evaluate_expected(rows, direction, temperatures, chosen, alternatives, weigh
                      oracle_matched_analysis_only=oracle.masked_fill(~matched, -torch.inf).argmax(0))
         p = logp.exp()
         keep = mixture_feasible(mask, allowed)
-        soft = (gain/.15).masked_fill(~keep, -torch.inf).softmax(0)
+        soft = (gain/mixture_temperature).masked_fill(~keep, -torch.inf).softmax(0)
         stack = weights[:, None].expand_as(gain).masked_fill(~keep, -torch.inf).softmax(0)
         estimates = dict(full=p[full], without=p[0], teacher=independent,
                          uniform=(p*keep[..., None]).sum(0)/keep.sum(0)[:, None],
@@ -609,9 +649,6 @@ def mechanism_study(device):
                         gain = removed-full
                         row[d] = dict(full=float(full.mean()), conditioning_gain=float(gain.mean()),
                                       harmful_fraction=float((gain < -.001).float().mean()))
-                if args.selector_controls:
-                    row = {key: row[key] for key in ("dataset", "split_seed", "model_seed", "epochs", "vocabulary",
-                                                     "audit", "seconds", "expected")}
                 rows.append(row)
             print("mechanism", factor, level, flush=True)
             save_json(rows, "research_twinmask_v5", "mechanisms.json")
@@ -638,6 +675,9 @@ def main():
             shared = induced_raw_split(name, split) if name == "computer" else graph_split(name, split)
             for seed in args.model_seeds:
                 row = run(name, split, seed, device, args.epochs, args.limit, shared, args.selector_controls)
+                if args.selector_controls:
+                    row = {key: row[key] for key in ("dataset", "split_seed", "model_seed", "epochs", "vocabulary",
+                                                     "audit", "seconds", "expected")}
                 rows.append(row)
                 print(name, split, seed, round(row["seconds"], 2), flush=True)
         suffix = "_selectors" if args.selector_controls else ""

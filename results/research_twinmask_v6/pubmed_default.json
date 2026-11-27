@@ -1,0 +1,1250 @@
+[
+  {
+    "family": "mlm",
+    "split": 3107,
+    "model_seed": 97,
+    "split_hash": "125ac3f7a9be34efb0f9a39e0a88d8d34e44b0ddd33b544348920d371b5b3fbe",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 5.486587882041931,
+            "edge": 0.6955104768276215,
+            "token_accuracy": 0.1816406287252903,
+            "edge_auc": 0.4793023370548758,
+            "conditioning_text": 0.0,
+            "conditioning_edge": -0.0007689288759138435
+          },
+          "score": 0.7912133839385957,
+          "gradients": {},
+          "train": [
+            6.118877828121185,
+            null
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 5.156419396400452,
+            "edge": 0.6954847872257233,
+            "token_accuracy": 0.2024739608168602,
+            "edge_auc": 0.48053680227828177,
+            "conditioning_text": 0.0,
+            "conditioning_edge": -0.0007432531783706509
+          },
+          "score": 0.7436002352183653,
+          "gradients": {},
+          "train": [
+            5.260551184415817,
+            null
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "91205e4fffde9a76af6b329d87561c9e29af1f789485c88c877802962e4df1b8",
+      "checkpoint_hash": "c985faae0e6eade65aca797efa0e5d35d13eb111c1921ffc8b9a7c1e5813a625",
+      "seconds": 1.2366627000155859
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\pubmed_3107_mlm_default.pt",
+    "checkpoint_file_sha256": "0647d3fb2abffa5f070d8cf1844e4fb71f93324b47b45293526fc7d81860679a",
+    "test": {
+      "text": 5.09507155418396,
+      "edge": 0.6939155012369156,
+      "token_accuracy": 0.1907552182674408,
+      "edge_auc": 0.48583735838084835,
+      "conditioning_text": 0.0,
+      "conditioning_edge": 1.5592009731335565e-05
+    }
+  },
+  {
+    "family": "structure",
+    "split": 3107,
+    "model_seed": 97,
+    "split_hash": "125ac3f7a9be34efb0f9a39e0a88d8d34e44b0ddd33b544348920d371b5b3fbe",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 7.0265052318573,
+            "edge": 0.4381940886378288,
+            "token_accuracy": 0.0052083334303461015,
+            "edge_auc": 0.8753636889692566,
+            "conditioning_text": -0.08101634308695793,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.6321804386246546,
+          "gradients": {},
+          "train": [
+            null,
+            0.47151253931224346
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 7.016325116157532,
+            "edge": 0.4195252060890198,
+            "token_accuracy": 0.005208333372138441,
+            "edge_auc": 0.8891552625238577,
+            "conditioning_text": -0.07083613146096468,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.6052469343525492,
+          "gradients": {},
+          "train": [
+            null,
+            0.3791122157126665
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "91205e4fffde9a76af6b329d87561c9e29af1f789485c88c877802962e4df1b8",
+      "checkpoint_hash": "2c332b98385e0403e83d13e9a964de5ecfa8b15d8002b73bc1339dee3ba95ebe",
+      "seconds": 1.1317222999641672
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\pubmed_3107_structure_default.pt",
+    "checkpoint_file_sha256": "0b426a34da4a13d42c81492cbfc1fff20d38f224a79c22babe588667e1c78ab4",
+    "test": {
+      "text": 6.994114995002747,
+      "edge": 0.41587992012500763,
+      "token_accuracy": 0.001953125058207661,
+      "edge_auc": 0.8898082916935252,
+      "conditioning_text": -0.05039521958678961,
+      "conditioning_edge": 0.0
+    }
+  },
+  {
+    "family": "structure_gat",
+    "split": 3107,
+    "model_seed": 97,
+    "split_hash": "125ac3f7a9be34efb0f9a39e0a88d8d34e44b0ddd33b544348920d371b5b3fbe",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 7.106512784957886,
+            "edge": 0.49125612527132034,
+            "token_accuracy": 0.0,
+            "edge_auc": 0.8641115944470982,
+            "conditioning_text": -0.029927070252597332,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.7087327757352613,
+          "gradients": {},
+          "train": [
+            null,
+            0.5854562427848577
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 7.095693945884705,
+            "edge": 0.4586930274963379,
+            "token_accuracy": 0.0,
+            "edge_auc": 0.8760292851792353,
+            "conditioning_text": -0.01910822535865009,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.6617541560593116,
+          "gradients": {},
+          "train": [
+            null,
+            0.432975010946393
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "1416d3cae831b9675b6bfd19e12f1ee557bac3381e469393106fcee6a2529eba",
+      "checkpoint_hash": "26a4eb9ee6f6636acfe1a0c5bb34844226dd136a925e0d8129505a618250433f",
+      "seconds": 1.3963019999791868
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\pubmed_3107_structure_gat_default.pt",
+    "checkpoint_file_sha256": "c601be9050f2cdf634b962f911882bd269004001a18d884d968d2814a0be111c",
+    "test": {
+      "text": 7.067457914352417,
+      "edge": 0.4656686931848526,
+      "token_accuracy": 0.0006510416860692203,
+      "edge_auc": 0.8739736826626145,
+      "conditioning_text": -0.024880425538867712,
+      "conditioning_edge": 0.0
+    }
+  },
+  {
+    "family": "text_link",
+    "split": 3107,
+    "model_seed": 97,
+    "split_hash": "125ac3f7a9be34efb0f9a39e0a88d8d34e44b0ddd33b544348920d371b5b3fbe",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 7.033872485160828,
+            "edge": 0.6936642229557037,
+            "token_accuracy": 0.0013020833721384406,
+            "edge_auc": 0.4938073799917235,
+            "conditioning_text": -0.07162631582468748,
+            "conditioning_edge": 0.0
+          },
+          "score": 1.00074593450029,
+          "gradients": {},
+          "train": [
+            null,
+            0.6997362785041332
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 7.0135650634765625,
+            "edge": 0.691994771361351,
+            "token_accuracy": 0.0006510416860692203,
+            "edge_auc": 0.5295311759218978,
+            "conditioning_text": -0.08577596489340067,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.9983374249641133,
+          "gradients": {},
+          "train": [
+            null,
+            0.6920526996254921
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "91205e4fffde9a76af6b329d87561c9e29af1f789485c88c877802962e4df1b8",
+      "checkpoint_hash": "60d0e77873742681c72924a7a9a005f172f501812729c964b08ac58b1ecb42c7",
+      "seconds": 1.3025834999862127
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\pubmed_3107_text_link_default.pt",
+    "checkpoint_file_sha256": "d0cdd453582f7a832b145ff3476b487ead05cb2f8afd47be689b14fe1231d879",
+    "test": {
+      "text": 6.987318277359009,
+      "edge": 0.6919066309928894,
+      "token_accuracy": 0.0013020833721384406,
+      "edge_auc": 0.5336659210976041,
+      "conditioning_text": -0.06659283861517906,
+      "conditioning_edge": 0.0
+    }
+  },
+  {
+    "family": "gae",
+    "split": 3107,
+    "model_seed": 97,
+    "split_hash": "125ac3f7a9be34efb0f9a39e0a88d8d34e44b0ddd33b544348920d371b5b3fbe",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 7.013089895248413,
+            "edge": 0.6092385798692703,
+            "token_accuracy": 0.0026041667442768812,
+            "edge_auc": 0.8023229028724119,
+            "conditioning_text": -0.06760114338248968,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.8789454778956309,
+          "gradients": {},
+          "train": [
+            null,
+            0.6611670181155205
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 7.006573557853699,
+            "edge": 0.5986109226942062,
+            "token_accuracy": 0.001953125,
+            "edge_auc": 0.7712738928411571,
+            "conditioning_text": -0.06108430307358503,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.863613009592898,
+          "gradients": {},
+          "train": [
+            null,
+            0.588289100676775
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "91205e4fffde9a76af6b329d87561c9e29af1f789485c88c877802962e4df1b8",
+      "checkpoint_hash": "2460aa32b0916c1a6a0c037d969799b61bccf554ab192f025c362f299e276bdf",
+      "seconds": 1.1038951000082307
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\pubmed_3107_gae_default.pt",
+    "checkpoint_file_sha256": "a4cc0099f1fd7909413359e82500b9903a5faf86dac9df2b818a1b527dfa95ca",
+    "test": {
+      "text": 6.999333024024963,
+      "edge": 0.5923420041799545,
+      "token_accuracy": 0.0013020833721384406,
+      "edge_auc": 0.7753905256472287,
+      "conditioning_text": -0.055613270960748196,
+      "conditioning_edge": 0.0
+    }
+  },
+  {
+    "family": "sage",
+    "split": 3107,
+    "model_seed": 97,
+    "split_hash": "125ac3f7a9be34efb0f9a39e0a88d8d34e44b0ddd33b544348920d371b5b3fbe",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 5.514862298965454,
+            "edge": 0.47321902960538864,
+            "token_accuracy": 0.11783854477107525,
+            "edge_auc": 0.8707262384771282,
+            "conditioning_text": 0.05280988849699497,
+            "conditioning_edge": -0.008714055293239653
+          },
+          "score": 0.7390007732265824,
+          "gradients": {},
+          "train": [
+            6.104333460330963,
+            0.5117223579436541
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 5.306369423866272,
+            "edge": 0.4363388195633888,
+            "token_accuracy": 0.1868489608168602,
+            "edge_auc": 0.8763617442024677,
+            "conditioning_text": -0.10097421705722809,
+            "conditioning_edge": -0.003917824495147215
+          },
+          "score": 0.6973640880380928,
+          "gradients": {},
+          "train": [
+            5.349382609128952,
+            0.41556725464761257
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "91205e4fffde9a76af6b329d87561c9e29af1f789485c88c877802962e4df1b8",
+      "checkpoint_hash": "b2d3f0889b735df0ba175e86363a2637c6396eed4766464dd89f10eb7db7efc6",
+      "seconds": 1.6235554000013508
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\pubmed_3107_sage_default.pt",
+    "checkpoint_file_sha256": "c57aba69ff222ef60540f43d94bc4b892485dfcefb8ed7c1f542e3c02d57496d",
+    "test": {
+      "text": 5.245765447616577,
+      "edge": 0.43501344323158264,
+      "token_accuracy": 0.1796875037252903,
+      "edge_auc": 0.8756070476344411,
+      "conditioning_text": -0.08465692959725857,
+      "conditioning_edge": -0.006237629160750657
+    }
+  },
+  {
+    "family": "gat",
+    "split": 3107,
+    "model_seed": 97,
+    "split_hash": "125ac3f7a9be34efb0f9a39e0a88d8d34e44b0ddd33b544348920d371b5b3fbe",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 5.521492600440979,
+            "edge": 0.47280868142843246,
+            "token_accuracy": 0.1764322966337204,
+            "edge_auc": 0.8625152787396585,
+            "conditioning_text": 0.1389964520931244,
+            "conditioning_edge": 0.008034306112676859
+          },
+          "score": 0.7391828429702716,
+          "gradients": {},
+          "train": [
+            6.157218724489212,
+            0.5827580410987139
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 5.313435435295105,
+            "edge": 0.444711335003376,
+            "token_accuracy": 0.1770833395421505,
+            "edge_auc": 0.877416566215599,
+            "conditioning_text": -0.07926618866622448,
+            "conditioning_edge": 0.0005173605168238282
+          },
+          "score": 0.7039130712444539,
+          "gradients": {},
+          "train": [
+            5.342046678066254,
+            0.4213542491197586
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "1416d3cae831b9675b6bfd19e12f1ee557bac3381e469393106fcee6a2529eba",
+      "checkpoint_hash": "b937287ed63b285e0e542f0759d26be308bd06195347ba0742ea8514afc3df53",
+      "seconds": 1.7557932999916375
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\pubmed_3107_gat_default.pt",
+    "checkpoint_file_sha256": "d5c851d2e8b6fbb422ab9a5148dbe81ab6dfcd029c2369df6ec6055ae4e21bb7",
+    "test": {
+      "text": 5.248760223388672,
+      "edge": 0.4474134296178818,
+      "token_accuracy": 0.1692708395421505,
+      "edge_auc": 0.8752057506221677,
+      "conditioning_text": -0.05591919319704175,
+      "conditioning_edge": 0.0019685178485815413
+    }
+  },
+  {
+    "family": "twinmask",
+    "split": 3107,
+    "model_seed": 97,
+    "split_hash": "125ac3f7a9be34efb0f9a39e0a88d8d34e44b0ddd33b544348920d371b5b3fbe",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.3333333333333333,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 5.528133273124695,
+            "edge": 0.4543990194797516,
+            "token_accuracy": 0.1145833358168602,
+            "edge_auc": 0.8720089229030387,
+            "conditioning_text": 0.04668387770652771,
+            "conditioning_edge": 0.0026280459233021247
+          },
+          "score": 0.7263819001639462,
+          "gradients": {},
+          "train": [
+            6.102201998233795,
+            0.5134553033858538
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 5.320518374443054,
+            "edge": 0.45309073477983475,
+            "token_accuracy": 0.1875000074505806,
+            "edge_auc": 0.874713955455407,
+            "conditioning_text": -0.04868471808731556,
+            "conditioning_edge": -0.009306535124778748
+          },
+          "score": 0.7104682410115457,
+          "gradients": {},
+          "train": [
+            5.366729646921158,
+            0.4118858762085438
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "91205e4fffde9a76af6b329d87561c9e29af1f789485c88c877802962e4df1b8",
+      "checkpoint_hash": "bd60785775e3ee855a135409b7f37f3c92ee10ddf2c930e0ecf09fa5699edbdd",
+      "seconds": 1.156577899993863
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\pubmed_3107_twinmask_default.pt",
+    "checkpoint_file_sha256": "90a22ea721d8869b702e423ecabfed4429d763c8b75b52407719d20df6a65d37",
+    "test": {
+      "text": 5.257873892784119,
+      "edge": 0.4515012577176094,
+      "token_accuracy": 0.1764322966337204,
+      "edge_auc": 0.8753649120397899,
+      "conditioning_text": -0.023278886917978525,
+      "conditioning_edge": -0.01072762708645314
+    }
+  },
+  {
+    "family": "mlm",
+    "split": 3137,
+    "model_seed": 97,
+    "split_hash": "eab9180798b47edd3ba435598210c81980b2f153b84603fa4dc695b039cdc5d6",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 5.443243384361267,
+            "edge": 0.6956799626350403,
+            "token_accuracy": 0.1595052145421505,
+            "edge_auc": 0.49021903513888254,
+            "conditioning_text": 0.0,
+            "conditioning_edge": -0.0004707450370915467
+          },
+          "score": 0.7849627328194755,
+          "gradients": {},
+          "train": [
+            6.141970068216324,
+            null
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 5.0993651151657104,
+            "edge": 0.6958040446043015,
+            "token_accuracy": 0.1888020858168602,
+            "edge_auc": 0.49332940231923617,
+            "conditioning_text": 0.0,
+            "conditioning_edge": -0.0005948489269940183
+          },
+          "score": 0.735372514840154,
+          "gradients": {},
+          "train": [
+            5.266958147287369,
+            null
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "91205e4fffde9a76af6b329d87561c9e29af1f789485c88c877802962e4df1b8",
+      "checkpoint_hash": "f50dce200b24b69c05efefeec34f30dfc759584859c211ba0f7134b04a50d98f",
+      "seconds": 0.8640339999692515
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\pubmed_3137_mlm_default.pt",
+    "checkpoint_file_sha256": "e28cd0f188470b18a5f1f6181514a38ed09542eb1ced8a67d483c027d10f13f9",
+    "test": {
+      "text": 5.093971133232117,
+      "edge": 0.6984006464481354,
+      "token_accuracy": 0.1888020858168602,
+      "edge_auc": 0.4411838306818787,
+      "conditioning_text": 0.0,
+      "conditioning_edge": 0.0005182491731829941
+    }
+  },
+  {
+    "family": "structure",
+    "split": 3137,
+    "model_seed": 97,
+    "split_hash": "eab9180798b47edd3ba435598210c81980b2f153b84603fa4dc695b039cdc5d6",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 7.007977247238159,
+            "edge": 0.45526018738746643,
+            "token_accuracy": 0.003906250058207661,
+            "edge_auc": 0.8901841846208024,
+            "conditioning_text": -0.06390211172401905,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.6568016146580781,
+          "gradients": {},
+          "train": [
+            null,
+            0.5015164073556662
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 6.9945162534713745,
+            "edge": 0.3937120586633682,
+            "token_accuracy": 0.004557291744276881,
+            "edge_auc": 0.8968807152524161,
+            "conditioning_text": -0.050441447645425797,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.568006434571826,
+          "gradients": {},
+          "train": [
+            null,
+            0.4175566229969263
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "91205e4fffde9a76af6b329d87561c9e29af1f789485c88c877802962e4df1b8",
+      "checkpoint_hash": "664ac5d15f432578ce1089e018a1570928940c20b59e2f9d85bed1ddac99696d",
+      "seconds": 1.0210219000000507
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\pubmed_3137_structure_default.pt",
+    "checkpoint_file_sha256": "eb9829c9f5c6673f3297cf43f545497af48058d5b85c7208061fcebace0b3f3b",
+    "test": {
+      "text": 6.996078014373779,
+      "edge": 0.39724671095609665,
+      "token_accuracy": 0.005208333546761423,
+      "edge_auc": 0.892548367533355,
+      "conditioning_text": -0.032591998344287276,
+      "conditioning_edge": 0.0
+    }
+  },
+  {
+    "family": "structure_gat",
+    "split": 3137,
+    "model_seed": 97,
+    "split_hash": "eab9180798b47edd3ba435598210c81980b2f153b84603fa4dc695b039cdc5d6",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 7.081828355789185,
+            "edge": 0.4462062865495682,
+            "token_accuracy": 0.0006510416860692203,
+            "edge_auc": 0.8822439511940326,
+            "conditioning_text": -0.032499323366209865,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.6437395968185418,
+          "gradients": {},
+          "train": [
+            null,
+            0.5843391325324774
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 7.074349999427795,
+            "edge": 0.42872951924800873,
+            "token_accuracy": 0.0006510416860692203,
+            "edge_auc": 0.8925938957188704,
+            "conditioning_text": -0.02502066281158477,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.6185259513018116,
+          "gradients": {},
+          "train": [
+            null,
+            0.44086306169629097
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "1416d3cae831b9675b6bfd19e12f1ee557bac3381e469393106fcee6a2529eba",
+      "checkpoint_hash": "07a8b4cd1ac8460dd28c5cffe51c96d677832c66e4eafe1dde1751c5aa23e878",
+      "seconds": 0.785290099971462
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\pubmed_3137_structure_gat_default.pt",
+    "checkpoint_file_sha256": "35c833d073c13c6d259669f957f9509cc4d056ba971e3964bd72cecece072353",
+    "test": {
+      "text": 7.089596271514893,
+      "edge": 0.4283519610762596,
+      "token_accuracy": 0.0013020833721384406,
+      "edge_auc": 0.8913275764719238,
+      "conditioning_text": -0.0336880492977798,
+      "conditioning_edge": 0.0
+    }
+  },
+  {
+    "family": "text_link",
+    "split": 3137,
+    "model_seed": 97,
+    "split_hash": "eab9180798b47edd3ba435598210c81980b2f153b84603fa4dc695b039cdc5d6",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 7.013180375099182,
+            "edge": 0.6943643242120743,
+            "token_accuracy": 0.0006510416860692203,
+            "edge_auc": 0.5019311213604915,
+            "conditioning_text": -0.07999797724187374,
+            "conditioning_edge": 0.0
+          },
+          "score": 1.001755967110976,
+          "gradients": {},
+          "train": [
+            null,
+            0.6958913058042526
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 6.9972083568573,
+            "edge": 0.6968621909618378,
+            "token_accuracy": 0.0006510416860692203,
+            "edge_auc": 0.5067118225892078,
+            "conditioning_text": -0.08926787786185741,
+            "conditioning_edge": 0.0
+          },
+          "score": 1.0053596270836611,
+          "gradients": {},
+          "train": [
+            null,
+            0.6912849918007851
+          ]
+        }
+      ],
+      "best_step": 16,
+      "initialization_hash": "91205e4fffde9a76af6b329d87561c9e29af1f789485c88c877802962e4df1b8",
+      "checkpoint_hash": "9c79b8a63cadffb3a4e99394ceece9639420c131bfa005a61d0dd9ee72843070",
+      "seconds": 1.1859108000062406
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\pubmed_3137_text_link_default.pt",
+    "checkpoint_file_sha256": "60736ea5f7ec1559d0689ad320f6d45589f9420d9e4cc0ef53d5cd83fd68cd0a",
+    "test": {
+      "text": 6.977744102478027,
+      "edge": 0.6959660202264786,
+      "token_accuracy": 0.0013020833721384406,
+      "edge_auc": 0.504225106103769,
+      "conditioning_text": -0.05090991873294115,
+      "conditioning_edge": 0.0
+    }
+  },
+  {
+    "family": "gae",
+    "split": 3137,
+    "model_seed": 97,
+    "split_hash": "eab9180798b47edd3ba435598210c81980b2f153b84603fa4dc695b039cdc5d6",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 7.012797951698303,
+            "edge": 0.5886977314949036,
+            "token_accuracy": 0.0,
+            "edge_auc": 0.8202372572209983,
+            "conditioning_text": -0.06872320361435413,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.8493112978102799,
+          "gradients": {},
+          "train": [
+            null,
+            0.6657677814364433
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 7.007157564163208,
+            "edge": 0.5798551291227341,
+            "token_accuracy": 0.0,
+            "edge_auc": 0.8334217598301865,
+            "conditioning_text": -0.063082966953516,
+            "conditioning_edge": 0.0
+          },
+          "score": 0.836554119219398,
+          "gradients": {},
+          "train": [
+            null,
+            0.585502851754427
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "91205e4fffde9a76af6b329d87561c9e29af1f789485c88c877802962e4df1b8",
+      "checkpoint_hash": "ecb150e1bf9e621e420366148c2bf4b49bbf5fffc0db9ae2a77151710c64358e",
+      "seconds": 1.2487102000159211
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\pubmed_3137_gae_default.pt",
+    "checkpoint_file_sha256": "67ba42e0d329a4ca89d1c0d0b39a853f88b4c8e0eaae9d2279ed05b7eee3c28b",
+    "test": {
+      "text": 7.0086870193481445,
+      "edge": 0.5836597383022308,
+      "token_accuracy": 0.0,
+      "edge_auc": 0.8276438590802686,
+      "conditioning_text": -0.04520097188651562,
+      "conditioning_edge": 0.0
+    }
+  },
+  {
+    "family": "sage",
+    "split": 3137,
+    "model_seed": 97,
+    "split_hash": "eab9180798b47edd3ba435598210c81980b2f153b84603fa4dc695b039cdc5d6",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 5.4497681856155396,
+            "edge": 0.43367181718349457,
+            "token_accuracy": 0.1067708358168602,
+            "edge_auc": 0.8875633420943485,
+            "conditioning_text": 0.06723636761307716,
+            "conditioning_edge": 0.029495900962501764
+          },
+          "score": 0.705779922783577,
+          "gradients": {},
+          "train": [
+            6.106974363327026,
+            0.4933291971683502
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 5.245216250419617,
+            "edge": 0.40117159485816956,
+            "token_accuracy": 0.1712239608168602,
+            "edge_auc": 0.8942114214617791,
+            "conditioning_text": -0.0734133031219244,
+            "conditioning_edge": 0.0013969078136142343
+          },
+          "score": 0.6675868896685697,
+          "gradients": {},
+          "train": [
+            5.347171366214752,
+            0.4032607898116112
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "91205e4fffde9a76af6b329d87561c9e29af1f789485c88c877802962e4df1b8",
+      "checkpoint_hash": "4f0db76b0c89abb2fc35c8aabca95332a3ba75b7b77c5aef3036caa9191c3fb3",
+      "seconds": 1.8108266000053845
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\pubmed_3137_sage_default.pt",
+    "checkpoint_file_sha256": "25c5466da9816facd6e8b64365b8a9187540f94637bc7a9327841f9f9a1620b3",
+    "test": {
+      "text": 5.236567735671997,
+      "edge": 0.40400123596191406,
+      "token_accuracy": 0.1673177108168602,
+      "edge_auc": 0.8921458313190008,
+      "conditioning_text": -0.07120201364159584,
+      "conditioning_edge": 0.001611404470168054
+    }
+  },
+  {
+    "family": "gat",
+    "split": 3137,
+    "model_seed": 97,
+    "split_hash": "eab9180798b47edd3ba435598210c81980b2f153b84603fa4dc695b039cdc5d6",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.0,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 5.461828351020813,
+            "edge": 0.46695223450660706,
+            "token_accuracy": 0.1575520858168602,
+            "edge_auc": 0.8777832066406269,
+            "conditioning_text": 0.14994695410132408,
+            "conditioning_edge": 0.021200344432145357
+          },
+          "score": 0.7306562593325414,
+          "gradients": {},
+          "train": [
+            6.1642100512981415,
+            0.5880960822105408
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 5.225285768508911,
+            "edge": 0.4310525506734848,
+            "token_accuracy": 0.1595052108168602,
+            "edge_auc": 0.8915659343034017,
+            "conditioning_text": -0.052666367031633854,
+            "conditioning_edge": 0.009185808710753918
+          },
+          "score": 0.6877043691958851,
+          "gradients": {},
+          "train": [
+            5.34025639295578,
+            0.4329249020665884
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "1416d3cae831b9675b6bfd19e12f1ee557bac3381e469393106fcee6a2529eba",
+      "checkpoint_hash": "c3e599bccf16195f119be7bd7a107abd507928feedf59dea61c9e8df7e2ff26d",
+      "seconds": 1.9298975000274368
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\pubmed_3137_gat_default.pt",
+    "checkpoint_file_sha256": "7cf2fa808e69ec69babaec6408ff08aaf4bf53ea6cbf91742d6149cbe24b823c",
+    "test": {
+      "text": 5.2166701555252075,
+      "edge": 0.4312833175063133,
+      "token_accuracy": 0.1725260466337204,
+      "edge_auc": 0.8912730180877074,
+      "conditioning_text": -0.04910574201494455,
+      "conditioning_edge": 0.010354142053984106
+    }
+  },
+  {
+    "family": "twinmask",
+    "split": 3137,
+    "model_seed": 97,
+    "split_hash": "eab9180798b47edd3ba435598210c81980b2f153b84603fa4dc695b039cdc5d6",
+    "config": {
+      "lr": 0.003,
+      "wd": 0.01,
+      "width": 48,
+      "depth": 2,
+      "dropout": 0.0,
+      "edge_weight": 1.0,
+      "fusion": 1.0,
+      "modality_dropout": 0.2,
+      "rollout": 0.3333333333333333,
+      "lr_text": 1.0,
+      "lr_structure": 1.0,
+      "lr_fusion": 1.0,
+      "normalize": false,
+      "scheduler": "constant",
+      "structural_stats": false,
+      "text_encoder": "cnn",
+      "length": 16
+    },
+    "steps": 32,
+    "history": {
+      "curve": [
+        {
+          "step": 16,
+          "dev": {
+            "text": 5.463914513587952,
+            "edge": 0.4259996712207794,
+            "token_accuracy": 0.1048177108168602,
+            "edge_auc": 0.8884245959497674,
+            "conditioning_text": 0.05432961042970419,
+            "conditioning_edge": 0.008156005875207484
+          },
+          "score": 0.7012656506851512,
+          "gradients": {},
+          "train": [
+            6.0956180691719055,
+            0.5019120797514915
+          ]
+        },
+        {
+          "step": 32,
+          "dev": {
+            "text": 5.259990930557251,
+            "edge": 0.3985452502965927,
+            "token_accuracy": 0.1666666716337204,
+            "edge_auc": 0.8945518543930372,
+            "conditioning_text": -0.030901832040399313,
+            "conditioning_edge": -0.0001939128851518035
+          },
+          "score": 0.6667577008055182,
+          "gradients": {},
+          "train": [
+            5.395274847745895,
+            0.3972574360668659
+          ]
+        }
+      ],
+      "best_step": 32,
+      "initialization_hash": "91205e4fffde9a76af6b329d87561c9e29af1f789485c88c877802962e4df1b8",
+      "checkpoint_hash": "fc0aa243b242f114280e2f7a977d893459ae76d46300d025c9159a0c82234002",
+      "seconds": 2.2011592999915592
+    },
+    "checkpoint": "checkpoints\\research_twinmask_v6\\pubmed_3137_twinmask_default.pt",
+    "checkpoint_file_sha256": "9d2f7dc72514b86d44ca44b0ecaf8a16d29e8fe10d3f61db775085d554bc4933",
+    "test": {
+      "text": 5.255895376205444,
+      "edge": 0.40218620002269745,
+      "token_accuracy": 0.1673177145421505,
+      "edge_auc": 0.8912738113827217,
+      "conditioning_text": -0.03058825060725212,
+      "conditioning_edge": 0.0006650698851444758
+    }
+  }
+]
